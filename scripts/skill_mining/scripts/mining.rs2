@@ -128,9 +128,9 @@ if (random($chance) = ^true) {
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
     // Temp note: dur does not need updated
-    if(loc_type = runiterock1 | loc_type = runiterock2) {
-        $respawn = ~variable_resources(1, $respawn);
-    }
+    //if(loc_type = runiterock1 | loc_type = runiterock2) {
+    //    $respawn = ~variable_resources(1, $respawn);
+    //}
     loc_change(loc_param(next_loc_stage_mining), $respawn);
     sound_synth(sound_230, 0, 0); // Sudden says its sound_230
     anim(null, 0);
