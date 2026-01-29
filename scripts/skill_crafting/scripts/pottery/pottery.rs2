@@ -65,7 +65,7 @@ if (stat(crafting) < $level)
 }
 sound_synth(pottery, 0, 0);
 anim(human_potterywheel, 0);
-p_delay(2);
+p_delay(1);
 inv_del(inv, softclay, 1);
 inv_add(inv, $item, 1);
 stat_advance(crafting, struct_param($struct, processexp));
@@ -83,7 +83,7 @@ p_delay(1);
 
 mes("The <oc_name(struct_param($struct, product))> hardens in the oven.");
 
-p_delay(1);
+//p_delay(1);
 
 def_namedobj $product = struct_param($struct, product);
 // delete unfired item
