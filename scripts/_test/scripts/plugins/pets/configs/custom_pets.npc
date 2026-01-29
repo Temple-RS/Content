@@ -1,5 +1,4 @@
 [pet_imp]
-vislevel=hide
 name=Dark Imp
 desc=A devious little bastard.
 walkanim=imp_walk
@@ -78,7 +77,6 @@ param=pet_item_id,woman_whistle
 
 
 [pet_rock]
-vislevel=hide
 name=Rock
 desc=a pretty solid pet!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -322,16 +320,3 @@ category=custompet
 blockwalk=none
 param=pet_item_id,cow_leash
 op1=Wrangle
-
-[pet_penguin]
-vislevel=hide
-name=Penguin
-desc=A penguin.
-model1=model_3003_npc
-walkanim=penguin_walk
-readyanim=penguin_ready
-op1=Unsummon
-param=death_anim,penguin_death
-category=custompet
-blockwalk=none
-param=pet_item_id,penguin_whistle

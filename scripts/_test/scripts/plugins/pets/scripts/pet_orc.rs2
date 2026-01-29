@@ -1,5 +1,6 @@
 [opheld1,orc_tooth] @orc_drop;
 [ai_timer,orc_pet]
+~custom_pet_ai;
 npc_say("UH-OH!");
 
 [label,orc_drop]

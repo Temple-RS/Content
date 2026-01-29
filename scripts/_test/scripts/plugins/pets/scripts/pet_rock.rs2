@@ -1,5 +1,6 @@
 [opheld1,pet_rock] @rock_drop;
 [ai_timer,pet_rock]
+~custom_pet_ai;
 npc_say("I'm your boulder!");
 
 [label,rock_drop]
@@ -22,4 +23,4 @@ npc_add(coord, $type, ^max_32bit_int);
 %npc_attacking_uid = uid;
 npc_setmode(playerfollow);
 npc_say("Here's your boulder!");
-npc_settimer(30);
+~custom_pet_ai;

@@ -1,5 +1,6 @@
 [opheld1,hellhound_cage] @hellhound_drop;
 [ai_timer,hellhound_pet]
+~custom_pet_ai;
 npc_say("BARK!");
 
 [label,hellhound_drop]

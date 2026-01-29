@@ -1,5 +1,6 @@
 [opheld1,pet_death_wing] @death_wing_drop;
 [ai_timer,pet_death_wing]
+~custom_pet_ai;
 npc_say("Reeerk!");
 
 [label,death_wing_drop]

@@ -1,5 +1,6 @@
 [opheld1,ernest_cage] @ernest_drop;
 [ai_timer,ernest_pet]
+~custom_pet_ai;
 npc_say("Bawk!");
 
 [label,ernest_drop]

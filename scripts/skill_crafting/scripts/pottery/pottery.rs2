@@ -79,11 +79,11 @@ mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
 sound_synth(furnace, 0, 0);
 anim(human_furnace, 0);
 
-p_delay(2);
+p_delay(1);
 
 mes("The <oc_name(struct_param($struct, product))> hardens in the oven.");
 
-p_delay(2);
+p_delay(1);
 
 def_namedobj $product = struct_param($struct, product);
 // delete unfired item

@@ -1,5 +1,6 @@
 [opheld1,lep_coins] @leprechaun_drop;
 [ai_timer,leprechaun_pet]
+~custom_pet_ai;
 npc_say("Feelin' rather lucky aren't we?!");
 
 [label,leprechaun_drop]

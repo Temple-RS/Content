@@ -1,0 +1,154 @@
+[opheld1,dice_bag] @dice_games;
+
+
+[label,dice_games]
+~mesbox("Welcome to Dice Games. |You will be prompted to type in your wager amount next.");
+~mesbox("Game is simple: Roll two dice, bet High, Low, Evens, Odds, or a Direct Number.| The house always has an edge... but you might get lucky!");
+
+def_int $wager = 0;
+p_countdialog;
+$wager = last_int;
+
+// Validate wager
+if ($wager <= 0) {
+    mes("You must enter a positive amount.");
+    return;
+}
+
+def_int $available = inv_total(inv, coins);
+if ($wager > $available) {
+    mes("You don't have that much gold to wager.");
+    return;
+}
+
+if (inv_freespace(inv) < 1) {
+    mes("You need at least one free inventory slot.");
+    return;
+}
+
+def_int $roll1 = add(randominc(5), 1);
+def_int $roll2 = add(randominc(5), 1);
+def_int $total = add($roll1, $roll2);
+def_string $result;
+def_int $game_result;
+def_int $game = ~p_choice5("High.", 1, "Low.", 2, "Evens.", 3, "Odds.", 4, "Direct Number.", 5);
+switch_int($game){
+    case 1 : { // High (8-12 wins, 6-7 LOSES - house edge!)
+        if ($total < 6) {
+            $result = "@red@LOSS@bla@";
+            $game_result = 0;
+        } else if ($total > 7) {
+            $result = "@gre@WIN@bla@";
+            $game_result = 1;
+        } else {
+            $result = "@gre@HOUSE WINS@bla@";
+            $game_result = 0; // House wins on 6-7!
+        }
+    }
+    case 2 : { // Low (2-5 wins, 6-7 LOSES - house edge!)
+        if ($total < 6) {
+            $result = "@gre@WIN@bla@";
+            $game_result = 1;
+        } else if ($total > 7) {
+            $result = "@red@LOSS@bla@";
+            $game_result = 0;
+        } else {
+            $result = "HOUSE @gre@WIN@bla@S";
+            $game_result = 0; // House wins on 6-7!
+        }
+    }
+    case 3 : { // Evens
+        def_int $remainder = sub($total, multiply(divide($total, 2), 2));
+        if ($remainder = 0) {
+            $result = "@gre@WIN@bla@";
+            $game_result = 1;
+        } else {
+            $result = "@red@LOSS@bla@";
+            $game_result = 0;
+        }
+    }
+    case 4 : { // Odds
+        def_int $remainder = sub($total, multiply(divide($total, 2), 2));
+        if ($remainder ! 0) {
+            $result = "@gre@WIN@bla@";
+            $game_result = 1;
+        } else {
+            $result = "@red@LOSS@bla@";
+            $game_result = 0;
+        }
+    }
+
+    case 5 : { // Direct Number Guess
+        ~mesbox("Enter a number between @gre@2@bla@ and @gre@12@bla@.| Guess correctly for a @yel@MASSIVE@bla@ payout!");
+        def_int $guess; 
+        p_countdialog;
+        $guess = last_int;
+        if ($guess < 2 | $guess > 12) {
+            mes("Invalid guess. Must be between 2 and 12.");
+            return;
+        }
+        if ($guess = $total) {
+            $result = "@yel@JACKPOT@bla@";
+            $game_result = 1;
+        } else {
+            $result = "@red@LOSS@bla@";
+            $game_result = 0;
+        }
+    }
+}
+
+mes("[Dice Games]");
+mes("Wager: <tostring($wager)>");
+mes("(Dice): [<tostring($roll1)>/<tostring($roll2)>]");
+mes("(Total): (<tostring($total)>)");
+mes("==========");
+~dice_roll;
+switch_int($game_result){
+    case 0 : {
+        ~dice_lose($wager);
+        ~mesbox("Result: [<$result>]");
+    }
+    case 1 : {
+        ~dice_win($wager, $game);
+        ~mesbox("Result: [<$result>]");
+    }
+}
+
+
+
+
+[proc,dice_roll]
+sound_synth(dice_shake, 2, 0);
+p_delay(1);
+anim(human_pickupfloor,0);
+sound_synth(dice_roll, 1, 0);
+sound_synth(dice_roll, 2, 1);
+p_delay(1);
+
+[proc,dice_win](int $wager, int $game)
+def_int $payout = 0;
+def_int $jackpot_roll = random(20); // 5% chance for bonus jackpot
+if ($game = 5) { 
+    // Direct Number - HUGE payout but very rare (1/11 chance)
+    $payout = multiply($wager, 15); // 15x payout!
+} else {
+    // Regular wins - house edge means only 90% profit
+    def_int $profit = divide(multiply($wager, 9), 10); // 0.9x profit
+    $payout = add($wager, $profit); // Return wager + 90% profit
+    
+    // Small chance for bonus jackpot on regular wins
+    if ($jackpot_roll = 0) {
+        def_int $bonus = multiply($wager, 5);
+        $payout = add($payout, $bonus);
+    }
+}
+inv_add(inv, coins, $payout);
+spotanim_pl(levelup_anim, 250, 0);
+midi_jingle(^dice_win_jingle,^dice_win_jingle_millis);
+
+[proc,dice_lose](int $wager)
+inv_del(inv, coins, $wager);
+anim(human_death,3);
+p_delay(1);
+midi_jingle(^dice_lose_jingle,^dice_lose_jingle_millis);
+anim(null, 0);

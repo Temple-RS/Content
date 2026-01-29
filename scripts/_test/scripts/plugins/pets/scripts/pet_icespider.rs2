@@ -1,5 +1,6 @@
 [opheld1,pet_ice_spider] @ice_spider_drop;
 [ai_timer,ice_spider_pet]
+~custom_pet_ai;
 npc_say("ee!");
 
 [label,ice_spider_drop]

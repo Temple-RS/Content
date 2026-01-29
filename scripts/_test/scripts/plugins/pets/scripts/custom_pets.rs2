@@ -13,3 +13,16 @@ p_delay(0);
 inv_add(inv, npc_param(pet_item_id), 1);
 sound_synth(pick, 0, 0);
 npc_del;
+
+//[ai_timer,_custompet]
+//~custom_pet_ai;
+
+[proc,custom_pet_ai]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
+    npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
+}
+npc_settimer(30);

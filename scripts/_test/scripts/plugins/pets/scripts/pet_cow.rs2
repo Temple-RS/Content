@@ -1,6 +1,7 @@
 [opheld1,cow_leash] @cow_drop;
 [ai_timer,cow_pet]
-@cow_moo;
+~custom_pet_ai;
+npc_say("Mooo!");
 
 [label,cow_drop]
 if (map_members = ^false) {

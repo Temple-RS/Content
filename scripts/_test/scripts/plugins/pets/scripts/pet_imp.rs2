@@ -1,5 +1,6 @@
 [opheld1,imp_lamp] @imp_drop;
 [ai_timer,pet_imp]
+~custom_pet_ai;
 def_int $random = random(3);
 switch_int($random) {
     case 0 : npc_say("Are we there yet!?");
@@ -28,5 +29,5 @@ npc_add(coord, $type, ^max_32bit_int);
 %npc_attacking_uid = uid;
 npc_setmode(playerfollow);
 npc_say("ahaha!");
-npc_settimer(30);
+~custom_pet_ai;
 

@@ -1,5 +1,6 @@
 [login,_]
 mes("Welcome to RuneScape.");
+mes("Players Online: <tostring(playercount)>");
 cam_reset;
 
 %musicplay = 1; // set to auto on login

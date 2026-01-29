@@ -1,5 +1,6 @@
 [opheld1,lizard_beads] @lizardman_drop;
 [ai_timer,lizardman_pet]
+~custom_pet_ai;
 npc_say("Eventually i'll find your weakness!");
 
 [label,lizardman_drop]
