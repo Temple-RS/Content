@@ -18,5 +18,5 @@ if ($is_inside = false) {
 }
 ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
 
-[opnpc1,head_chef]
-~chatnpc("<p,happy>Hello, welcome to the Cooking Guild.|Only accomplished chefs and cooks are allowed in here.|Feel free to use any of our facilities.");
+//[opnpc1,head_chef]
+//~chatnpc("<p,happy>Hello, welcome to the Cooking Guild.|Only accomplished chefs and cooks are allowed in here.|Feel free to use any of our facilities.");
