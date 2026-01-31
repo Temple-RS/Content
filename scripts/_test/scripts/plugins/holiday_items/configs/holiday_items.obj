@@ -12,8 +12,8 @@ members=yes
 tradeable=no
 
 [unpacked_snow]
-name=Unpacked snow
-desc=A pile of snow.
+name=Snow
+desc=A pile of unpacked snow.
 cost=2
 model=model_2742_obj
 recol1s=21140
@@ -26,6 +26,24 @@ weight=2oz
 iop1=Pack
 members=yes
 tradeable=yes
+iop3=Eat
+
+[unpacked_yellow_snow]
+name=Yellow snow
+desc=A pile of unpacked yellow snow.
+cost=2
+model=model_2742_obj
+recol1s=21140
+recol1d=31683
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+weight=2oz
+iop2=Pack
+members=yes
+tradeable=yes
+iop3=Eat
 
 [snowball]
 name=Snowball
@@ -44,6 +62,25 @@ cost=1
 weight=80g
 members=yes
 
+
+[yellow_snowball]
+name=Yellow snowball
+desc=Can be used to prank others.
+model=model_2520_obj
+2dxof=1
+2dyof=-2
+2dzoom=690
+2dyan=256
+2dxan=364
+recol1s=25
+recol1d=31683
+recol2s=0
+recol2d=31683
+recol3s=32767
+recol3d=31683
+cost=1
+weight=80g
+members=yes
 
 
 [berret_green]
