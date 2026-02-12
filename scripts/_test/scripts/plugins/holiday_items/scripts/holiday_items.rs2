@@ -46,21 +46,25 @@ loc_del(1200);
 [label,pack_snow](obj $obj)
 def_int $ps = inv_total(inv, unpacked_snow);
 def_int $pys = inv_total(inv, unpacked_yellow_snow);
-if ($ps < 1 | $pys < 1){
-    mes("You need at least 1 Unpacked Snow to pack it into a snowball.");
-    return;
-}
 switch_obj($obj){
     case unpacked_snow : {
+        if ($ps < 1){
+            mes("You need at least 1 Unpacked Snow to pack it into a snowball.");
+            return;
+        }
         inv_del(inv, unpacked_snow, 1);
         inv_add(inv, snowball, 4);
         ~objbox(snowball, "You have packed the snow into a snowball.", 250, 0, 25);
         return;
     }
     case unpacked_yellow_snow : {
+        if ($pys < 1){
+            mes("You need at least 1 Unpacked Yellow Snow to pack it into a snowball.");
+            return;
+        }
         inv_del(inv, unpacked_yellow_snow, 1);
         inv_add(inv, yellow_snowball, 4);
-        ~objbox(yellow_snowball, "You have packed the yellow snow into a snowball.", 250, 0, 25);
+        ~objbox(snowball, "You have packed the snow into a snowball.", 250, 0, 25);
         return;
     }
 }
