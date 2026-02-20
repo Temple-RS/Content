@@ -64,7 +64,7 @@ switch_obj($obj){
         }
         inv_del(inv, unpacked_yellow_snow, 1);
         inv_add(inv, yellow_snowball, 4);
-        ~objbox(snowball, "You have packed the snow into a snowball.", 250, 0, 25);
+        ~objbox(yellow_snowball, "You have packed the snow into a snowball.", 250, 0, 25);
         return;
     }
 }
