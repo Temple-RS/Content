@@ -12,9 +12,8 @@ switch_int(%tutorial) {
 @tutorial_complete;
 
 [label,newbie_basics_instructor_return]
-~chatnpc("<p,neutral>Welcome back. You have already learnt the first thing needed to succeed in this world: talking to other people!");
-~chatnpc("<p,neutral>You will find many inhabitants of this world have useful things to say to you. By clicking on them, you can talk to them.");
-~chatnpc("<p,neutral>To continue the tutorial go through that door over there, and speak to your first instructor!");
+%tutorial = ^tutorial_complete;
+@tutorial_complete;
 
 [proc,set_hint_newbie_basics_instructor]
 if (%tutorial < ^newbie_basics_instructor_interact_with_scenery) {
