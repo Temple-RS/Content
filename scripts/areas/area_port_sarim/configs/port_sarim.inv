@@ -1,7 +1,7 @@
 [foodshop]
 // https://oldschool.runescape.wiki/w/Unused_shops
 scope=shared
-size=10
+size=11
 restock=yes
 stackall=yes
 allstock=no
@@ -12,9 +12,10 @@ stock4=banana,3,100
 stock5=redberries,1,100
 stock6=bread,0,100
 stock7=chocolate_bar,1,95
-stock8=cheese,3,100
-stock9=tomato,3,100
-stock10=potato,1,100
+stock8=cheese,100,25
+stock9=tomato,100,25
+stock10=potato,100,25
+stock11=grapes,10,50
 //unused
 
 [battleaxeshop]

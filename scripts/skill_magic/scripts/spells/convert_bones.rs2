@@ -27,8 +27,13 @@ if (p_finduid(uid) = true) {
         return;
     }
     // delete all bones by category
-    inv_del(inv, bones, $total_bones);
-    inv_add(inv, $product, $total_bones);
+    if (inv_total(worn,cabbage_hat) > 0){
+        inv_del(inv, bones, $total_bones);
+        inv_add(inv, cabbage, $total_bones);
+    } else {
+        inv_del(inv, bones, $total_bones);
+        inv_add(inv, $product, $total_bones);
+    }
     // play sound and anim
     sound_synth($sound, 0, 0);
     anim($anim, 0);

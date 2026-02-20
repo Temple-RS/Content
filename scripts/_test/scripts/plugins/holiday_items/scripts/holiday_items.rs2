@@ -1,0 +1,109 @@
+[oploc1,snow_pile] @dig_snow;
+[opheldu,snowball_mould] @pack_snow(last_item);
+[opheld1,unpacked_snow] @pack_snow(last_item);
+[opheld3,unpacked_snow] @eat_snow(last_item);
+
+[opheld1,unpacked_yellow_snow] @pack_snow(last_item);
+[opheld3,unpacked_yellow_snow] @eat_snow(last_item);
+
+
+[oplocu,snow_pile] 
+switch_obj(last_useitem){
+    case spade : {
+        inv_add(inv, unpacked_snow, 4);
+        loc_del(1200);
+    }
+    case default : {
+        mes("Nothing seems to happen.");
+        return;
+    }
+}
+[label,eat_snow](obj $obj)
+anim(human_eat, 0);
+p_delay(1);
+inv_del(inv, $obj, 1);
+switch_obj($obj){
+    case unpacked_snow : {
+        mes("You eat the snow.");
+        return;
+    }
+    case unpacked_yellow_snow : {
+        mes("You eat the yellow snow.");
+        return;
+    }
+}
+
+[label,dig_snow]
+anim(human_pickupfloor, 1);
+if (random(128) = 128){
+    inv_add(inv, unpacked_yellow_snow, 1);
+    mes("Eww some yellow snow! This will make a good snowball...");
+} else {
+    inv_add(inv, unpacked_snow, 1);
+}
+loc_del(1200);
+
+[label,pack_snow](obj $obj)
+def_int $ps = inv_total(inv, unpacked_snow);
+def_int $pys = inv_total(inv, unpacked_yellow_snow);
+switch_obj($obj){
+    case unpacked_snow : {
+        if ($ps < 1){
+            mes("You need at least 1 Unpacked Snow to pack it into a snowball.");
+            return;
+        }
+        inv_del(inv, unpacked_snow, 1);
+        inv_add(inv, snowball, 4);
+        ~objbox(snowball, "You have packed the snow into a snowball.", 250, 0, 25);
+        return;
+    }
+    case unpacked_yellow_snow : {
+        if ($pys < 1){
+            mes("You need at least 1 Unpacked Yellow Snow to pack it into a snowball.");
+            return;
+        }
+        inv_del(inv, unpacked_yellow_snow, 1);
+        inv_add(inv, yellow_snowball, 4);
+        ~objbox(snowball, "You have packed the snow into a snowball.", 250, 0, 25);
+        return;
+    }
+}
+
+
+
+
+[opplayeru,snowball] @snowball_throw(last_useitem);
+[applayeru,snowball] @snowball_throw(last_useitem);
+[opplayeru,yellow_snowball] @snowball_throw(last_useitem);
+[applayeru,yellow_snowball] @snowball_throw(last_useitem);
+
+[label,snowball_throw](obj $obj)
+if (%snowball_delay > map_clock) {
+    return; // this is how it works in osrs, doesnt use action_delay (cant tick manip with it)
+}
+inv_delslot(inv, last_useslot);
+
+anim(human_throw, 0);
+%snowball_delay = calc(map_clock + 5);
+switch_obj($obj){
+    case snowball : {
+        sound_synth(thrown, 0, 0);
+        spotanim_pl(snowball_launch, 96, 0);
+        mes("You pelted <.name> with a snowball!");
+        .mes("<name> pelted you with a snowball!");
+        // If Random Location is selected change .coord to $random_coord
+        def_int $duration = ~coord_projectile(coord, .coord, snowball_travel, 40, 0, 28, 15, 18, 32, 5);
+        //sound_synth todo: find sound?
+        spotanim_map(snowball_splash, .coord, 96, calc($duration/30));
+    }
+    case yellow_snowball : {
+        sound_synth(thrown, 0, 0);
+        spotanim_pl(yellow_snowball_launch, 96, 0);
+        mes("You pelted <.name> with a yellow snowball!");
+        .mes("<name> pelted you with a yellow snowball!");
+        // If Random Location is selected change .coord to $random_coord
+        def_int $duration = ~coord_projectile(coord, .coord, yellow_snowball_travel, 40, 0, 28, 15, 18, 32, 5);
+        //sound_synth todo: find sound?
+        spotanim_map(yellow_snowball_splash, .coord, 96, calc($duration/30));
+    }
+}

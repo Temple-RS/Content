@@ -1,0 +1,83 @@
+[opnpcu,master_crafter] @crafting_trade(last_useitem);
+
+[label,crafting_trade](obj $last_object)
+def_int $total = inv_total(inv, $last_object);
+def_int $coins = inv_total(inv, coins);
+def_int $multiplier = calc($total * 75);
+
+
+switch_obj($last_object){
+    case pot_empty : {
+        if ($coins < $multiplier) {
+            ~chatplayer("<p,neutral>You need <tostring($multiplier)> coins.");
+            return;
+        }
+        inv_del(inv, coins, $multiplier);
+        inv_del(inv, $last_object, $total);
+        inv_add(inv, cert_pot_empty, $total);
+    } 
+    case piedish : {
+        if ($coins < $multiplier) {
+            ~chatplayer("<p,neutral>You need <tostring($multiplier)> coins.");
+            return;
+        }
+        inv_del(inv, coins, $multiplier);
+        inv_del(inv, $last_object, $total);
+        inv_add(inv, cert_piedish, $total);
+    } 
+    case bowl_empty : {
+        if ($coins < $multiplier) {
+            ~chatplayer("<p,neutral>You need <tostring($multiplier)> coins.");
+            return;
+        }
+        inv_del(inv, coins, $multiplier);
+        inv_del(inv, $last_object, $total);
+        inv_add(inv, cert_bowl_empty, $total);
+    }
+    case bowl_water : {
+        if ($coins < $multiplier) {
+            ~chatplayer("<p,neutral>You need <tostring($multiplier)> coins.");
+            return;
+        }
+        inv_del(inv, coins, $multiplier);
+        inv_del(inv, $last_object, $total);
+        inv_add(inv, cert_bowl_water, $total);
+    }
+    case leather : {
+        if ($coins < calc($multiplier + 25)) {
+            ~chatplayer("<p,neutral>You need <tostring($multiplier)> coins.");
+            return;
+        }
+        inv_del(inv, coins, calc($multiplier + 25));
+        inv_del(inv, $last_object, $total);
+        inv_add(inv, cert_leather, $total);
+    } 
+    case hard_leather : {
+        if ($coins < calc($multiplier + 50)) {
+            ~chatplayer("<p,neutral>You need <tostring($multiplier)> coins.");
+            return;
+        }
+        inv_del(inv, coins, calc($multiplier + 50));
+        inv_del(inv, $last_object, $total);
+        inv_add(inv, cert_hard_leather, $total);
+    }
+    case default : {
+        ~chatplayer("<p,neutral>Err... I don't know what that is.");
+        return;
+    }
+}
+~chatplayer("<p,happy>Right on!"); // animationId = 567
+
+
+[proc,chefhatcheck]()(boolean)
+switch_obj(inv_getobj(worn, ^wearpos_hat)) {
+    case chefs_hat : {
+        return(true);
+    }
+    case cabbage_hat : {
+        return(true);
+    }
+    case default : {
+        return(false);
+    }
+}

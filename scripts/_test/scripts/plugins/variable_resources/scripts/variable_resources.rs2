@@ -1,0 +1,17 @@
+//[proc,variable_resources](int $options, int $default)(int)
+//def_int $pc = playercount;
+//def_int $number = $default;
+//
+//// 1 = runite, 2 = magic trees
+//switch_int($options){
+//    case 1 : 
+//        if ($pc < 500){
+//            $number = 1800;
+//        }
+//    case 2 : 
+//        if ($pc < 500){
+//            $number = 1800;
+//        }
+//}
+//return($number);
+
