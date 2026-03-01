@@ -1,0 +1,105 @@
+[opheld1,event_scroll]
+%book_page = 0;
+%open_book = event_scroll;
+@open_event_scroll;
+
+[label,open_event_scroll]
+@book_flip_page(0, 0, 3, event_scroll);
+
+[proc,event_scroll]
+def_string $christmas;
+def_string $newyears;
+def_string $easter;
+def_string $stpat;
+def_string $fourtwenty;
+def_string $halloween;
+
+def_int $christmasi = %christmas;
+def_int $newyearsi = %newyearseve;
+def_int $easteri = %easter;
+def_int $stpati = %stpatricksday;
+def_int $fourtwentyi = %420day;
+def_int $halloweeni = %halloween;
+
+switch_int($christmasi){
+    case 0 : {
+        $christmas = "@red@No@bla@";
+    }
+    case 1 : {
+        $christmas = "@gre@Yes@bla@";
+    }
+}
+switch_int($newyearsi){
+    case 0 : {
+        $newyears = "@red@No@bla@";
+    }
+    case 1 : {
+        $newyears = "@gre@Yes@bla@";
+    }
+
+}
+switch_int($easteri){
+    case 0 : {
+        $easter = "@red@No@bla@";
+    }
+    case 1 : {
+        $easter = "@gre@Yes@bla@";
+    }
+
+}
+switch_int($stpati){
+    case 0 : {
+        $stpat = "@red@No@bla@";
+    }
+    case 1 : {
+        $stpat = "@gre@Yes@bla@";
+    }
+
+}
+switch_int($fourtwentyi){
+    case 0 : {
+        $fourtwenty = "@red@No@bla@";
+    }
+    case 1 : {
+        $fourtwenty = "@gre@Yes@bla@";
+    }
+
+}
+switch_int($halloweeni){
+    case 0 : {
+        $halloween = "@red@No@bla@";
+    }
+    case 1 : {
+        $halloween = "@gre@Yes@bla@";
+    }
+
+}
+switch_int (%book_page) {
+    case 0 : ~book("Event List", "Christmas: [<$christmas>] |New Years Eve: [<$newyears>] |Easter: [<$easter>] |St. Patricks Day: [<$stpat>] |4/20: [<$fourtwenty>] |Halloween: [<$halloween>] |||");
+}
+
+
+
+
+
+[label,smoke_cannabis]
+inv_del(inv, cannabis, 1);
+sound_synth(tinderbox_strike, 1, 0);
+p_delay(1);
+anim(human_glassblowing,0);
+mes("You smoke the cannabis.");
+say("Thats the good stuff...");
+spotanim_pl(smokepuff, 500, 0);
+p_delay(1);
+sound_synth(tinderbox_strike, 1, 0);
+anim(human_glassblowing,0);
+mes("You smoke the cannabis.");
+say("Thats the good stuff...");
+spotanim_pl(smokepuff_large, 800, 0);
+stat_boost(herblore, 3, 0);
+stat_advance(herblore, 20);
+
+
+[label,grind_cannabis]
+~grinding_action(cannabis, ground_cannabis);
+stat_advance(herblore, 5);

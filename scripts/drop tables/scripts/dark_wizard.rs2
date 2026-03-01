@@ -3,6 +3,9 @@ gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
 }
+if (npc_findhero = ^true){
+    queue(dark_wizard_kill, 0, 0);
+}
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
@@ -74,6 +77,9 @@ if ($random < 4) {
 gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
+}
+if (npc_findhero = ^true){
+    queue(dark_wizard_kill, 0, 0);
 }
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);

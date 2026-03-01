@@ -654,13 +654,34 @@ weight=5lb
 
 [halberd]
 name=Halberd
+category=weapon_slash
 model=model_2791_obj
 2dxof=-7
 2dyof=-6
 2dzoom=1580
 2dyan=400
 2dxan=224
-weight=10lb
+iop2=Wield
+wearpos=righthand
+wearpos2=lefthand
+manwear=model_555_npc,0
+womanwear=model_555_npc,0
+weight=7lb
+param=stabattack,48
+param=slashattack,145
+param=crushattack,3
+param=slashdefence,3
+param=crushdefence,1
+param=strengthbonus,130
+param=ready_baseanim,human_ready_scythe
+param=attackrate,9
+param=slashattack_anim,human_middlegrip
+param=crushattack_anim,human_scythe_lunge
+param=stabattack_anim,human_scythe_slash
+param=defend_anim,human_scythe_block
+param=stab_sound,scythe_slash
+param=slash_sound,scythe_slash
+param=crush_sound,scythe_slash
 
 [warhammer]
 name=Warhammer

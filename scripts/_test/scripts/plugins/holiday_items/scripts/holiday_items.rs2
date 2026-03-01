@@ -18,6 +18,7 @@ switch_obj(last_useitem){
         return;
     }
 }
+
 [label,eat_snow](obj $obj)
 anim(human_eat, 0);
 p_delay(1);
@@ -46,6 +47,8 @@ loc_del(1200);
 [label,pack_snow](obj $obj)
 def_int $ps = inv_total(inv, unpacked_snow);
 def_int $pys = inv_total(inv, unpacked_yellow_snow);
+def_int $mould = inv_total(inv, snowball_mould);
+def_int $count = 1;
 switch_obj($obj){
     case unpacked_snow : {
         if ($ps < 1){
@@ -53,7 +56,12 @@ switch_obj($obj){
             return;
         }
         inv_del(inv, unpacked_snow, 1);
-        inv_add(inv, snowball, 4);
+        if ($mould < 1){
+            $count = 1;
+        } else {
+            $count = 4;
+        }
+        inv_add(inv, snowball, $count);
         ~objbox(snowball, "You have packed the snow into a snowball.", 250, 0, 25);
         return;
     }
@@ -62,8 +70,13 @@ switch_obj($obj){
             mes("You need at least 1 Unpacked Yellow Snow to pack it into a snowball.");
             return;
         }
+        if ($mould < 1){
+            $count = 1;
+        } else {
+            $count = 4;
+        }
         inv_del(inv, unpacked_yellow_snow, 1);
-        inv_add(inv, yellow_snowball, 4);
+        inv_add(inv, yellow_snowball, $count);
         ~objbox(yellow_snowball, "You have packed the snow into a snowball.", 250, 0, 25);
         return;
     }

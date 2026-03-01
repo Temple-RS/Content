@@ -1,9 +1,10 @@
 [opnpcu,master_crafter] @crafting_trade(last_useitem);
 
+// info: Allows a player to trade items for certificates.
 [label,crafting_trade](obj $last_object)
 def_int $total = inv_total(inv, $last_object);
 def_int $coins = inv_total(inv, coins);
-def_int $multiplier = calc($total * 75);
+def_int $multiplier = calc($total * 25);
 
 
 switch_obj($last_object){
@@ -68,9 +69,9 @@ switch_obj($last_object){
 }
 ~chatplayer("<p,happy>Right on!"); // animationId = 567
 
-
-[proc,chefhatcheck]()(boolean)
-switch_obj(inv_getobj(worn, ^wearpos_hat)) {
+// info: Checks if the player is wearing an item in a specific slot. | Slots: 0 = hat, 1 = back, 2 = front, 3 = rhand, 4 = torso, 5 = lhand, 6 = arms, 7 = legs, 8 = head, 9 = hands, 10 = feet, 11 = jaw, 12 = ring, 13 = quiver
+[proc,slot_checker](int $slot, obj $item)(boolean)
+switch_obj(inv_getobj(worn, $slot)) {
     case chefs_hat : {
         return(true);
     }
@@ -81,3 +82,378 @@ switch_obj(inv_getobj(worn, ^wearpos_hat)) {
         return(false);
     }
 }
+
+// info: Pays the toll gate.
+[proc,easy_pay](loc $loc)
+switch_loc($loc){
+    case border_gate_toll_left : {
+        if (inv_total(inv, coins) < 10) {
+            ~chatplayer("<p,quiz>Oh dear, I don't actually seem to have enough money.");
+            return;
+        }      
+        mes("You pay the guard.");
+        inv_del(inv, coins, 10);
+    }
+    case border_gate_toll_right : {
+        if (inv_total(inv, coins) < 10) {
+            ~chatplayer("<p,quiz>Oh dear, I don't actually seem to have enough money.");
+            return;
+        }        
+        mes("You pay the guard.");
+        inv_del(inv, coins, 10);
+    }
+}
+
+// Workbench repairing
+[oplocu,workbench] @attempt_workbench;
+[oplocu,workbench2] @attempt_workbench;
+
+[label,attempt_workbench]
+switch_obj(last_useitem){
+    // pickaxes
+    case macro_broken_bronze_pickaxe : {
+        @workbench(last_useitem, human_smithing, 25, smithing, 1, "repaired");
+    }
+    case macro_broken_iron_pickaxe : {
+        @workbench(last_useitem, human_smithing, 50, smithing, 1, "repaired");
+    }
+    case macro_broken_steel_pickaxe : {
+        @workbench(last_useitem, human_smithing, 65, smithing, 5, "repaired");
+    }
+    case macro_broken_mithril_pickaxe : {
+        @workbench(last_useitem, human_smithing, 75, smithing, 20, "repaired");
+    }
+    case macro_broken_adamant_pickaxe : {
+        @workbench(last_useitem, human_smithing, 100, smithing, 40, "repaired");
+    }
+    case macro_broken_rune_pickaxe : {
+        @workbench(last_useitem, human_smithing, 150, smithing, 40, "repaired");
+    }
+
+    // hatchets
+    case macro_broken_bronze_hatchet : {
+        @workbench(last_useitem, human_smithing, 25, smithing, 1, "repaired");
+    }
+    case macro_broken_iron_hatchet : {
+        @workbench(last_useitem, human_smithing, 50, smithing, 1, "repaired");
+    }
+    case macro_broken_steel_hatchet : {
+        @workbench(last_useitem, human_smithing, 65, smithing, 5, "repaired");
+    }
+    case macro_broken_black_hatchet : {
+        @workbench(last_useitem, human_smithing, 70, smithing, 10, "repaired");
+    }
+    case macro_broken_mithril_hatchet : {
+        @workbench(last_useitem, human_smithing, 75, smithing, 20, "repaired");
+    }
+    case macro_broken_adamant_hatchet : {
+        @workbench(last_useitem, human_smithing, 100, smithing, 30, "repaired");
+    }
+    case macro_broken_rune_hatchet : {
+        @workbench(last_useitem, human_smithing, 150, smithing, 40, "repaired");
+    }
+    case nails : {
+        if (~material_checker(hammer, 1, iron_bar, 5, nails, 5, woodplank, 5) = true){
+            if (stat_base(smithing) < 15) {
+                mes("You need a higher smithing level to do this.");
+                return;
+            }
+            switch_obj(last_useitem){
+                case nails : {
+                    inv_del(inv, iron_bar, 5);
+                    inv_del(inv, nails, 5);
+                    inv_del(inv, woodplank, 5);
+                    inv_add(inv, empty_casket, 1);
+                    ~crafting_action;
+                    mes("You have created an empty casket!");
+                    stat_advance(smithing, 3125);
+                    jump(end_label);
+                }
+            }
+        }        
+    }
+}
+
+//info Uses a workbench to repair items. (last_use, exp to gain, animation, stat, level requirement, string)
+[label,workbench](obj $last_object, seq $anim, int $exp, stat $stat, int $level_required, string $string)
+if (stat_base($stat) < $level_required) {
+    ~chatplayer("<p,neutral>You need a level of <tostring($level_required)> <~stat_name($stat)> to repair this item.");
+    return;
+}
+switch_obj($last_object){
+    // pickaxes
+    case macro_broken_bronze_pickaxe : {
+        inv_del(inv, macro_broken_bronze_pickaxe, 1);
+        inv_add(inv, bronze_pickaxe, 1);
+    }
+    case macro_broken_iron_pickaxe : {
+        inv_del(inv, macro_broken_iron_pickaxe, 1);
+        inv_add(inv, iron_pickaxe, 1);
+    }
+    case macro_broken_steel_pickaxe : {
+        inv_del(inv, macro_broken_steel_pickaxe, 1);
+        inv_add(inv, steel_pickaxe, 1);
+    }
+    case macro_broken_mithril_pickaxe : {
+        inv_del(inv, macro_broken_mithril_pickaxe, 1);
+        inv_add(inv, mithril_pickaxe, 1);
+    }
+    case macro_broken_adamant_pickaxe : {
+        inv_del(inv, macro_broken_adamant_pickaxe, 1);
+        inv_add(inv, adamant_pickaxe, 1);
+    }
+    case macro_broken_rune_pickaxe : {
+        inv_del(inv, macro_broken_rune_pickaxe, 1);
+        inv_add(inv, rune_pickaxe, 1);
+    }
+
+    // hatchets
+    case macro_broken_bronze_hatchet : {
+        inv_del(inv, macro_broken_bronze_hatchet, 1);
+        inv_add(inv, bronze_axe, 1);
+    }
+    case macro_broken_iron_hatchet : {
+        inv_del(inv, macro_broken_iron_hatchet, 1);
+        inv_add(inv, iron_axe, 1);
+    }
+    case macro_broken_steel_hatchet : {
+        inv_del(inv, macro_broken_steel_hatchet, 1);
+        inv_add(inv, steel_axe, 1);
+    }
+    case macro_broken_black_hatchet : {
+        inv_del(inv, macro_broken_black_hatchet, 1);
+        inv_add(inv, black_axe, 1);
+    }
+    case macro_broken_mithril_hatchet : {
+        inv_del(inv, macro_broken_mithril_hatchet, 1);
+        inv_add(inv, mithril_axe, 1);
+    }
+    case macro_broken_adamant_hatchet : {
+        inv_del(inv, macro_broken_adamant_hatchet, 1);
+        inv_add(inv, adamant_axe, 1);
+    }
+    case macro_broken_rune_hatchet : {
+        inv_del(inv, macro_broken_rune_hatchet, 1);
+        inv_add(inv, rune_axe, 1);
+    }
+    case default : {
+        mes("Nothing happened.");
+    }
+}
+~crafting_action;
+stat_advance($stat, $exp);
+mes("You have <$string> your tool.");
+
+[proc,material_checker](obj $tool, int $count1, obj $material1, int $count2, obj $material2, int $count3, obj $material3, int $count4)(boolean)
+if (inv_total(inv, $tool) < 1){
+    mes("You need a tool to do this.");
+    return(false);
+}
+
+if ($material1 ! null) {
+    if ($count2 > 0){
+        if (inv_total(inv, $material1) < $count2){
+            mes("You need more materials to do this.");
+            return(false);
+        }
+    }
+}
+
+if ($material2 ! null) {
+    if ($count3 > 0){
+        if (inv_total(inv, $material2) < $count3){
+            mes("You need more materials to do this.");
+            return(false);
+        }
+    }
+}
+
+if ($material3 ! null) {
+    if ($count4 > 0){
+        if (inv_total(inv, $material3) < $count4){
+            mes("You need more materials to do this.");
+            return(false);
+        }
+    }
+}
+
+return(true);
+
+// info: Standard crafting action with variable crafting speeds.
+[proc,crafting_action]
+if (~tool_check(hammer) = false) {return;}
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+anim(human_pickuptable,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+
+// info: Standard grind action with variable crafting speeds.
+[proc,grinding_action](obj $used_item, namedobj $product)
+if (inv_total(inv, $used_item) < 1){
+    mes("You cannot create a <oc_param($product,name)>.");
+    return;
+}
+inv_del(inv, $used_item, 1);
+anim(human_herbing_grind,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+anim(human_herbing_grind,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+inv_add(inv, $product, 1);
+
+// info: Standard fill action with variable crafting speeds.
+[proc,filling_action]
+anim(human_opencupboard,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+anim(human_redtopazcutting,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+
+// info: Returns the crafting speed based on the player's skill level. [ 90: 1t | 75: 2t | 50: 3t | 25: 4t | 1: 5t ]
+[proc,stat_speed](stat $skill)(int)
+def_int $level = stat_base($skill);
+def_int $speed = 5;
+if ($level > 25) { $speed = 4;}
+if ($level > 50) { $speed = 3;}
+if ($level > 75) { $speed = 2;}
+if ($level > 90) { $speed = 1;}
+return($speed);
+
+// info: Checks your inventory for a tool and returns a true or false boolean.
+[proc,tool_check](obj $tool)(boolean)
+def_obj $worn = inv_getobj(worn, 3);
+if (inv_total(inv, $tool) < 1) {
+    ~mesbox("You need a <oc_param($tool, name)> to do this.");
+    return(false);
+}
+switch_obj($worn){
+    case default : {
+        return(false);
+    }
+    case bronze_pickaxe : {
+        return(true);
+    }
+    case iron_pickaxe : {
+        return(true);
+    }
+    case steel_pickaxe : {
+        return(true);
+    }
+    case mithril_pickaxe : {
+        return(true);
+    }
+    case adamant_pickaxe : {
+        return(true);
+    }
+    case rune_pickaxe : {
+        return(true);
+    }
+    case bronze_axe : {
+        return(true);
+    }
+    case iron_axe : {
+        return(true);
+    }
+    case steel_axe : {
+        return(true);
+    }
+    case black_axe : {
+        return(true);
+    }
+    case mithril_axe : {
+        return(true);
+    }
+    case adamant_axe : {
+        return(true);
+    }
+    case rune_axe : {
+        return(true);
+    }
+}
+return(true);
+
+// info: Returns the bonus as an int. | $strings = "stab", "slash", "crush", "magic", "range", "strength", "prayer", "rangebonus" |
+[proc,bonus_checker](string $string)(int)
+def_int $total;
+def_int $stabattack;
+def_int $slashattack;
+def_int $crushattack;
+def_int $magicattack;
+def_int $rangeattack;
+def_int $stabdefence;
+def_int $slashdefence;
+def_int $crushdefence;
+def_int $magicdefence;
+def_int $rangedefence;
+def_int $strengthbonus;
+def_int $prayerbonus;
+def_int $attack_prayer;
+def_int $defence_prayer;
+def_int $strength_prayer;
+def_int $rangebonus;
+
+$stabattack,
+$slashattack,
+$crushattack,
+$magicattack,
+$rangeattack,
+$stabdefence,
+$slashdefence,
+$crushdefence,
+$magicdefence,
+$rangedefence,
+$strengthbonus,
+$prayerbonus,
+$rangebonus = ~equip_get_bonuses;
+def_int $bonus = calc(
+    $stabattack +
+    $slashattack +
+    $crushattack +
+    $magicattack +
+    $rangeattack +
+    $stabdefence +
+    $slashdefence +
+    $crushdefence +
+    $magicdefence +
+    $rangedefence +
+    $strengthbonus +
+    $prayerbonus +
+    $rangebonus
+);
+return($total);
+
+[label,end_label]
+return;
+
+
+[opheld5,stake_dagger] @drop_gauntlets;
+[opheld5,shield_of_arrav] @drop_gauntlets;
+
+
+// info: Checks if the player has an item in their inventory, bank, worn, or around them.
+[proc,find_item](obj $item)(boolean)
+def_int $count = 0;
+if (inv_total(inv, $item) > 0) {
+    $count = calc($count + 1);
+}
+if (inv_total(bank, $item) > 0) {
+    $count = calc($count + 1);
+}
+if (inv_total(worn, $item) > 0) {
+    $count = calc($count + 1);
+}
+if (obj_find(coord, $item) = true) {
+    $count = calc($count + 1);
+}
+switch_int($count){
+    case 0 : {
+        return(false);
+    }
+
+}
+return(true);

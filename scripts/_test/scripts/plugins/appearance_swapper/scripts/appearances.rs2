@@ -1,0 +1,41 @@
+[opheld1,disguise_box] @change_appearance;
+
+[label,change_appearance]
+
+def_int $disguise = ~p_choice2_header("Yes.", 1, "No.", 2, "Would you like to change your disguise?");
+switch_int($disguise){
+    case 1 : {
+        if_openmain(player_kit);
+        allowdesign(true);
+    }
+    case 2 : {
+        return;
+    }
+}
+mes("You have changed your disguise!");
+
+[opheldu,blondwig] @create_disguise(last_useitem);
+
+
+[label,create_disguise](obj $last_use)
+if (%princequest ! ^prince_complete){
+    mes("You cannot do this.");
+    return;
+}
+def_int $wig = inv_total(inv, blondwig);
+def_int $tinderbox = inv_total(inv, tinderbox);
+
+switch_obj($last_use){
+    case tinderbox : {
+        if ($wig < 1){
+            mes("You need a blond wig to do this.");
+            return;
+        }
+        mes("You empty the tinderbox and pack it full of your disguise materials.");
+        inv_del(inv, tinderbox, 1);
+        inv_del(inv, blondwig, 1);
+        inv_del(inv, pink_skirt, 1);
+        inv_add(inv, disguise_box, 1);
+        mes("You have created a disguise box!");
+    }
+}

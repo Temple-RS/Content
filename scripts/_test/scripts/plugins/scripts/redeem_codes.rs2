@@ -1,0 +1,22 @@
+// info: allows a player to input a code and redeem various options.
+[label,redeemcode]
+switch_int(~enter_code){
+    case 1337 : {
+        ~mesbox("You have redeemed the code 1337!");
+    }
+    case 8008135 : {
+        ~mesbox("You have redeemed the code 8008135!");
+    }
+    case 8675309 : {
+        ~mesbox("You cannot call Jenny from here.");
+    }
+    case default : {
+        ~mesbox("Invalid code.");
+    }
+}
+
+// info: handles the input of the code, and allows for custom code length.
+[proc,enter_code]()(int)
+p_countdialog;
+def_int $numbers = last_int;
+return($numbers);

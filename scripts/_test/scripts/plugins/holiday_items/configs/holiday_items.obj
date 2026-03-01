@@ -128,3 +128,32 @@ iop2=Wear
 weight=2lb
 
 
+
+
+[cannabis]
+name=Cannabis
+desc=This herb is Cannabis.
+category=category_90
+cost=5
+model=model_2364_obj
+members=yes
+2dxof=4
+2dzoom=700
+2dyan=1588
+2dxan=376
+weight=7g
+
+
+[ground_cannabis]
+name=Ground Cannabis
+desc=This herb is Cannabis.
+category=category_90
+cost=5
+model=model_2742_obj
+recol1s=21140
+recol1d=1349
+2dxof=-6
+2dzoom=1210
+2dyan=1892
+2dxan=264
+weight=2oz

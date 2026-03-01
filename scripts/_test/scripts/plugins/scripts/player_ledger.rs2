@@ -1,0 +1,48 @@
+[opheld1,player_ledger]
+%book_page = 0;
+%open_book = player_ledger;
+@open_player_ledger;
+
+[label,open_player_ledger]
+@book_flip_page(0, 0, 1, player_ledger_book);
+
+[proc,player_ledger_book]
+def_int $player_count = playercount;
+def_string $player_name = displayname;
+def_string $dragonslayer = "Incomplete";
+def_string $legendsquest = "Incomplete";
+def_string $heroesquest = "Incomplete";
+
+
+
+
+//Slayer
+def_int $slayer_taskamount = %task_amount;
+def_int $slayer_currentcount = %current_count;
+def_int $slayer_points = %slayer_points;
+
+if (%dragonquest = ^dragon_complete) {
+    $dragonslayer = "@gre@YES@bla@";
+} else {
+    $dragonslayer = "@red@NO@bla@";
+}
+if (%legendsquest = ^legends_complete) {
+    $legendsquest = "@gre@YES@bla@";
+} else {
+    $legendsquest = "@red@NO@bla@";
+}
+
+if (%heroquest = ^hero_complete) {
+    $heroesquest = "@gre@YES@bla@";
+} else {
+    $heroesquest = "@red@NO@bla@";
+}
+
+switch_int (%book_page) {
+
+    case 0 : ~book("The Ledger of Action", 
+    "@red@Welcome, <$player_name> ||@bla@This ledger records your skills, PvP stats, kills, and your rare treasures.||Unlock the next steps in your path to |glory and greatness.|||@blu@Account Info |@bla@Players Online: [@whi@<tostring($player_count)>@bla@] @bla@Dragon Slayer I: @whi@<$dragonslayer> |@bla@Legends Quest: @whi@<$legendsquest> |@bla@Heroes Quest: @whi@<$heroesquest> |@bla@Slayer Task: | [@whi@<tostring(%current_count)>@bla@/@whi@<tostring(~task_amount)>@bla@] | [@whi@<tostring(~task_amount)>@bla@x @whi@<~task_name>@bla@] | @bla@Points: [@whi@<tostring(%slayer_points)>@bla@] |||");
+    case 1 : ~book("All Stats",
+    "@bla@Attack: <tostring(stat_base(attack))>/99 |Strength: <tostring(stat_base(strength))>/99 |Defence: <tostring(stat_base(defence))>/99 |Ranged: <tostring(stat_base(ranged))>/99 |Prayer: <tostring(stat_base(prayer))>/99 |Magic: <tostring(stat_base(magic))>/99 |Hitpoints: <tostring(stat_base(hitpoints))>/99 |Runecraft: <tostring(stat_base(runecraft))>/99 |Agility: <tostring(stat_base(agility))>/99 |Herblore: <tostring(stat_base(herblore))>/99 |Thieving: <tostring(stat_base(thieving))>/99 |Crafting: <tostring(stat_base(crafting))>/99 |Mining: <tostring(stat_base(mining))>/99 |Smithing: <tostring(stat_base(smithing))>/99 |Fishing: <tostring(stat_base(fishing))>/99 |Cooking: <tostring(stat_base(cooking))>/99 |Firemaking: <tostring(stat_base(firemaking))>/99 |Woodcutting: <tostring(stat_base(woodcutting))>/99 |||");
+
+}

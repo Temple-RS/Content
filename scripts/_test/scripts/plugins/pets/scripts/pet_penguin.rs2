@@ -110,12 +110,14 @@ switch_obj(last_useitem){
 
 [ai_timer,pet_penguin]
 ~custom_pet_ai;
-def_int $random = random(3);
-switch_int($random) {
-    case 0 : npc_say("I wish it was colder..");
-    case 1 : npc_say("Feed me, human!");
-    case 2 : npc_say("Tfw no penguin gf");
-    case 3 : npc_say("Carry me, my feet are tired");
+if (~random_limit(9, 8) = true) {
+  def_int $random = random(3);
+  switch_int($random) {
+      case 0 : npc_say("I wish it was colder..");
+      case 1 : npc_say("Feed me, human!");
+      case 2 : npc_say("Tfw no penguin gf");
+      case 3 : npc_say("Carry me, my feet are tired");
+  }
 }
 
 [label,penguin_drop]

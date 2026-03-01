@@ -1,7 +1,9 @@
 [opheld1,mummy_wraps] @mummy_drop;
 [ai_timer,mummy_pet]
 ~custom_pet_ai;
-npc_say("Ughh!");
+if (~random_limit(9, 8) = true) {
+  npc_say("Ughh!");
+}
 
 [label,mummy_drop]
 if (map_members = ^false) {

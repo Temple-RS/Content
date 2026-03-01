@@ -3500,6 +3500,8 @@ width=2
 name=Grandfather clock
 desc=Tick-tock, it's a clock.
 model=model_loc_683
+op1=Check
+op2=Fix
 
 [weathervane]
 name=Weather vane
@@ -6308,7 +6310,7 @@ width=2
 length=2
 
 [cabbage]
-desc=Cabbage... yuk !
+desc=Cabbage... yum!
 model=model_loc_1161
 op2=Pick
 blockwalk=no

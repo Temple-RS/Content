@@ -37,3 +37,8 @@ switch_int (~p_choice3("No, vampires are scary!", 1, "Ok, I'm up for an adventur
 [label,morgan_after_vampire_slayer]
 ~chatplayer("<p,happy>I have slain the foul creature!");
 ~chatnpc("<p,neutral>Thank you, thank you! You will always be a hero in our village!");
+if (~find_item(stake_dagger) = false) {
+    inv_add(inv, stake_dagger, 1);
+    ~chatnpc("<p,neutral>Here is a small token of my appreciation.");
+    return;
+}

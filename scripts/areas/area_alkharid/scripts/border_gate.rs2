@@ -4,9 +4,10 @@
 [opnpc1,borderguard2] @talk_to_border_guard(null);
 [oploc1,border_gate_toll_left] @find_and_talk_to_border_guard;
 [oploc1,border_gate_toll_right] @find_and_talk_to_border_guard;
-
+[oploc2,border_gate_toll_left] @fast_gate;
+[oploc2,border_gate_toll_right] @fast_gate;
 // searches for a nearby border guard
-// then starts dialogue with them
+// then starts dialogue with them.
 [label,find_and_talk_to_border_guard]
 if (coordx(coord) < coordx(loc_coord)) { // in lumby
     if (npc_find(coord, borderguard1, 1, 0) = true) {
@@ -17,6 +18,16 @@ if (coordx(coord) < coordx(loc_coord)) { // in lumby
         @talk_to_border_guard(loc_coord);
     }
 }
+
+[label,fast_gate]
+if (inv_total(inv, coins) < 10) {
+    ~chatplayer("<p,quiz>Oh dear, I don't actually seem to have enough money.");
+    return;
+}
+
+mes("You pay the guard.");
+inv_del(inv, coins, 10);
+@pass_toll_gate(loc_coord);
 
 [label,talk_to_border_guard](coord $loc_coord)
 // in early rs, paying 10gp will message "You pay the guard.".

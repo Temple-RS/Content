@@ -1,7 +1,9 @@
 [opheld1,pet_ice_spider] @ice_spider_drop;
 [ai_timer,ice_spider_pet]
 ~custom_pet_ai;
-npc_say("ee!");
+if (~random_limit(9, 8) = true) {
+    npc_say("ee!");
+}
 
 [label,ice_spider_drop]
 if (map_members = ^false) {

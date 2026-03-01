@@ -1,0 +1,67 @@
+[opheld1,light_case] @open_slayercase(light_case);
+[opheld1,medium_case] @open_slayercase(medium_case);
+[opheld1,heavy_case] @open_slayercase(heavy_case);
+
+
+[label,open_slayercase](obj $item_case)
+def_int $random = random(75);
+def_string $name;
+switch_obj($item_case){
+    case light_case : {
+        $random = calc($random + 10);
+        $name = "Light Case";
+    }
+    case medium_case : {
+        $random = calc($random + 20);
+        $name = "Medium Case";
+    }
+    case heavy_case : {
+        $random = calc($random + 30);
+        $name = "Heavy Case";
+    }
+}
+mes("You open a <$name>.");
+~open_slayer($item_case, $random);
+
+[proc,open_slayer](obj $item_case, int $random)
+def_int $ran = calc(randominc(30) + 1);
+switch_obj($item_case){
+    case light_case : {
+        inv_add(inv, ~low_tier_items);
+        inv_add(inv, ~low_tier_items);
+        inv_add(inv, ~grindingtable);
+        inv_add(inv, ~grindingtable);
+        inv_add(inv, coins, calc($ran/2));
+        if ($random < 10){
+            inv_add(inv, ~low_tier_items);
+        } else if ($random < 31){
+            inv_add(inv, ~mid_tier_items);
+        }
+        inv_del(inv, $item_case, 1);
+    }
+    case medium_case : {
+        inv_add(inv, ~mid_tier_items);
+        inv_add(inv, ~mid_tier_items);
+        inv_add(inv, ~grindingtable);
+        inv_add(inv, ~grindingtable);
+        inv_add(inv, coins, calc($ran/2));
+        if ($random < 90){
+            inv_add(inv, ~low_tier_items);
+        } else if ($random > 90){
+            inv_add(inv, ~mid_tier_items);
+        }
+        inv_del(inv, $item_case, 1);
+    }
+    case heavy_case : {
+        inv_add(inv, ~mid_tier_items);
+        inv_add(inv, ~high_tier_items);
+        inv_add(inv, ~grindingtable);
+        inv_add(inv, ~grindingtable);
+        if ($random < 105) {
+            inv_add(inv, ~high_tier_items);
+        } else if ($random > 105){
+            inv_add(inv, ~elite_tier_items);
+        }
+        inv_del(inv, $item_case, 1);
+    }
+}

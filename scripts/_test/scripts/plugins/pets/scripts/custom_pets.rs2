@@ -26,3 +26,12 @@ if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
     npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
 }
 npc_settimer(30);
+
+
+// info: Checks if the random number is above the limit. Limit must exceed random by at least 1 integer. Random starts its index at 0.
+[proc,random_limit](int $random, int $limit)(boolean)
+def_int $int = random($random);
+if ($int > $limit) {
+    return(true);
+}
+return(false);

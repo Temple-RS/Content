@@ -1,7 +1,9 @@
 [opheld1,rat_trap] @rat_drop;
 [ai_timer,rat_pet]
 ~custom_pet_ai;
-npc_say("stsk! stsk!");
+if (~random_limit(9, 8) = true) {
+  npc_say("stsk! stsk!");
+}
 
 [label,rat_drop]
 if (map_members = ^false) {

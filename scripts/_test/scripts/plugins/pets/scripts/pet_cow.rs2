@@ -1,7 +1,9 @@
 [opheld1,cow_leash] @cow_drop;
 [ai_timer,cow_pet]
 ~custom_pet_ai;
-npc_say("Mooo!");
+if (~random_limit(9, 8) = true) {
+    npc_say("Mooo!");
+}
 
 [label,cow_drop]
 if (map_members = ^false) {

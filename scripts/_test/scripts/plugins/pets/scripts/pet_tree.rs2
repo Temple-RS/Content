@@ -1,7 +1,9 @@
 [opheld1,tree_pet] @tree_drop;
 [ai_timer,tree_pet]
 ~custom_pet_ai;
-npc_say("Chop chop!");
+if (~random_limit(9, 8) = true) {
+  npc_say("Chop chop!");
+}
 
 [label,tree_drop]
 if (map_members = ^false) {

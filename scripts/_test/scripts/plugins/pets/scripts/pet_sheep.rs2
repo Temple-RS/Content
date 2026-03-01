@@ -1,7 +1,9 @@
 [opheld1,sheep_leash] @sheep_drop;
 [ai_timer,sheep_pet]
 ~custom_pet_ai;
-npc_say("Baaa!");
+if (~random_limit(9, 8) = true) {
+  npc_say("Baaa!");
+}
 
 [label,sheep_drop]
 if (map_members = ^false) {

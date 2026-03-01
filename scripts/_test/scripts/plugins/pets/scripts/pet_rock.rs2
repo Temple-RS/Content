@@ -1,7 +1,9 @@
 [opheld1,pet_rock] @rock_drop;
 [ai_timer,pet_rock]
 ~custom_pet_ai;
-npc_say("I'm your boulder!");
+if (~random_limit(9, 8) = true) {
+  npc_say("I'm your boulder!");
+}
 
 [label,rock_drop]
 if (map_members = ^false) {

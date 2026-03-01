@@ -100,6 +100,7 @@ walkanim=rock_ready
 model1=model_2846_npc
 category=custompet
 blockwalk=none
+size=1
 param=pet_item_id,pet_rock
 
 [pet_death_wing]
