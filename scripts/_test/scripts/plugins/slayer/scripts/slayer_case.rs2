@@ -16,7 +16,7 @@ switch_obj($item_case){
         $name = "Medium Case";
     }
     case heavy_case : {
-        $random = calc($random + 30);
+        $random = calc($random + 31);
         $name = "Heavy Case";
     }
 }
