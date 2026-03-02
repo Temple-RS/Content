@@ -248,6 +248,25 @@ blockwalk=none
 param=pet_item_id,hellhound_cage
 op1=Bind
 
+
+[hellhound_pet2]
+size=1
+walkanim=hell_walk
+readyanim=hell_ready
+name=Bouncer
+desc=Nice doggy.
+vislevel=137
+model1=model_2997_npc
+param=attack_anim,hell_attack
+param=defend_anim,hell_block
+param=death_anim,hell_death
+param=attack_sound,growl6
+param=defend_sound,growl5
+category=custompet
+blockwalk=none
+param=pet_item_id,hellhound_cage2
+op1=Bind
+
 [rat_pet]
 name=Rat
 desc=A popular dwarven delicacy.

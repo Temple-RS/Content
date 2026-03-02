@@ -68,8 +68,8 @@ if ($random < 5) {
 } else if ($random < 115) {
     obj_add(npc_coord, ~high_tier_items, ^lootdrop_duration);
 } else if ($random < 127) {
-    def_int $ran2 = random(1000);
+    def_int $ran2 = random(500);
     switch_int($ran2){
-        case 500 : obj_add(npc_coord, hellhound_cage, 1, ^lootdrop_duration);
+        case 250 : obj_add(npc_coord, hellhound_cage, 1, ^lootdrop_duration);
     }
 }

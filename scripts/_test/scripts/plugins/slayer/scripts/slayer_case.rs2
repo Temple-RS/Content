@@ -31,7 +31,7 @@ switch_obj($item_case){
         inv_add(inv, ~low_tier_items);
         inv_add(inv, ~grindingtable);
         inv_add(inv, ~grindingtable);
-        inv_add(inv, coins, calc($ran/2));
+        inv_add(inv, coins, calc(max(10, random(58))));
         if ($random < 10){
             inv_add(inv, ~low_tier_items);
         } else if ($random < 31){
@@ -44,7 +44,7 @@ switch_obj($item_case){
         inv_add(inv, ~mid_tier_items);
         inv_add(inv, ~grindingtable);
         inv_add(inv, ~grindingtable);
-        inv_add(inv, coins, calc($ran/2));
+        inv_add(inv, coins, calc(max(20, random(100))));
         if ($random < 90){
             inv_add(inv, ~low_tier_items);
         } else if ($random > 90){

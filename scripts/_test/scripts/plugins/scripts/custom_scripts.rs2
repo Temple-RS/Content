@@ -457,3 +457,9 @@ switch_int($count){
 
 }
 return(true);
+
+[opheldu,pestle_and_mortar]
+switch_obj(last_useitem) {
+    case cannabis : @grind_cannabis;
+    case default : ~displaymessage(^dm_default);
+}

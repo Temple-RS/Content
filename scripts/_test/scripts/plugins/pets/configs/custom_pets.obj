@@ -127,7 +127,7 @@ param=no_alchemy,^true
 
 [hellhound_cage]
 name=Hellhound Cage
-desc=Useful for catching bats.
+desc=Binds a Hellhound.
 model=model_2663_obj
 2dzoom=1180
 2dyan=1668
@@ -140,6 +140,23 @@ recol2d=9216
 iop1=Release
 tradeable=no
 param=follower_id,hellhound_pet
+param=no_alchemy,^true
+
+[hellhound_cage2]
+name=Bouncer's Cage
+desc=Useful for catching Bouncer.
+model=model_2663_obj
+2dzoom=1180
+2dyan=1668
+2dxan=192
+cost=20
+recol1s=10400
+recol1d=15426
+recol2s=10570 
+recol2d=9216  
+iop1=Release
+tradeable=no
+param=follower_id,hellhound_pet2
 param=no_alchemy,^true
 
 [rat_trap]
