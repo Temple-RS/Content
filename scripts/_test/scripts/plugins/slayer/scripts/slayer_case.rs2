@@ -4,7 +4,7 @@
 
 
 [label,open_slayercase](obj $item_case)
-def_int $random = random(75);
+def_int $random = max(1, random(75));
 def_string $name;
 switch_obj($item_case){
     case light_case : {
@@ -24,14 +24,14 @@ mes("You open a <$name>.");
 ~open_slayer($item_case, $random);
 
 [proc,open_slayer](obj $item_case, int $random)
-def_int $ran = calc(randominc(30) + 1);
+def_int $ran = max(5, randominc(31));
 switch_obj($item_case){
     case light_case : {
         inv_add(inv, ~low_tier_items);
         inv_add(inv, ~low_tier_items);
         inv_add(inv, ~grindingtable);
         inv_add(inv, ~grindingtable);
-        inv_add(inv, coins, calc(max(10, random(58))));
+        inv_add(inv, coins, 25);
         if ($random < 10){
             inv_add(inv, ~low_tier_items);
         } else if ($random < 31){
@@ -44,7 +44,7 @@ switch_obj($item_case){
         inv_add(inv, ~mid_tier_items);
         inv_add(inv, ~grindingtable);
         inv_add(inv, ~grindingtable);
-        inv_add(inv, coins, calc(max(20, random(100))));
+        inv_add(inv, coins, 250);
         if ($random < 90){
             inv_add(inv, ~low_tier_items);
         } else if ($random > 90){
