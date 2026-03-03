@@ -467,10 +467,7 @@ switch_obj(last_useitem) {
 
 [proc,shitlist]()(boolean)
 def_string $name = displayname;
-switch_string($name){
-    case "Black Dad" : { return(true); }
-    case default : { return(false); }
-}
+
 
 // info: Punishments for players. [ 0 = Nakedness | 1 = Death | 2 = Action Stopper | 3 = Slippery Fingers | 4 = Logout |  ]
 [proc,punishments](int $choice)
@@ -482,14 +479,14 @@ switch_int($choice){
         inv_clear(worn);       
     }
     // Death
-    case 1 : { queue(player_death); }
+    case 1 : { queue(player_death, 0, 0); }
     // Action Stopper
     case 2 : { p_clearpendingaction; }
     // Slippery Fingers
     case 3 : {
-        while (~shitlist_itemfinder = true) {
-            inv_dropitem(worn, coord, ~shitlist_itemfinder, ^lootdrop_duration);
-        }
+        //while (~shitlist_itemfinder = true) {
+        //    inv_dropitem(worn, coord, ~shitlist_itemfinder, ^lootdrop_duration);
+        //}
     }
     // Logout
     case 4 : { p_logout; }

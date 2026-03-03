@@ -1,0 +1,39 @@
+[oploc1,wilderness_chestclosed]
+mes("The chest is locked.");
+sound_synth(locked, 0, 0);
+
+[oplocu,wilderness_chestclosed]
+def_coord $loc_coord = loc_coord;
+def_locshape $loc_shape = loc_shape;
+def_int $loc_angle = loc_angle;
+
+if (last_useitem ! wc_key) {
+    ~displaymessage(^dm_default);
+    return;
+}
+def_int $random_respawn = max(random(30000), max(100000, random(140000)));
+mes("Chest will respawn in <tostring($random_respawn)>.");
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+mes("You unlock the chest with your key.");
+p_delay(0);
+// Temp note: dur updated
+loc_change(wilderness_chestopen, $random_respawn);
+inv_del(inv, wc_key, 1);
+//inv_add(inv, wilderness_ring, 1);
+//inv_add(inv, wilderness_cape, 1);
+//inv_add(inv, wilderness_necklace, 1);
+//mes("You find some treasure in the chest!");
+p_delay(0);
+
+
+[opheld2,wilderness_cape] @defence_limit(40, last_slot);
+[opheld2,wilderness_ring] @defence_limit(40, last_slot);
+[opheld2,wilderness_necklace] @defence_limit(40, last_slot);
+
+[label,defence_limit](int $level, int $slot)
+if (stat_base(defence) > $level) {
+    mes("Your defence is too high to use this item.");
+    return;
+}
+~equip($slot);

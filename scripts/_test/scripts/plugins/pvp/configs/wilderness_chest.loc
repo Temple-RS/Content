@@ -1,0 +1,16 @@
+[wilderness_chestclosed]
+name=Closed chest
+desc=I wonder what's inside.
+model=wooden_chest
+op1=Open
+forceapproach=north
+recol1s=10570
+recol1d=17505
+
+[wilderness_chestopen]
+name=Open chest
+desc=Perhaps I should search it.
+model=model_loc_76
+forceapproach=north
+recol1s=10570
+recol1d=17505

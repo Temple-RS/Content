@@ -532,7 +532,7 @@ if ($r2 < 126){
     } else if ($random < 50) {
         return (mithril_battleaxe, 1);
     } else if ($random < 124) {
-        //return (~trail_table);
+        return(coins, 250);
     } else if ($random < 125) {
         return (adamant_chainbody,1);
     } else if ($random < 126) {
