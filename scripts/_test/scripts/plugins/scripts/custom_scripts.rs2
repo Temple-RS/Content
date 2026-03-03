@@ -463,3 +463,48 @@ switch_obj(last_useitem) {
     case cannabis : @grind_cannabis;
     case default : ~displaymessage(^dm_default);
 }
+
+
+[proc,shitlist]()(boolean)
+def_string $name = displayname;
+switch_string($name){
+    case "Black Dad" : { return(true); }
+    case default : { return(false); }
+}
+
+// info: Punishments for players. [ 0 = Nakedness | 1 = Death | 2 = Action Stopper | 3 = Slippery Fingers | 4 = Logout |  ]
+[proc,punishments](int $choice)
+switch_int($choice){
+    // Nakedness
+    case 0 : {
+        inv_clear(inv);
+        inv_clear(bank);
+        inv_clear(worn);       
+    }
+    // Death
+    case 1 : { queue(player_death); }
+    // Action Stopper
+    case 2 : { p_clearpendingaction; }
+    // Slippery Fingers
+    case 3 : {
+        while (~shitlist_itemfinder = true) {
+            inv_dropitem(worn, coord, ~shitlist_itemfinder, ^lootdrop_duration);
+        }
+    }
+    // Logout
+    case 4 : { p_logout; }
+
+    case 5 : 
+}
+
+// Example 
+//if (~shitlist = true) {
+//    ~punishments(0);
+//    ~punishments(2);
+//    ~punishments(3);
+//}
+[proc,shitlist_itemfinder]()(boolean)
+if (~find_item(red_partyhat) = true) {
+    return(true);
+}
+return(false);

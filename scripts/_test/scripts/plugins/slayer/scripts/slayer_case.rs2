@@ -53,13 +53,12 @@ switch_obj($item_case){
         inv_del(inv, $item_case, 1);
     }
     case heavy_case : {
-        inv_add(inv, ~mid_tier_items);
+        inv_add(inv, ~high_tier_items);
         inv_add(inv, ~high_tier_items);
         inv_add(inv, ~grindingtable);
         inv_add(inv, ~grindingtable);
+        inv_add(inv, ~grindingtable);
         if ($random < 105) {
-            inv_add(inv, ~high_tier_items);
-        } else if ($random > 105){
             inv_add(inv, ~elite_tier_items);
         }
         inv_del(inv, $item_case, 1);
