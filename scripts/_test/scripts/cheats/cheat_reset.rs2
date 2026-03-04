@@ -13,7 +13,7 @@ if (p_finduid(uid) = true) {
     inv_clear(worn);
 
     p_teleport(0_48_48_22_35);
-
+    stat_reset2();
     ~reset_all_quests;
     %thieving_stall_timer = 0;
     %cat_growth = 0;

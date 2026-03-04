@@ -787,6 +787,11 @@
 // info: Return true if an obj is stackable
 [command,oc_stackable](obj $obj)(boolean)
 
+
+// info: Reset Stats to level 1
+[command,stat_reset2]()
+// info: Reset other player stats to level 1
+[command,.stat_reset2]()
 // Inventory ops (4300-4399)
 // info: Get the inv config's allstock state
 [command,inv_allstock](inv $inv)(boolean)

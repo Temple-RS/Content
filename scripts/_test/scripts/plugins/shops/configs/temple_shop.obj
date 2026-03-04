@@ -1,0 +1,15 @@
+[temple_coins]
+name=Temple Coins
+desc=Coins used in the Temple.
+cost=1
+model=model_2772_obj
+recol1s=31201
+recol1d=9082
+recol2s=30646
+recol2d=9082
+2dzoom=1090
+2dyan=336
+2dxan=284
+stackable=yes
+param=no_alchemy,^true
+tradeable=yes

@@ -1,0 +1,7 @@
+//[proc,stat_reset]
+//def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Reset Stats");
+//if ($choice = 1) {
+//    stat_reset2();
+//}else{
+//    return;
+//}
