@@ -26,6 +26,7 @@ p_telejump($coord);
 
 // portal
 [oploc1,loc_2492]
+%teleportlocation = ^reset_tele;
 // IncompleteProjectile(id = 109, startHeight = 15, endHeight = 31, delay = 0, angle = 16, distOffset = 128)	| distance = 1, flightDuration = 30, visualStart = Location(x = 9557, y = 3778, z = 0)
 def_int $duration = ~player_projectile(loc_coord, coord, uid, curse_travel, 15, 31, 0, 16, 0, 128, 5);
 spotanim_pl(curse_impact, 124, 30);

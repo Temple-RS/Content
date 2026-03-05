@@ -6,6 +6,8 @@ scope=perm
 scope=perm
 [rc_taskamount]
 scope=perm
+[rc_taskprogress]
+scope=perm
 [runecraft_taskstatus]
 scope=perm
 [rc_rep]

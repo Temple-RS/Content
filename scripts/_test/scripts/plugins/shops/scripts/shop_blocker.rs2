@@ -1,0 +1,108 @@
+[proc,shop_blocker](obj $obj)(boolean)
+switch_obj($obj){
+    case coins : {
+        return(false);
+    }
+    case trick_or_treat_head : {
+        return(false);
+    }
+    case pirate_bandanna : {
+        return(false);
+    }
+    case piratehat : {
+        return(false);
+    }
+    case piratehook : {
+        return(false);
+    }
+    case eye_patch : {
+        return(false);
+    }
+    case broodoomask_combat : {
+        return(false);
+    }
+    case imp_lamp : {
+        return(false);
+    }
+    case burger : {
+        return(false);
+    }
+    case woman_whistle : {
+        return(false);
+    }
+    case tree_pet : {
+        return(false);
+    }
+    case penguin_whistle : {
+        return(false);
+    }
+    case pet_rock : {
+        return(false);
+    }
+    case pet_death_wing : {
+        return(false);
+    }
+    case hellhound_cage : {
+        return(false);
+    }
+    case rat_trap : {
+        return(false);
+    }
+    case sheep_leash : {
+        return(false);
+    }
+    case ernest_cage : {
+        return(false);
+    }
+    case cow_leash : {
+        return(false);
+    }
+    case pet_ice_spider : {
+        return(false);
+    }
+    case orc_tooth : {
+        return(false);
+    }
+    case mummy_wraps : {
+        return(false);
+    }
+    case lizard_beads : {
+        return(false);
+    }
+    case lep_coins : {
+        return(false);
+    }
+    case skull_helm : {
+        return(false);
+    }
+    case half_full_wine_jug : {
+        return(false);
+    }
+    case red_partyhat : {
+        return(false);
+    }
+    case blue_partyhat : {
+        return(false);
+    }
+    case green_partyhat : {
+        return(false);
+    }
+    case yellow_partyhat : {
+        return(false);
+    }
+    case purple_partyhat : {
+        return(false);
+    }
+    case white_partyhat : {
+        return(false);
+    }
+    case santa_hat : {
+        return(false);
+    }
+    case bunnyears : {
+        return(false);
+    }
+    case scythe : {
+        return(false);
+    }
+}

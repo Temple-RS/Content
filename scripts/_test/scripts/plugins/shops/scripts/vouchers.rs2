@@ -1,0 +1,54 @@
+[opheld1,10voucher] ~add_templecoins(last_item, 1);
+[opheld1,20voucher] ~add_templecoins(last_item, 2);
+[opheld1,50voucher] ~add_templecoins(last_item, 3);
+[opheld1,100voucher] ~add_templecoins(last_item, 4);
+
+[proc,add_templecoins](obj $last_item, int $tier)
+def_int $invspace = inv_freespace(inv);
+def_int $bankspace = inv_freespace(bank);
+if ($invspace = 0 ){
+    if ($bankspace = 0){
+        mes("You need more space to do this.");
+        return;
+    } else {
+        inv_del(inv, $last_item, 1);
+        switch_int($tier){
+            case 1 : {
+                inv_add(inv, temple_coins, 10);
+                %voucher_totals = calc(%voucher_totals + 10);
+            }
+            case 2 : {
+                inv_add(inv, temple_coins, 20);
+                %voucher_totals = calc(%voucher_totals + 20);
+            }
+            case 3 : {
+                inv_add(inv, temple_coins, 50);
+                %voucher_totals = calc(%voucher_totals + 50);
+            }
+            case 4 : {
+                inv_add(inv, temple_coins, 100);
+                %voucher_totals = calc(%voucher_totals + 100);
+            }
+        }
+    }
+} else {
+    inv_del(inv, $last_item, 1);
+    switch_int($tier){
+        case 1 : {
+            inv_add(inv, temple_coins, 10);
+            %voucher_totals = calc(%voucher_totals + 10);
+        }
+        case 2 : {
+            inv_add(inv, temple_coins, 20);
+            %voucher_totals = calc(%voucher_totals + 20);
+        }
+        case 3 : {
+            inv_add(inv, temple_coins, 50);
+            %voucher_totals = calc(%voucher_totals + 50);
+        }
+        case 4 : {
+            inv_add(inv, temple_coins, 100);
+            %voucher_totals = calc(%voucher_totals + 100);            
+        }
+    }
+}

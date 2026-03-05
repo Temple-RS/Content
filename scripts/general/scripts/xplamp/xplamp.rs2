@@ -103,17 +103,36 @@ if (map_members = ^false & ~stat_members($stat) = ^true) {
     return;
 }
 def_int $base_level = stat_base($stat);
+def_int $standard;
 if (inv_total(inv, expscroll) > 0) {
     ~expscroll_used;
-    stat_advance($stat, multiply($base_level, 25)); // stat level * 2.5
+    if (%donation_exp >= 100){
+        $standard = calc(multiply($base_level, 25) + 100);
+        %donation_exp = calc(%donation_exp - 100);
+        mes("Your donation to the fountain empowers the lamp!");
+    } else {
+        $standard = calc(multiply($base_level, 25));
+    }
+
+    stat_advance($stat, $standard);
     sound_synth(found_gem, 0, 0);
+
 } else {
     if_close;
     inv_del(inv, macro_genilamp, 1);
     %xplamp = ^xplamp_none;
-    stat_advance($stat, multiply($base_level, 100)); // stat level * 10
+
+    if (%donation_exp >= 500){
+        $standard = calc(multiply($base_level, 100) + 500);
+        %donation_exp = calc(%donation_exp - 500);
+        mes("Your donation to the fountain empowers the lamp!");
+    } else {
+        $standard = calc(multiply($base_level, 100));
+    }
+
+    stat_advance($stat, $standard);
     sound_synth(found_gem, 0, 0);
 }
 
 
-~mesbox("Your wish has been granted!|You have been awarded <tostring(multiply($base_level, 10))> <enum(stat, string, stat_names, $stat)> experience!");
+~mesbox("Your wish has been granted!|You have been awarded <tostring($standard)> <enum(stat, string, stat_names, $stat)> experience!");

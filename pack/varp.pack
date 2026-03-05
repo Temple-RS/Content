@@ -338,3 +338,12 @@
 337=rc_rep
 338=rc_repmulti
 339=clues_completed
+340=rc_craftedcount
+341=rc_taskprogress
+342=drogo_status
+343=drogo_bars
+344=bonus_exp
+345=donation_exp
+346=voucher_totals
+347=fountain_donations
+348=vip_level

@@ -1,5 +1,7 @@
 [opnpc1,slayer_expert] @slayer_menu;
-[opnpc2,slayer_expert] ~task_check;
+[opnpc3,slayer_expert] ~openshop_activenpc;
+[opnpc4,slayer_expert] ~task_check;
+[opheld1,slayer_gem] ~task_check;
 
 [label,slayer_menu]
 ~chatnpc("<p,shock>Hello <name>! I am the local Slayer expert!");
@@ -19,7 +21,6 @@ switch_int($choice){
                     ~new_slayer_task(50);
                 }
             }
-            
         } else {
             mes("You need to finish your current task of killing <tostring(~task_amount)> more <~task_name>");
             return;
@@ -36,6 +37,7 @@ switch_int($choice){
                     mes("You do not have enough slayer points to buy this item.");
                     return;
                 }
+                %slayer_points = calc(%slayer_points - 25);
                 inv_add(inv,~buy_provisions(25));                
             }
             case 2 : {
@@ -43,6 +45,7 @@ switch_int($choice){
                     mes("You do not have enough slayer points to buy this item.");
                     return;
                 }
+                %slayer_points = calc(%slayer_points - 100);
                 inv_add(inv,~buy_provisions(100));                
             }
             case 3 : {
@@ -50,6 +53,7 @@ switch_int($choice){
                     mes("You do not have enough slayer points to buy this item.");
                     return;
                 }
+                %slayer_points = calc(%slayer_points - 500);
                 inv_add(inv,~buy_provisions(500));                
             }
         }
@@ -72,27 +76,20 @@ switch_int($choice){
 [label,slayer_kill](int $active_task, int $task_amount, int $current_count)
 if (~task_complete($active_task, $task_amount, $current_count) = false){
     ~succesful_kill;
-    mes("You have killed a <~task_name>, marking a notch in your logbook.");
-    return;
-    //mes("<tostring(~task_amount)> <~task_name> kills left.");
-} else if (~task_complete($active_task, $task_amount, $current_count) = true){
-    //mes("You have killed a <~task_name>, marking a notch in your logbook.");
-    ~succesful_kill;
-    if (%active_slayer_task > 12){
-        %slayer_points = calc(%slayer_points + 10 + %active_slayer_task);
-    } else {
-        %slayer_points = calc(%slayer_points + 10);
-
+    if (inv_total(inv, player_ledger) > 0){
+        mes("You have killed a <~task_name>, marking a notch in your logbook.");
     }
-    mes("You have completed your task! Return to the Slayer expert for another.");
-    ~task_reset;
+    return;
+} else {
     return;
 }
+
 
 [proc,new_slayer_task](int $difficulty)
 def_string $active_task;
 def_int $random_task = random(6);
 def_int $count = random(25);
+
 switch_int($difficulty){
     case 0 : {
         $random_task = $random_task;
@@ -103,8 +100,8 @@ switch_int($difficulty){
     case 50 : {
         $random_task = calc($random_task + max(10, random(15)));
     }
-
 }
+
 switch_int($random_task){
     case 0 : {
         %active_slayer_task = ^giant_rat;
@@ -113,7 +110,6 @@ switch_int($random_task){
     case 1 : {
         %active_slayer_task = ^goblin;
         $active_task = "Goblin";
-        
     }
     case 2 : {
         %active_slayer_task = ^skeleton;
@@ -136,12 +132,12 @@ switch_int($random_task){
         $active_task = "Giant";
     }
     case 7 : {
-        %active_slayer_task = ^fire_giant;
-        $active_task = "Fire Giant";
-    }
-    case 8 : {
         %active_slayer_task = ^moss_giant;
         $active_task = "Moss Giant";
+    }
+    case 8 : {
+        %active_slayer_task = ^fire_giant;
+        $active_task = "Fire Giant";
     }
     case 9 : {
         %active_slayer_task = ^green_dragon;
@@ -171,6 +167,10 @@ switch_int($random_task){
         %active_slayer_task = ^hellhound;
         $active_task = "Hellhound";
     }
+    case default : {
+        %active_slayer_task = ^goblin;
+        $active_task = "Goblin";
+    }
 }
 def_int $task_amount = calc($count + $difficulty + random(12));
 %task_amount = $task_amount;
@@ -195,69 +195,42 @@ return($remaining);
 def_string $string;
 def_int $active_task = calc(%active_slayer_task - 1);
 switch_int($active_task){
-    case 0 : {
-        $string = "Giant Rat";
-    }
-    case 1 : {
-        $string = "Goblin";
-    }
-    case 2 : {
-        $string = "Skeleton";
-    }
-    case 3 : {
-        $string = "Hobgoblin";
-    }
-    case 4 : {
-        $string = "Dark Wizard";
-    }
-    case 5 : {
-        $string = "Wizard";
-    }
-    case 6 : {
-        $string = "Giant";
-    }
-    case 7 : {
-        $string = "Fire Giant";
-    }
-    case 8 : {
-        $string = "Moss Giant";
-    }
-    case 9 : {
-        $string = "Green Dragon";
-    }
-    case 10 : {
-        $string = "Blue Dragon";
-    }
-    case 11 : {
-        $string = "Red Dragon";
-    }
-    case 12 : {
-        $string = "Black Dragon";
-    }
-    case default : {
-        $string = "None";
-    }
+    case 0 : { $string = "Giant Rat"; }
+    case 1 : { $string = "Goblin"; }
+    case 2 : { $string = "Skeleton"; }
+    case 3 : { $string = "Hobgoblin"; }
+    case 4 : { $string = "Dark Wizard"; }
+    case 5 : { $string = "Wizard"; }
+    case 6 : { $string = "Giant"; }
+    case 7 : { $string = "Moss Giant"; }
+    case 8 : { $string = "Fire Giant"; }
+    case 9 : { $string = "Green Dragon"; }
+    case 10 : { $string = "Blue Dragon"; }
+    case 11 : { $string = "Red Dragon"; }
+    case 12 : { $string = "Black Dragon"; }
+    case 13 : { $string = "Ice Giant"; }
+    case 14 : { $string = "Ice Warrior"; }
+    case 15 : { $string = "Hellhound"; }
+    case default : { $string = "None"; }
 }
 return($string);
 
 [proc,task_complete](int $active_task, int $task_amount, int $current_count)(boolean)
-if ($active_task ! 0 & $current_count < $task_amount ){
+if ($active_task = 0){
     return(false);
-} else {
+}
+if ($current_count >= $task_amount){
     return(true);
 }
-
+return(false);
 
 [proc,succesful_kill]
 %current_count = calc(%current_count + 1);
-if (~task_amount < 1){
-    return;
-} else if (%task_amount = 0) {
+if (~task_amount <= 0) {
     if (%active_slayer_task > 12){
         %slayer_points = calc(%slayer_points + 10 + %active_slayer_task);
     } else {
-        %slayer_points = calc(%slayer_points + 1);
-
+        %slayer_points = calc(%slayer_points + 10);
     }
     mes("You have completed your task! Return to the Slayer expert for another.");
     ~task_reset;
@@ -265,7 +238,6 @@ if (~task_amount < 1){
 } else {
     mes("Remaining Kills: <tostring(~task_amount)> <~task_name>");
 }
-
 
 
 [proc,buy_provisions](int $cost)(namedobj, int)

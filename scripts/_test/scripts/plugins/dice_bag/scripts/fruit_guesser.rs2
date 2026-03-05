@@ -1,0 +1,146 @@
+[label,fruitguesser]
+
+~mesbox("Welcome to Fruit Guesser!|Spin the fruit slots and match fruits to win coins.");
+
+// Get wager
+def_int $wager = 0;
+p_countdialog;
+$wager = last_int;
+
+if ($wager <= 0) {
+    mes("You must enter a positive wager.");
+    return;
+} else if ($wager > 10000) {
+    mes("You can't wager more than 10000 coins.");
+    return;
+}
+
+def_int $available = inv_total(inv, coins);
+if ($wager > $available) {
+    mes("You don't have that many coins.");
+    return;
+}
+
+if (inv_freespace(inv) < 1) {
+    mes("You need at least one free inventory slot.");
+    return;
+}
+
+//////////////////////////////////////////////////
+// SLOT ROLL
+//////////////////////////////////////////////////
+
+def_int $roll1 = randominc(2);
+def_int $roll2 = randominc(2);
+def_int $roll3 = randominc(2);
+
+def_namedobj $slot1;
+def_namedobj $slot2;
+def_namedobj $slot3;
+def_string $grapes = "Grapes.";
+def_string $cooking_apple = "Cooking Apple.";
+def_string $lemon = "Lemon.";
+def_string $resultstring1;
+def_string $resultstring2;
+def_string $resultstring3;
+switch_int($roll1) {
+    case 0 :
+        $slot1 = grapes;
+        $resultstring1 = $grapes;
+    case 1 :
+        $slot1 = cooking_apple;
+        $resultstring1 = $cooking_apple;
+    case 2 :
+        $slot1 = lemon;
+        $resultstring1 = $lemon;
+} 
+
+switch_int($roll2) {
+    case 0 :
+        $slot2 = grapes;
+        $resultstring2 = $grapes;
+    case 1 :
+        $slot2 = cooking_apple;
+        $resultstring2 = $cooking_apple;
+    case 2 :
+        $slot2 = lemon;
+        $resultstring2 = $lemon;
+}
+
+switch_int($roll3) {
+    case 0 : 
+        $slot3 = grapes;
+        $resultstring3 = $grapes;
+    case 1 : 
+        $slot3 = cooking_apple;
+        $resultstring3 = $cooking_apple;
+    case 2 : 
+        $slot3 = lemon;
+        $resultstring3 = $lemon;
+}
+
+//////////////////////////////////////////////////
+// SLOT DISPLAY
+//////////////////////////////////////////////////
+
+sound_synth(dice_roll,1,0);
+
+def_namedobj $spin = ~multiobj3(
+    "Fruit Slots",
+    $slot1, 0,-10,250, $resultstring1,0,0,
+    $slot2, 0,-10,250, $resultstring2,0,0,
+    $slot3, 0,-10,250, $resultstring3,0,0
+);
+
+p_delay(2);
+
+//////////////////////////////////////////////////
+// RESULT CHECK
+//////////////////////////////////////////////////
+
+// Triple match
+if ($slot1 = $slot2 & $slot2 = $slot3) {
+
+    def_int $payout = multiply($wager, 5);
+
+    inv_add(inv, coins, $payout);
+
+    spotanim_pl(levelup_anim,250,0);
+    midi_jingle(^dice_win_jingle,^dice_win_jingle_millis);
+
+    ~objbox($slot1,
+        "JACKPOT!|Triple fruit!|You win <tostring($payout)> coins!",
+        250,0,0
+    );
+
+    return;
+}
+
+// Two match
+if ($slot1 = $slot2 | $slot1 = $slot3 | $slot2 = $slot3) {
+
+    def_int $payout = multiply($wager, 2);
+
+    inv_add(inv, coins, $payout);
+
+    ~objbox($slot1,
+        "Nice!|Two fruits match!|You win <tostring($payout)> coins!",
+        250,0,0
+    );
+
+    return;
+}
+
+//////////////////////////////////////////////////
+// LOSS
+//////////////////////////////////////////////////
+
+inv_del(inv, coins, $wager);
+
+anim(human_death,3);
+anim(null,0);
+
+~objbox($slot1,
+    "No match!|You lost <tostring($wager)> coins.",
+    250,0,0
+);

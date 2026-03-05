@@ -2,6 +2,7 @@
 if (finduid(%npc_attacking_uid) = true) {
     if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
         npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
+        npc_say("Meow!");
     }
     return;
 }
@@ -19,7 +20,7 @@ if (npc_finduid(%follower_uid) = true) {
         return;
     }
     def_int $growth = getbit_range(%cat_growth, 11, 19); //growth       (0-120-320)
-    npc_say("Meow!"); //done every 90s, no random chance
+    //npc_say("Meow!"); //done every 90s, no random chance
     %cat_growth = setbit_range_toint(%cat_growth, min(320,max(calc($growth + 1),-1)), 11, 19);
     if ($cat_cat = cat) {
         @cat_growth;
@@ -258,7 +259,7 @@ if (%follower_obj ! null) {
         %npc_attacking_uid = uid;
         %follower_uid = npc_uid;
         npc_setmode(playerfollow);
-        npc_say("Meeeew!"); //youtu.be/6y_cOu5OQf4?t=110
+        //npc_say("Meeeew!"); //youtu.be/6y_cOu5OQf4?t=110
         settimer(petcat_growth, 150);
     }
 }

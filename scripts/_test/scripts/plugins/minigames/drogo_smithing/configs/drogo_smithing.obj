@@ -1,0 +1,88 @@
+[blurite_bar]
+name=Blurite bar
+desc=It's a bar of blurite.
+cost=1
+model=model_2408_obj
+recol1s=11488
+recol1d=15871    
+2dxof=1
+2dyof=-8
+2dzoom=820
+2dyan=1180
+2dxan=196
+weight=4lb
+tradeable=no
+param=no_alchemy,^true
+
+
+[elemental_nails]
+name=Elemental nails
+desc=Keeps things in place fairly permanently.
+cost=3
+model=model_2580_obj
+stackable=yes
+members=yes
+recol1s=7399 
+recol1d=10259
+2dxof=3
+2dyof=4
+2dzoom=650
+2dyan=1984
+2dxan=308
+weight=5g
+tradeable=no
+param=no_alchemy,^true
+
+[elemental_cog]
+name=Elemental cog
+desc=A cog from some machinery.
+model=model_2351_obj
+recol1s=32767
+recol1d=10259
+recol2s=15855
+recol2d=5130
+members=yes
+2dyan=2040
+2dxan=292
+weight=1kg
+tradeable=no
+param=no_alchemy,^true
+stackable=yes
+
+[elemental_nail_box]
+name=Nail box (e)
+desc=A box of 100 elemental nails.
+model=model_2348_obj
+recol1s=32767
+recol1d=1057
+recol2s=11456
+recol2d=6155
+manwear=model_488_obj_wear,0
+womanwear=model_488_obj_wear,0
+2dxof=1
+2dyof=-10
+2dzoom=660
+2dyan=1968
+2dxan=196
+cost=1
+tradeable=no
+param=no_alchemy,^true
+
+[elemental_cog_box]
+name=Cog box (e)
+desc=A box of 100 elemental cogs.
+model=model_2348_obj
+recol1s=32767
+recol1d=1057
+recol2s=11456
+recol2d=6155
+manwear=model_488_obj_wear,0
+womanwear=model_488_obj_wear,0
+2dxof=1
+2dyof=-10
+2dzoom=660
+2dyan=1968
+2dxan=196
+cost=1
+tradeable=no
+param=no_alchemy,^true

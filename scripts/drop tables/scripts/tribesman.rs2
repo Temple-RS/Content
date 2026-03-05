@@ -1,8 +1,11 @@
 [ai_queue3,tribesman]
-gosub(npc_death);
-if (npc_findhero = ^false){
+if (npc_findhero = ^false) {
     return;
 }
+if (npc_findhero = ^true) {
+    queue(tribesman_kill, 0, 0);
+}
+gosub(npc_death);
 
 // Default drop from config
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
@@ -12,6 +15,10 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 def_int $random = random(138);
 if ($random < 7){
     obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+} else if ($random < 8) {
+    obj_add(npc_coord,cooked_chicken, 1, ^lootdrop_duration);
+} else if ($random < 9) {
+    obj_add(npc_coord, watermelon, 1, ^lootdrop_duration);
 } else if ($random < 10) {
     obj_add(npc_coord, steel_javelin, 10, ^lootdrop_duration);
 } else if ($random < 12) {
@@ -43,7 +50,7 @@ if ($random < 7){
 } else if ($random < 122) {
     obj_add(npc_coord, coins, 62, ^lootdrop_duration);
 } else if ($random < 127) {
-    obj_add(npc_coord, gold_ore, 1, ^lootdrop_duration);
+    obj_add(npc_coord, cert_gold_ore, 1, ^lootdrop_duration);
 } else if ($random < 130) {
     obj_add(npc_coord, 2dose2antipoison, 1, ^lootdrop_duration);
 } else if ($random < 131) {
@@ -56,4 +63,9 @@ if ($random < 7){
     obj_add(npc_coord, pot_flour, 1, ^lootdrop_duration);
 } else if ($random < 136) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~grindingtable, ^lootdrop_duration);
+} else if ($random < 137) {
+    obj_add(npc_coord, ~mid_tier_items, ^lootdrop_duration);
 }
+
+[queue,tribesman_kill]

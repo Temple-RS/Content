@@ -9,6 +9,7 @@
 if_close;
 if (p_finduid(uid) = true) {
     // look for spell in db
+    %teleportlocation = ^reset_tele;
     def_dbrow $spell_data = ~get_spell_data($spell);
     if (~check_spell_requirements($spell_data)= false) {
         return;
@@ -47,6 +48,7 @@ if (p_finduid(uid) = true) {
 }
 
 [proc,player_teleport_normal](coord $coord)
+%teleportlocation = ^reset_tele;
 if_close;
 p_stopaction;
 sound_synth(teleport_all, 0, 0);
@@ -56,6 +58,7 @@ p_delay(2);
 ~p_telejump_safe($coord);
 
 [proc,p_telejump_safe](coord $coord)
+%teleportlocation = ^reset_tele;
 if (stat(hitpoints) = 0) {
     return;
 }

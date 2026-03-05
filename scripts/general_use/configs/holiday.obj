@@ -27,6 +27,7 @@ manhead=model_33_obj_wear
 womanhead=model_91_obj_wear
 weight=8oz
 tradeable=no
+cost=3000
 
 [red_partyhat]
 name=Red partyhat
@@ -45,6 +46,7 @@ manhead=model_29_obj_wear
 womanhead=model_87_obj_wear
 weight=2oz
 param=party_clean_exempt,^true
+cost=5000
 
 [yellow_partyhat]
 name=Yellow partyhat
@@ -65,6 +67,7 @@ manhead=model_29_obj_wear
 womanhead=model_87_obj_wear
 weight=2oz
 param=party_clean_exempt,^true
+cost=5000
 
 [blue_partyhat]
 name=Blue partyhat
@@ -85,6 +88,7 @@ manhead=model_29_obj_wear
 womanhead=model_87_obj_wear
 weight=2oz
 param=party_clean_exempt,^true
+cost=5000
 
 [green_partyhat]
 name=Green partyhat
@@ -105,6 +109,7 @@ manhead=model_29_obj_wear
 womanhead=model_87_obj_wear
 weight=2oz
 param=party_clean_exempt,^true
+cost=5000
 
 [purple_partyhat]
 name=Purple partyhat
@@ -125,6 +130,7 @@ manhead=model_29_obj_wear
 womanhead=model_87_obj_wear
 weight=2oz
 param=party_clean_exempt,^true
+cost=5000
 
 [white_partyhat]
 name=White partyhat
@@ -145,10 +151,10 @@ manhead=model_29_obj_wear
 womanhead=model_87_obj_wear
 weight=2oz
 param=party_clean_exempt,^true
+cost=5000
 
 [santa_hat]
 name=Santa hat
-cost=160
 model=model_2537_obj
 2dyof=-3
 2dzoom=540
@@ -163,11 +169,10 @@ womanhead=model_127_obj_wear
 iop2=Wear
 weight=4oz
 param=party_clean_exempt,^true
-
+cost=4000
 [halloweenmask_green]
 name=Halloween mask
 desc=Aaaarrrghhh ... i'm a monster.
-cost=15
 weight=12oz
 model=model_2438_obj
 recol1s=15360
@@ -184,11 +189,10 @@ womanhead=model_3187_obj_wear
 2dxan=516
 iop2=Wear
 param=party_clean_exempt,^true
-
+cost=3000
 [halloweenmask_blue]
 name=Halloween mask
 desc=Aaaarrrghhh ... i'm a monster.
-cost=15
 weight=12oz
 model=model_2438_obj
 recol1s=15360
@@ -205,11 +209,11 @@ womanhead=model_3187_obj_wear
 2dxan=516
 iop2=Wear
 param=party_clean_exempt,^true
+cost=3000
 
 [halloweenmask_red]
 name=Halloween mask
 desc=Aaaarrrghhh ... i'm a monster.
-cost=15
 weight=12oz
 model=model_2438_obj
 wearpos=hat
@@ -224,3 +228,4 @@ womanhead=model_3187_obj_wear
 2dxan=516
 iop2=Wear
 param=party_clean_exempt,^true
+cost=3000

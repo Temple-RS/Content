@@ -140,20 +140,20 @@ timer=20
 // https://web.archive.org/web/20051125144605/http://www.tip.it/runescape/index.php?rs2monster_id=167
 strength=10
 // attack and hp is completely guessed
-attack=50
+attack=100
 hitpoints=255
+param=attackrate,3
 // these ranges are based off https://www.youtube.com/watch?v=ohRbhtCRL2c&list=PLn23LiLYLb1bhaCSJgRd1zQet3DFcY0yG&index=4
 wanderrange=3
 maxrange=3
 // attack rate is 7 ticks https://youtu.be/5NgTccJZh1o
-param=attackrate,7
 param=attack_sound,swarm_attack
 param=attack_anim,swarm_block
 param=defend_sound,null
 param=defend_anim,swarm_attack
 param=death_drop,null
 param=combat_xp_multiplier,25
-param=max_dealt,0
+param=max_dealt,2
 // TODO
 
 // datatodo: rename

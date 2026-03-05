@@ -1,5 +1,6 @@
+[opnpc2,partyroom_pete] ~openshop_temple_activenpc;
 [opnpc1,partyroom_pete]
-// clue scroll
+// clue scroll1
 if(inv_total(inv, trail_clue_medium_anagram010) > 0) {
     ~chatnpc("<p,happy>You've come to the right place!");
     ~progress_clue_medium(trail_clue_medium_anagram010, "Party Pete has given you another clue scroll!");
@@ -9,7 +10,7 @@ if(inv_total(inv, trail_clue_medium_anagram010) > 0) {
 // dialogue from OSRS, but I think it's mostly unchanged (besides the new option which I didn't include)
 // since it references the gold chest (falador one is white) and Kandarin (which is where seers is, not falador)
 ~chatnpc("<p,happy>Hi! I'm Party Pete.|Welcome to the Party Room!");
-switch_int(~p_choice4("So what's this room for?", 1, "What's the big lever over there for?", 2, "What's the gold chest for?", 3, "I wanna party!", 4)) {
+switch_int(~p_choice5("So what's this room for?", 1, "What's the big lever over there for?", 2, "What's the gold chest for?", 3, "I wanna party!", 4, "Temple Exchange!!", 5)) {
     case 1 :
         ~chatplayer("<p,confused>So what's this room for?");
         ~chatnpc("<p,laugh>This room is for partying the night away!");
@@ -36,6 +37,30 @@ switch_int(~p_choice4("So what's this room for?", 1, "What's the big lever over 
         ~chatplayer("<p,laugh>Show me your moves Pete!");
         if_close;
         npc_anim(partyroom_dance, 0);
+    case 5 :
+        //def_int $ch = ~p_choice3("Ticket Exchange.",1, "-", 2, "-", 3);
+        //switch_int($ch){
+        //    case 1 : {
+        //        ~chatplayer("<p,happy>I would like to exchange 1,000 tickets ");
+        //        def_int $total_tickets = inv_total(inv, archery_ticket);
+        //        if ($total_tickets >= 1000){
+        //            inv_del(inv,archery_ticket, 1000);
+        //            inv_add(inv,temple_tickets, 100);
+        //            ~chatnpc("<p,happy>Here you go!");
+        //            ~objbox(temple_tickets,"You receive 100 Temple Tickets!", 250, 0, 0);
+        //        } else {
+        //            ~chatnpc("<p,sad>You need at least 1,000 tickets to exchange."); 
+        //        }
+        //    }
+        //    case 2 : {
+        //        return;    
+        //    }
+        //    case 3 : {
+        //        return;    
+        //    }
+        //}
+        ~chatnpc("<p,sad>Come back later!");
+        return;
 }
 
 [ai_timer,partyroom_pete]

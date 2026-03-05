@@ -35,6 +35,9 @@ if ($item = coins) {
 } else if ((%shop = generalshop3 & $item = silk) | inv_allstock(%shop) = false & inv_stockbase(%shop, oc_uncert($item)) = -1) { // can't sell silk to al-kharid general store
     mes("You can't sell this item to this shop.");
     return (false);
+} else if(~shop_blocker($item) = false) {
+    mes("You can't sell this item to this shop.");
+    return (false);
 }
 return (true);
 

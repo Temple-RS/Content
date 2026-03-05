@@ -51,7 +51,7 @@ param=next_obj_stage,jug_empty
 [half_full_wine_jug]
 name=Half full wine jug
 desc=An optimist would say it's half full.
-cost=1
+cost=10000
 model=model_2390_obj
 recol1s=32767
 recol1d=25765
@@ -60,10 +60,7 @@ recol1d=25765
 2dzoom=600
 2dyan=84
 2dxan=260
-iop1=Drink
 weight=1kg
-category=alcoholic_drinks
-param=next_obj_stage,jug_empty
 
 [jug_unfermented_wine]
 cost=10

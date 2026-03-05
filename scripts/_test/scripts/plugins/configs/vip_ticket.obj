@@ -1,0 +1,63 @@
+[vip_t1]
+name=VIP (T1)
+desc=Allows you to become VIP 1.
+model=model_2560_obj
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=360
+weight=4g
+members=yes
+weight=5g
+recol1s=19150
+recol1d=30624
+iop2=Redeem
+
+[vip_guest]
+name=VIP (G)
+desc=Allows you to become a guest VIP.
+model=model_2560_obj
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=360
+weight=4g
+members=yes
+weight=5g
+recol1s=19150
+recol1d=866
+iop2=Redeem
+
+[vip_t2]
+name=VIP (T2)
+desc=Allows you to become VIP 2.
+model=model_2560_obj
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=360
+weight=4g
+members=yes
+weight=5g
+recol1s=19150
+recol1d=30336
+iop2=Redeem
+
+[vip_t3]
+name=VIP (T3)
+desc=Allows you to become VIP 3.
+model=model_2560_obj
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=360
+weight=4g
+members=yes
+weight=5g
+recol1s=19150
+recol1d=27648
+iop2=Redeem

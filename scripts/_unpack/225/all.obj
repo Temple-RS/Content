@@ -98,6 +98,7 @@ desc=A plank of wood!
 2dxan=356
 weight=800g
 category=category_475
+stackable=yes
 
 [christmas_cracker]
 name=Christmas cracker
@@ -734,6 +735,7 @@ param=stab_sound,scythe_stab
 param=slash_sound,scythe_slash
 param=crush_sound,scythe_double
 tradeable=no
+cost=5000
 
 [archery_ticket]
 name=Archery ticket

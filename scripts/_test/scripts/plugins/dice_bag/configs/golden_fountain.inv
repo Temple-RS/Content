@@ -1,0 +1,6 @@
+[golden_fountain]
+scope=shared
+protect=yes
+size=3
+restock=no
+stock1=coins,0,10

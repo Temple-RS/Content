@@ -6,18 +6,27 @@
 anim(human_pickpocket,0);
 p_delay(2);
 
-[proc,receive_burger]
+[proc,receive_food]
 if (inv_freespace(inv) > 0) {
-    inv_add(inv,burger, 1);
+    def_int $ran = random(5000);
+    if ($ran > 4950){
+        inv_add(inv, triangle_sandwich, 1);
+        ~objbox(triangle_sandwich, "You receive a Triangle Sandwich!", 250, 0, 0);
+    } else if ($ran > 4998){
+        inv_add(inv, square_sandwich, 1);
+        ~objbox(square_sandwich, "You receive a Square Sandwich!", 250, 0, 0);
+    } else {
+        inv_add(inv, burger, 1);
+    }
     ~chatnpc("Enjoy sweetheart!");
 } else {
     ~chatnpc("I am sorry but you don't have enough space!");
 }
 
 [proc,woman_talk]
-def_int $t = (~p_choice2_header("Give me a burger please!", 1, "Nothing!", 2,"What do you want to say?"));
+def_int $t = (~p_choice2_header("Feed me!", 1, "Nothing!", 2,"What do you want to say?"));
 switch_int($t){
-    case 1 : ~receive_burger;
+    case 1 : ~receive_food;
     case 2 : mes("Come again xoxo!");
 }
 npc_setmode(playerfollow);

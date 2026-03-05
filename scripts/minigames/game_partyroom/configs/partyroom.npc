@@ -4,6 +4,7 @@ desc=He likes to paaaarty!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
+op2=Shop
 vislevel=hide
 recol1s=14724
 recol1d=23295
@@ -24,6 +25,11 @@ head1=model_63_idk_head
 head2=model_77_npc_head
 head3=model_29_obj_wear
 timer=1
+param=owned_shop,temple_shop
+param=shop_buy_multiplier,60
+param=shop_sell_multiplier,100
+param=shop_delta,10
+param=shop_title,Temple Exchange
 
 [partyroom_knight]
 name=Knight

@@ -165,22 +165,26 @@ if(last_useitem = elemental_workshop_lava_bowl_full) {
 [oploc1,elemental_workshop_bellows_r] @elemental_workshop_fix_bellows;
 
 [label,elemental_workshop_fix_bellows]
-if(testbit(%elemental_workshop_bits, ^elemental_workshop_bellows_repaired) = ^true) {
+if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^false) {
+    if(testbit(%elemental_workshop_bits, ^elemental_workshop_bellows_repaired) = ^true) {
+        mes("The bellows already look fixed to you.");
+        return;
+    }
+    if(stat(crafting) < 20) {
+        mes("You need a Crafting level of 20 to fix this.");
+        return;
+    }
+    if(inv_total(inv, needle) = 0 | inv_total(inv, leather) = 0 | inv_total(inv, thread) = 0) {
+        mes("You need a piece of leather, some thread and a needle to fix this.");
+        return;
+    }
+    mes("You stitch the leather over the hole in the bellows.");
+    %elemental_workshop_bits = setbit(%elemental_workshop_bits, ^elemental_workshop_bellows_repaired);
+    inv_del(inv, thread, 1);
+    inv_del(inv, leather, 1);
+} else {
     mes("The bellows already look fixed to you.");
-    return;
 }
-if(stat(crafting) < 20) {
-    mes("You need a Crafting level of 20 to fix this.");
-    return;
-}
-if(inv_total(inv, needle) = 0 | inv_total(inv, leather) = 0 | inv_total(inv, thread) = 0) {
-    mes("You need a piece of leather, some thread and a needle to fix this.");
-    return;
-}
-mes("You stitch the leather over the hole in the bellows.");
-%elemental_workshop_bits = setbit(%elemental_workshop_bits, ^elemental_workshop_bellows_repaired);
-inv_del(inv, thread, 1);
-inv_del(inv, leather, 1);
 
 [oploc1,elemental_workshop_rock]
 if(stat(mining) < 20) {
@@ -207,67 +211,97 @@ p_delay(1);
 
 [oplocu,elemental_workshop_furnace]
 def_obj $last_useitem = last_useitem;
-if($last_useitem = elemental_workshop_lava_bowl_full) {
-    mes("You empty the lava in the furnace.");
-    inv_del(inv, elemental_workshop_lava_bowl_full, 1);
-    inv_add(inv, elemental_workshop_lava_bowl, 1);
-    p_delay(4);
-    if(testbit(%elemental_workshop_bits, ^elemental_workshop_furnace_lit) = ^true) {
-        mes("The lava makes little difference to the furnace's searing heat.");
+if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^false){
+    if($last_useitem = elemental_workshop_lava_bowl_full) {
+        if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^false) {
+            mes("You empty the lava in the furnace.");
+            inv_del(inv, elemental_workshop_lava_bowl_full, 1);
+            inv_add(inv, elemental_workshop_lava_bowl, 1);
+            p_delay(4);
+            if(testbit(%elemental_workshop_bits, ^elemental_workshop_furnace_lit) = ^true) {
+                mes("The lava makes little difference to the furnace's searing heat.");
+                return;
+            }
+            mes("The furnace bursts in to life.");
+            %elemental_workshop_bits = setbit(%elemental_workshop_bits, ^elemental_workshop_furnace_lit);
+        } else {
+            mes("This is already hot enough to use.");
+            return;
+        }
+    }
+    if(testbit(%elemental_workshop_bits, ^elemental_workshop_furnace_lit) = ^false) {
+        mes("The furnace is cold and useless for anything.");
         return;
     }
-    mes("The furnace bursts in to life.");
-    %elemental_workshop_bits = setbit(%elemental_workshop_bits, ^elemental_workshop_furnace_lit);
-}
-if(testbit(%elemental_workshop_bits, ^elemental_workshop_furnace_lit) = ^false) {
-    mes("The furnace is cold and useless for anything.");
-    return;
-}
-if($last_useitem = elemental_workshop_ore) {
-    if(testbit(%elemental_workshop_bits, ^elemental_workshop_air_blowing) = ^false) {
-        mes("The furnace needs to be hotter to be of any use.");
-        return;
+    if($last_useitem = elemental_workshop_ore) {
+        if(testbit(%elemental_workshop_bits, ^elemental_workshop_air_blowing) = ^false) {
+            mes("The furnace needs to be hotter to be of any use.");
+            return;
+        }
+        if(inv_total(inv, coal) < 4) {
+            mes("You need four heaps of coal to smelt elemental ore.");
+            return;
+        }
+        mes("You place the elemental ore and four heaps of coal into the furnace.");
+        inv_del(inv, elemental_workshop_ore, 1);
+        inv_del(inv, coal, 4);
+        anim(human_furnace, 0);
+        p_delay(3);
+        stat_advance(smithing, 80);
+        inv_add(inv, elemental_workshop_bar, 1);
+        mes("You retrieve a bar of elemental metal.");
+        mes("The furnace is so hot it will destroy almost anything put in it."); // todo: does this mean anything functionally?
     }
-    if(inv_total(inv, coal) < 4) {
-        mes("You need four heaps of coal to smelt elemental ore.");
-        return;
+} else {
+    switch_obj($last_useitem){
+        case elemental_workshop_ore : ~smelting_action(elemental_workshop_ore, 4, elemental_workshop_bar, 1, 650);
+        case tin_ore : mes("This furnace is too hot for this weak metal.");
+        case copper_ore : mes("This furnace is too hot for this weak metal.");
+        case iron_ore : mes("This furnace is too hot for this weak metal.");
+        case silver_ore : @smelt_ore(silver_ore);
+        case gold_ore : @smelt_ore(gold_ore);
+        case mithril_ore : @smelt_ore(mithril_ore);
+        case adamantite_ore : @smelt_ore(adamantite_ore);
+        case runite_ore : @smelt_ore(runite_ore);
+        case blurite_ore : ~smelting_action(blurite_ore, 2, blurite_bar, 1, 350);
     }
-    mes("You place the elemental ore and four heaps of coal into the furnace.");
-    inv_del(inv, elemental_workshop_ore, 1);
-    inv_del(inv, coal, 4);
-    anim(human_furnace, 0);
-    p_delay(3);
-    stat_advance(smithing, 80);
-    inv_add(inv, elemental_workshop_bar, 1);
-    mes("You retrieve a bar of elemental metal.");
-    mes("The furnace is so hot it will destroy almost anything put in it."); // todo: does this mean anything functionally?
 }
 
 [oplocu,elemental_workshop_workbench]
-if(last_useitem = elemental_workshop_bar) {
-    if(inv_total(inv, hammer) = 0) {
-        ~mesbox("You need a hammer to work the metal with.");
-        return;
+switch_obj(last_useitem){
+    case elemental_workshop_bar : {
+        if(inv_total(inv, hammer) = 0) {
+            ~mesbox("You need a hammer to work the metal with.");
+            return;
+        }
+        if(stat(smithing) < 20) {
+            ~mesbox("You need a Smithing level of at least 20 to work elemental bars.");
+            return;
+        }
+        if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^false){
+            if(inv_total(inv, elemental_workshop_shield_book) = 0) {
+                ~mesbox("This workbench is too complicated. You need instructions to follow.");
+                return;
+            }
+            // https://youtu.be/3_KOiy-ZK4c?si=iMaWOSMTw2ZrjG4r&t=429
+            mes("You make an Elemental Shield.");
+            inv_del(inv, elemental_workshop_bar, 1);
+            anim(human_cooking, 0);
+            p_delay(3);
+            inv_add(inv, elemental_shield, 1);
+            stat_advance(smithing, 200);
+            if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^false) queue(elemental_workshop_quest_complete, 0, 0);
+        } else { ~elemental_workshop(last_useitem); }
     }
-    if(stat(smithing) < 20) {
-        ~mesbox("You need a Smithing level of at least 20 to work elemental bars.");
-        return;
+    case elemental_nails : ~create_nail_box;
+    case elemental_cog : ~create_cog_box;
+    case default : {
+        if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^true) {
+            if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
+            else ~displaymessage(^dm_default);
+        }
     }
-    if(inv_total(inv, elemental_workshop_shield_book) = 0) {
-        ~mesbox("This workbench is too complicated. You need instructions to follow.");
-        return;
-    }
-    // https://youtu.be/3_KOiy-ZK4c?si=iMaWOSMTw2ZrjG4r&t=429
-    mes("You make an Elemental Shield.");
-    inv_del(inv, elemental_workshop_bar, 1);
-    anim(human_cooking, 0);
-    p_delay(3);
-    inv_add(inv, elemental_shield, 1);
-    stat_advance(smithing, 200);
-    if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^false) queue(elemental_workshop_quest_complete, 0, 0);
 }
-else if (oc_category(last_useitem) = category_151) ~objbox(last_useitem, "The workbench is not made to work this type of metal.", 250, 0, 0);
-else ~displaymessage(^dm_default);
 
 [queue,elemental_workshop_quest_complete]
 %elemental_workshop_bits = setbit(%elemental_workshop_bits, ^elemental_workshop_complete);

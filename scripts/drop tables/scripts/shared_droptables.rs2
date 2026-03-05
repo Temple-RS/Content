@@ -110,7 +110,7 @@ if ($random < 3) {
 } else if ($random < 84) {
     return (keyhalf2, 1);
 } else if ($random < 89) {
-    return (runite_bar, 1);
+    return (rune_scimitar, 1);
 } else if ($random < 91) {
     return (dragonstone, 1);
 } else if ($random < 93) {
@@ -140,11 +140,7 @@ if ($random < 8) {
 } else if ($random < 15) {
     return (rune_spear, 1);
 } else if ($random < 16) {
-    return (rune_longsword, 1);    
-} else if ($random < 18) {
-    return (boots_ranger, 1);
-} else if ($random < 19) {
-    return (robinhoodhat, 1);
+    return (rune_longsword, 1);
 } else if ($random < 50) {
     return (keyhalf2, 1);
 } else if ($random < 126) {
@@ -248,6 +244,8 @@ if ($random < 8) {
     return (mithril_chainbody,1);
 } else if ($random < 126) {
     return (mithril_sword,1);
+} else if ($random < 127) {
+    return (~talisman_table);
 }  else if ($random < 128) {
     return (mithril_mace, 1);
 }

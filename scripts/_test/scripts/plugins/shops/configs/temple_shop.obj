@@ -1,15 +1,108 @@
 [temple_coins]
-name=Temple Coins
+name=Coins(T)
 desc=Coins used in the Temple.
 cost=1
 model=model_2772_obj
 recol1s=31201
-recol1d=9082
+recol1d=991
 recol2s=30646
-recol2d=9082
+recol2d=859
 2dzoom=1090
 2dyan=336
 2dxan=284
 stackable=yes
 param=no_alchemy,^true
 tradeable=yes
+
+[temple_tickets]
+name=Temple tickets
+desc=I can exchange this for rare items.
+model=model_2560_obj
+cost=25
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=320
+members=yes
+stackable=yes
+weight=5g
+recol1s=19150
+recol1d=991
+
+
+[10voucher]
+name=$10 Voucher
+desc=I can exchange this for rare items.
+model=model_2560_obj
+cost=25
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=320
+members=yes
+stackable=yes
+tradeable=yes
+param=no_alchemy,^true
+weight=5g
+recol1s=19150
+recol1d=447
+iop1=Open
+
+[20voucher]
+name=$20 Voucher
+desc=I can exchange this for rare items.
+model=model_2560_obj
+cost=25
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=320
+members=yes
+stackable=yes
+tradeable=yes
+param=no_alchemy,^true
+weight=5g
+recol1s=19150
+recol1d=9247
+iop1=Open
+
+[50voucher]
+name=$50 Voucher
+desc=I can exchange this for rare items.
+model=model_2560_obj
+cost=25
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=320
+members=yes
+stackable=yes
+tradeable=yes
+param=no_alchemy,^true
+weight=5g
+recol1s=19150
+recol1d=32320
+iop1=Open
+
+[100voucher]
+name=$100 Voucher
+desc=I can exchange this for rare items.
+model=model_2560_obj
+cost=25
+2dxof=6
+2dyof=-2
+2dzoom=830
+2dyan=132
+2dxan=320
+members=yes
+stackable=yes
+tradeable=yes
+param=no_alchemy,^true
+weight=5g
+recol1s=19150
+recol1d=27648
+iop1=Open

@@ -1,0 +1,11 @@
+[bonus_exp]
+scope=perm
+
+[donation_exp]
+scope=perm
+
+[voucher_totals]
+scope=perm
+
+[fountain_donations]
+scope=perm

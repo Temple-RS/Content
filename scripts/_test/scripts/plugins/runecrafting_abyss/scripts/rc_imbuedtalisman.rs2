@@ -1,10 +1,277 @@
-//[opheld4,imbued_talisman] @returntomageguild;
-//
-//[label,returntomageguild]
-//
-//if (%teleportlocation = ^mageguild) {
-//    ~player_teleport_normal(0_40_48_43_16);
-//    %teleportlocation = ^reset_tele;
+[opheld4,imbued_talisman] @returntomageguild;
+
+[label,returntomageguild]
+
+if (%teleportlocation = ^mageguild) {
+    ~player_teleport_normal(0_40_48_43_16);
+    %teleportlocation = ^reset_tele;
+} else {
+    ~mesbox("You need to have teleported from the Mage Guild to use this!");
+}
+
+
+[proc,createtalisman]
+%talismancount = 0;
+if (stat_base(magic) < 60) {
+    ~chatnpc("<p,sad>You must have at least 60 Magic for me to consider doing this.");
+    return;
+}
+
+//mes("#1)<tostring(%talismancount)>");
+if (inv_total(inv, air_talisman) > 0){
+    %talismancount = add(%talismancount,1);
+}
+if (inv_total(inv, earth_talisman) > 0){
+    %talismancount = add(%talismancount,1);
+}
+if (inv_total(inv, water_talisman) > 0) {
+    %talismancount = add(%talismancount,1);
+}
+if (inv_total(inv, fire_talisman) > 0){
+    %talismancount = add(%talismancount,1);
+}
+if (inv_total(inv, mind_talisman) > 0){
+    %talismancount = add(%talismancount,1);
+}
+if (inv_total(inv, body_talisman) > 0){
+    %talismancount = add(%talismancount,1);
+}
+if (inv_total(inv, cosmic_talisman) > 0){
+    %talismancount = add(%talismancount,1);
+}
+if (inv_total(inv, nature_talisman) > 0){
+    %talismancount = add(%talismancount,1);
+}
+if (inv_total(inv, chaos_talisman) > 0){
+    %talismancount = add(%talismancount,1);
+}
+
+//mes("#2<tostring(%talismancount)>");
+if (add(%talismancount, 1) > 8) {
+    inv_del(inv, air_talisman,1);    
+    inv_del(inv, earth_talisman,1);
+    inv_del(inv, fire_talisman,1);
+    inv_del(inv, water_talisman,1);
+    inv_del(inv, chaos_talisman,1);
+    inv_del(inv, mind_talisman,1);
+    inv_del(inv, body_talisman,1);
+    inv_del(inv, nature_talisman,1);
+    inv_del(inv, cosmic_talisman,1);
+    inv_add(inv, imbued_talisman,1);
+    ~objbox(imbued_talisman, "Congrats! You receive an Imbued Talisman!!", 250, 0, divide(^objbox_height, 2));
+    return;
+}
+~chatnpc("<p,sad>Sorry you do not have enough talismans for me to make an imbued talisman! You need one of each.");
+
+//mes("<tostring(%talismancount)>");
+
+
+//[proc,airaltar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(0_44_75_25_30);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;
 //} else {
-//    ~mesbox("You need to have teleported from the Mage Guild to use this!");
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Air Altar!");
 //}
+//
+//[proc,mindaltar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(0_43_75_41_29);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;
+//} else {
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Mind Altar!");
+//}
+//
+//[proc,wateraltar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(0_42_75_37_32);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;
+//} else {
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Water Altar!");
+//}
+//
+//[proc,earthaltar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(0_41_75_33_30);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;    
+//} else {
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Earth Altar!");
+//}
+//
+//[proc,firealtar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(0_40_75_16_48);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;
+//} else {
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Fire Altar!");
+//}
+//
+//[proc,bodyaltar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(0_39_75_27_38);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;
+//} else {
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Body Altar!");
+//}
+//
+//[proc,cosmicaltar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(0_33_75_30_13);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;
+//} else {
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Cosmic Altar!");
+//}
+//
+//[proc,chaosaltar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(3_35_75_35_47);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;
+//} else {
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Chaos Altar!");
+//}
+//
+//[proc,naturealtar]
+//if (inv_total(inv, imbued_dust) > 2499) {
+//    p_telejump(0_37_75_32_35);
+//    inv_del(inv, imbued_dust, 2500);
+//    %teleportlocation = ^mageguild;
+//} else {
+//    ~chatnpc("Sorry, you need at least 2500 Imbued Dust to use the Nature Altar!");
+//}
+
+[proc,airaltar]
+if (%rc_rep < 0) {
+    ~chatnpc("You are not yet recognized by the Magicians' Guild. Earn reputation through Runecrafting Tasks first!");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 2499) {
+    p_telejump(0_44_75_25_30);
+    inv_del(inv, imbued_dust, 2500);
+    %teleportlocation = ^mageguild;
+} else {
+    ~chatnpc("You need at least 2500 Imbued Dust to use the Air Altar!");
+}
+
+[proc,mindaltar]
+if (%rc_rep < 0) {
+    ~chatnpc("You must gain some reputation before the guild allows access to this altar.");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 2499) {
+    p_telejump(0_43_75_41_29);
+    inv_del(inv, imbued_dust, 2500);
+    %teleportlocation = ^mageguild;
+} else {
+    ~chatnpc("You need at least 2500 Imbued Dust to use the Mind Altar!");
+}
+
+[proc,wateraltar]
+if (%rc_rep < 250) {
+    ~chatnpc("You need at least 250 Runecraft Reputation to use the Water Altar.");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 2499) {
+    p_telejump(0_42_75_37_32);
+    inv_del(inv, imbued_dust, 2500);
+    %teleportlocation = ^mageguild;
+} else {
+    ~chatnpc("You need at least 2500 Imbued Dust to use the Water Altar!");
+}
+
+[proc,earthaltar]
+if (%rc_rep < 250) {
+    ~chatnpc("You need at least 250 Runecraft Reputation to use the Earth Altar.");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 2499) {
+    p_telejump(0_41_75_33_30);
+    inv_del(inv, imbued_dust, 2500);
+    %teleportlocation = ^mageguild;    
+} else {
+    ~chatnpc("You need at least 2500 Imbued Dust to use the Earth Altar!");
+}
+
+[proc,firealtar]
+if (%rc_rep < 750) {
+    ~chatnpc("You need at least 750 Runecraft Reputation to use the Fire Altar.");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 3499) {
+    p_telejump(0_40_75_16_48);
+    inv_del(inv, imbued_dust, 3500);
+    %teleportlocation = ^mageguild;
+} else {
+    ~chatnpc("You need at least 3500 Imbued Dust to use the Fire Altar!");
+}
+
+[proc,bodyaltar]
+if (%rc_rep < 750) {
+    ~chatnpc("You need at least 750 Runecraft Reputation to use the Body Altar.");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 4499) {
+    p_telejump(0_39_75_27_38);
+    inv_del(inv, imbued_dust, 4500);
+    %teleportlocation = ^mageguild;
+} else {
+    ~chatnpc("You need at least 4500 Imbued Dust to use the Body Altar!");
+}
+
+[proc,cosmicaltar]
+if (%rc_rep < 15000) {
+    ~chatnpc("You need at least 15,000 Runecraft Reputation to use the Cosmic Altar.");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 5499) {
+    p_telejump(0_33_75_30_13);
+    inv_del(inv, imbued_dust, 5500);
+    %teleportlocation = ^mageguild;
+} else {
+    ~chatnpc("You need at least 5500 Imbued Dust to use the Cosmic Altar!");
+}
+
+[proc,chaosaltar]
+if (%rc_rep < 15000) {
+    ~chatnpc("You need at least 15,000 Runecraft Reputation to use the Chaos Altar.");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 6499) {
+    p_telejump(3_35_75_35_47);
+    inv_del(inv, imbued_dust, 6500);
+    %teleportlocation = ^mageguild;
+} else {
+    ~chatnpc("You need at least 6500 Imbued Dust to use the Chaos Altar!");
+}
+
+[proc,naturealtar]
+if (%rc_rep < 30000) {
+    ~chatnpc("You need at least 30,000 Runecraft Reputation to use the Nature Altar.");
+    return;
+}
+if (inv_total(inv, imbued_dust) > 7499) {
+    p_telejump(0_37_75_32_35);
+    inv_del(inv, imbued_dust, 7500);
+    %teleportlocation = ^mageguild;
+} else {
+    ~chatnpc("You need at least 7500 Imbued Dust to use the Nature Altar!");
+}
+
+[debugproc,all_talismans]
+inv_add(inv, air_talisman,1);
+inv_add(inv, earth_talisman,1);
+inv_add(inv, fire_talisman,1);
+inv_add(inv, water_talisman,1);
+inv_add(inv, chaos_talisman,1);
+inv_add(inv, mind_talisman,1);
+inv_add(inv, body_talisman,1);
+inv_add(inv, nature_talisman,1);
+inv_add(inv, cosmic_talisman,1);
+mes("You have been given all the talismans!");

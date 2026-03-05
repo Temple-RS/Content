@@ -46,7 +46,9 @@ recol1d=18849
 recol2s=15855
 recol2d=19937
 category=watersource
-
+param=owned_shop,golden_fountain
+param=shop_title,Golden Fountain
+op1=Check
 [well]
 name=Well
 desc=Best used with a bucket.

@@ -16,6 +16,7 @@ iop1=Summon
 tradeable=no
 param=follower_id,pet_imp
 param=no_alchemy,^true
+cost=200
 
 [burger]
 iop1=Eat
@@ -39,7 +40,7 @@ category=category_130
 [woman_whistle]
 name=Woman whistle
 desc=Call a fair maiden to serve you.
-cost=10
+cost=200
 members=yes
 model=model_2433_obj
 2dyof=-2
@@ -52,13 +53,14 @@ tradeable=no
 param=follower_id,pet_woman
 param=no_alchemy,^true
 
+
 [tree_pet]
 name=Tree spirit
 desc=A very angry nymph.
 model=model_2856_npc
 2dxof=2
 2dyof=-2
-2dzoom=1950
+2dzoom=2700
 2dyan=228
 2dxan=28
 recol1s=14692
@@ -74,11 +76,12 @@ iop1=Summon
 tradeable=no
 param=follower_id,tree_pet
 param=no_alchemy,^true
+cost=2000
 
 [penguin_whistle]
 name=Penguin whistle
 desc=Call a penguin to serve you.
-cost=10
+cost=2000
 members=yes
 model=model_2433_obj
 2dyof=-2
@@ -94,7 +97,7 @@ param=no_alchemy,^true
 [pet_rock]
 name=Rock
 desc=a pretty solid pet!
-cost=10
+cost=2000
 iop1=Place
 members=yes
 model=model_2571_obj
@@ -115,7 +118,7 @@ model=model_2663_obj
 2dzoom=1180
 2dyan=1668
 2dxan=192
-cost=20
+cost=2000
 recol1s=10400
 recol1d=6144
 recol2s=10570 
@@ -132,7 +135,7 @@ model=model_2663_obj
 2dzoom=1180
 2dyan=1668
 2dxan=192
-cost=20
+cost=2000
 recol1s=10400
 recol1d=15426
 recol2s=10570 
@@ -149,7 +152,7 @@ model=model_2663_obj
 2dzoom=1180
 2dyan=1668
 2dxan=192
-cost=20
+cost=200
 recol1s=10400
 recol1d=15426
 recol2s=10570 
@@ -160,7 +163,7 @@ param=follower_id,hellhound_pet2
 param=no_alchemy,^true
 
 [rat_trap]
-cost=1
+cost=200
 name=Rat Trap
 desc=They deserve this.
 model=model_2663_obj
@@ -178,7 +181,7 @@ param=no_alchemy,^true
 [sheep_leash]
 name=Sheep Leash
 desc=A leash for sheep.
-cost=50
+cost=200
 model=model_loc_227_8
 recol1s=11524
 recol1d=7296
@@ -194,7 +197,7 @@ param=follower_id,sheep_pet
 param=no_alchemy,^true
 
 [ernest_cage]
-cost=1
+cost=200
 name=Ernest
 desc=The lucky survivor!
 model=model_2663_obj
@@ -212,7 +215,7 @@ param=no_alchemy,^true
 [cow_leash]
 name=Cow Leash
 desc=A leash for cows.
-cost=50
+cost=200
 model=model_loc_227_8
 recol1s=11524
 recol1d=7296
@@ -230,7 +233,7 @@ param=no_alchemy,^true
 [pet_ice_spider]
 name=Ice spider's eggs
 desc=Eewww.
-cost=7
+cost=200
 model=model_2343_obj
 2dxof=-3
 2dzoom=1500
@@ -259,11 +262,12 @@ tradeable=no
 iop1=Smash
 param=follower_id,orc_pet
 param=no_alchemy,^true
+cost=200
 
 [mummy_wraps]
 name=Mummy Wraps
 desc=It's wrappings of a mummy.
-cost=30
+cost=200
 model=model_2725_obj
 recol1s=32767
 recol1d=30680
@@ -290,8 +294,10 @@ tradeable=no
 iop1=Rub
 param=follower_id,lizardman_pet
 param=no_alchemy,^true
+cost=200
 
 [lep_coins]
+cost=200
 name=Lucky Coins
 desc=I know an Irishmen that owns these.
 model=model_2825_obj

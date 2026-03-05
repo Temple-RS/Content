@@ -5,6 +5,7 @@ weight=1100g
 cost=86500
 model=model_2699_obj
 iop1=Roll-
+iop2=Guess-
 recol1s=13705
 recol1d=11473
 2dxof=-4

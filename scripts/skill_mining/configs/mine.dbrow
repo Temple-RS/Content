@@ -5,7 +5,7 @@ data=ore_name,rune stones
 data=success_message,You manage to mine an unbound rune stone.
 data=rock_output,blankrune
 data=rock_level,1
-data=rock_exp,50
+data=rock_exp,75
 data=rock_successchance,256,256
 
 [clay_rock_table]

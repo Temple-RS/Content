@@ -1,7 +1,7 @@
 [skull_helm]
 name=Skull Helm
 desc=an amusing helm.
-cost=24
+cost=2000
 model=model_2388_obj
 recol1s=14724 
 recol1d=32767 

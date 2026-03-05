@@ -1,5 +1,5 @@
 [opheld1,dice_bag] @dice_games;
-
+[opheld2,dice_bag] @fruitguesser;
 
 [label,dice_games]
 ~mesbox("Welcome to Dice Games. |You will be prompted to type in your wager amount next.");

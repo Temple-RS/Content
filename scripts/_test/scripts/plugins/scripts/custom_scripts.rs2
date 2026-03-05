@@ -162,11 +162,8 @@ switch_obj(last_useitem){
                 case nails : {
                     inv_del(inv, iron_bar, 5);
                     inv_del(inv, nails, 5);
-                    inv_del(inv, woodplank, 5);
-                    inv_add(inv, empty_casket, 1);
-                    ~crafting_action;
+                    ~workbench_action(woodplank, 5, empty_casket, 1, 3125);
                     mes("You have created an empty casket!");
-                    stat_advance(smithing, 3125);
                     jump(end_label);
                 }
             }
@@ -279,7 +276,110 @@ if ($material3 ! null) {
 
 return(true);
 
-// info: Standard crafting action with variable crafting speeds.
+// info: Eat Action
+[proc,eat_action](obj $used_item, int $slot, int $delay, int $effect)
+inv_delslot(inv, $slot);
+anim(human_eat, 0);
+sound_synth(eat, 0, 0);
+switch_int($effect){
+    case 1 : {
+        stat_heal(hitpoints, 10, 1);
+    }
+}
+p_delay($delay);
+
+// info: Cutting Action
+[proc,cutting_action](obj $used_item, int $slot, namedobj $product, int $delay)
+inv_delslot(inv, $slot);
+p_delay($delay);
+switch_obj($used_item){
+    case watermelon : {
+        anim(human_watermelon_cutting, 0);
+    }
+    case default : {
+        anim(human_cutting, 0);
+    }
+}
+sound_synth(sliced, 0, 0);
+inv_add(inv, $product, 1);
+
+
+
+// info: Advanced Workbench action
+[proc,workbench_action](obj $used_material, int $amount, namedobj $product, int $count, int $exp)
+if (~tool_check(hammer) = false) {return;}
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+anim(human_pickuptable,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+inv_del(inv, $used_material, $amount);
+inv_add(inv, $product, $count);
+stat_advance(smithing, $exp);
+stat_advance(crafting, min(75, $exp));
+
+// info: Standard smelting action with variable smithing speeds.
+[proc,smelting_action](obj $used_ore, int $coal_amount, namedobj $product, int $count, int $exp)
+if (inv_total(inv, coal) < $coal_amount){
+    mes("You need more coal to do this.");
+    return;
+}
+if ($coal_amount = 0) {
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
+    p_delay(~stat_speed(smithing));
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
+    p_delay(~stat_speed(smithing));
+    inv_del(inv, $used_ore, $count);
+} else {
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
+    p_delay(~stat_speed(smithing));
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
+    p_delay(~stat_speed(smithing));
+    inv_del(inv, $used_ore, $count);
+    inv_del(inv, coal, $coal_amount);
+}
+inv_add(inv, $product, $count);
+stat_advance(smithing, $exp);
+
+// info: Standard stat action with variable magic speeds.
+[proc,stat_action](stat $skill, int $exp)
+spotanim_pl(highlvlalchemy_casting, 92, 0);
+anim(human_casthighlvlalchemy, 0);
+sound_synth(high_alchemy, 2, 0);
+p_delay(~stat_speed($skill));
+if ($exp > 1){
+    stat_advance($skill, $exp);
+}
+
+// info: Standard smithing action with variable smithing speeds.
+[proc,smithing_action](obj $used_bar, int $count, namedobj $product, int $count2, int $exp)
+if (~tool_check(hammer) = false) {return;}
+if (inv_total(inv, $used_bar) < $count){
+    mes("You need more materials to do this.");
+    return;
+}
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+inv_del(inv, $used_bar, $count);
+inv_add(inv, $product, $count2);
+stat_advance(smithing, $exp);
+
+// info: Standard magic action with variable magic speeds.
+[proc,magic_action]
+spotanim_pl(highlvlalchemy_casting, 92, 0);
+anim(human_casthighlvlalchemy, 0);
+sound_synth(high_alchemy, 2, 0);
+p_delay(~stat_speed(magic));
+
+
+// info: Basic workbench action
 [proc,crafting_action]
 if (~tool_check(hammer) = false) {return;}
 anim(human_smithing, ~stat_speed(crafting));
@@ -289,6 +389,7 @@ anim(human_smithing, ~stat_speed(crafting));
 sound_synth(anvil, ~stat_speed(crafting), 0);
 anim(human_pickuptable,0);
 sound_synth(grind, ~stat_speed(crafting), 0);
+
 
 // info: Standard grind action with variable crafting speeds.
 [proc,grinding_action](obj $used_item, namedobj $product)
@@ -317,11 +418,10 @@ p_delay(~stat_speed(crafting));
 // info: Returns the crafting speed based on the player's skill level. [ 90: 1t | 75: 2t | 50: 3t | 25: 4t | 1: 5t ]
 [proc,stat_speed](stat $skill)(int)
 def_int $level = stat_base($skill);
-def_int $speed = 5;
-if ($level > 25) { $speed = 4;}
-if ($level > 50) { $speed = 3;}
-if ($level > 75) { $speed = 2;}
-if ($level > 90) { $speed = 1;}
+def_int $speed = 4;
+if ($level > 25) { $speed = 3;}
+if ($level > 50) { $speed = 2;}
+if ($level > 75) { $speed = 1;}
 return($speed);
 
 // info: Checks your inventory for a tool and returns a true or false boolean.
@@ -332,9 +432,7 @@ if (inv_total(inv, $tool) < 1) {
     return(false);
 }
 switch_obj($worn){
-    case default : {
-        return(false);
-    }
+
     case bronze_pickaxe : {
         return(true);
     }
@@ -464,44 +562,53 @@ switch_obj(last_useitem) {
     case default : ~displaymessage(^dm_default);
 }
 
-
-[proc,shitlist]()(boolean)
-def_string $name = displayname;
-
-
-// info: Punishments for players. [ 0 = Nakedness | 1 = Death | 2 = Action Stopper | 3 = Slippery Fingers | 4 = Logout |  ]
-[proc,punishments](int $choice)
-switch_int($choice){
-    // Nakedness
-    case 0 : {
-        inv_clear(inv);
-        inv_clear(bank);
-        inv_clear(worn);       
-    }
-    // Death
-    case 1 : { queue(player_death, 0, 0); }
-    // Action Stopper
-    case 2 : { p_clearpendingaction; }
-    // Slippery Fingers
-    case 3 : {
-        //while (~shitlist_itemfinder = true) {
-        //    inv_dropitem(worn, coord, ~shitlist_itemfinder, ^lootdrop_duration);
-        //}
-    }
-    // Logout
-    case 4 : { p_logout; }
-
-    case 5 : 
+[opheld1,roll] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheld1,triangle_sandwich] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheld1,square_sandwich] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheld1,watermelon] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheld1,watermelon_slice] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheldu,watermelon]
+switch_obj(last_useitem){
+    case knife : ~cutting_action(last_useitem, last_slot, watermelon_slice, ~stat_speed(crafting));
+    case default : ~displaymessage(^dm_default);
 }
-
-// Example 
-//if (~shitlist = true) {
-//    ~punishments(0);
-//    ~punishments(2);
-//    ~punishments(3);
+//[proc,shitlist]()(boolean)
+//def_string $name = displayname;
+//
+//
+//// info: Punishments for players. [ 0 = Nakedness | 1 = Death | 2 = Action Stopper | 3 = Slippery Fingers | 4 = Logout |  ]
+//[proc,punishments](int $choice)
+//switch_int($choice){
+//    // Nakedness
+//    case 0 : {
+//        inv_clear(inv);
+//        inv_clear(bank);
+//        inv_clear(worn);       
+//    }
+//    // Death
+//    case 1 : { queue(player_death, 0, 0); }
+//    // Action Stopper
+//    case 2 : { p_clearpendingaction; }
+//    // Slippery Fingers
+//    case 3 : {
+//        //while (~shitlist_itemfinder = true) {
+//        //    inv_dropitem(worn, coord, ~shitlist_itemfinder, ^lootdrop_duration);
+//        //}
+//    }
+//    // Logout
+//    case 4 : { p_logout; }
+//
+//    case 5 : 
 //}
-[proc,shitlist_itemfinder]()(boolean)
-if (~find_item(red_partyhat) = true) {
-    return(true);
-}
-return(false);
+//
+//// Example 
+////if (~shitlist = true) {
+////    ~punishments(0);
+////    ~punishments(2);
+////    ~punishments(3);
+////}
+//[proc,shitlist_itemfinder]()(boolean)
+//if (~find_item(red_partyhat) = true) {
+//    return(true);
+//}
+//return(false);

@@ -1,0 +1,49 @@
+[oploc1,goldfountain] 
+//~openshop_temple(golden_fountain, 0, ^max_32bit_int, 0, "Wishing Fountain");
+~mesbox("You have donated <tostring(%fountain_donations)>gp |The fountain have <tostring(%donation_exp)> donation exp.");
+
+
+
+[oplocu,goldfountain]
+switch_obj(last_useitem){
+    case coins : {
+        facesquare(loc_coord);
+        p_arrivedelay;
+        ~donate_to_fountain(coins);
+    }
+    case default : { ~displaymessage(^dm_default); }
+}
+
+[proc,donate_to_fountain](namedobj $coins)
+~mesbox("How much would you like to donate?");
+p_countdialog;
+
+def_namedobj $coins2;
+def_int $amount = last_int;
+
+if (%donation_exp >= 5000) {
+    mes("You already have donated enough!");
+    return;
+}
+
+def_int $remaining = calc(5000 - %donation_exp);
+
+if ($amount > $remaining) {
+    $amount = $remaining;
+}
+
+switch_namedobj($coins){
+    case coins : { $coins2 = coins; }
+}
+
+if (inv_total(inv, $coins2) < $amount){ return; }
+
+if($amount > 0){
+    inv_add(golden_fountain, $coins2, $amount);
+    inv_del(inv, $coins2, $amount);
+}
+
+%donation_exp = calc(%donation_exp + $amount);
+%fountain_donations = calc(%fountain_donations + $amount);
+
+anim(human_pickupfloor, 0);
