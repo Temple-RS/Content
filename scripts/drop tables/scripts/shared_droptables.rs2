@@ -176,6 +176,8 @@ if ($random < 8) {
     return (arrow_shaft, 25);
 } else if ($random < 21) {
     return (bronze_dart_tip, 15);
+} else if ($random < 22) {
+    return (~grindingtable);
 } else if ($random < 50) {
     return (bronze_battleaxe, 1);
 } else if ($random < 55) {
@@ -226,8 +228,10 @@ if ($random < 8) {
     return (coins, 300);
 } else if ($random < 21) {
     return (arrow_shaft, 125);
-} else if ($random < 21) {
+} else if ($random < 22) {
     return (steel_dart_tip, 15);
+} else if ($random < 23) {
+    return (~grindingtable);
 } else if ($random < 25) {
     return (lumbyscroll, 2);
 } else if ($random < 35) {
@@ -279,6 +283,8 @@ if ($random < 8) {
     return (arrow_shaft, 175);
 } else if ($random < 22) {
     return (mithril_dart_tip, 15);
+} else if ($random < 23) {
+    return (~grindingtable);
 } else if ($random < 25) {
     return (shiloscroll, 1);
 } else if ($random < 34) {

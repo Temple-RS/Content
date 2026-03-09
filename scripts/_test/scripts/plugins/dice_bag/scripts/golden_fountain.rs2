@@ -1,6 +1,5 @@
 [oploc1,goldfountain] 
-//~openshop_temple(golden_fountain, 0, ^max_32bit_int, 0, "Wishing Fountain");
-~mesbox("You have donated <tostring(%fountain_donations)>gp |The fountain have <tostring(%donation_exp)> donation exp.");
+~mesbox("You have donated <tostring(%fountain_donations)> gold total. |The fountain has <tostring(%donation_exp)> donation experience remaining in your pool.");
 
 
 
@@ -13,46 +12,52 @@ switch_obj(last_useitem){
     }
     case default : { ~displaymessage(^dm_default); }
 }
-// info: Donate 5,000 gp for 5,000 donation exp, if the amoutn donated is more than 5,000 gp, the difference is returned
+
 [proc,donate_to_fountain](namedobj $coins)
-~mesbox("How much would you like to donate?");
+if (%donation_exp >= 5000) {
+    mes("Your donation experience pool is already at the 5,000 exp cap.");
+    return;
+}
+
+~mesbox("How much would you like to donate? |(10 gold = 1 exp)");
 p_countdialog;
 
-def_namedobj $coins2;
 def_int $amount = last_int;
 
 if ($amount <= 0) {
     return;
 }
 
-switch_namedobj($coins){
-    case coins : { $coins2 = coins; }
-}
-
-// Clamp amount to what the player actually has in their inventory to prevent item deletion/dupe exploits
-def_int $held = inv_total(inv, $coins2);
+// Clamp to what the player actually has
+def_int $held = inv_total(inv, $coins);
 if ($amount > $held) {
     $amount = $held;
 }
 
-if (%donation_exp >= 5000) {
-    mes("You already have donated enough!");
+// Calculate how much more exp we can accept
+def_int $remaining_exp = calc(5000 - %donation_exp);
+// Calculate how much gold that corresponds to (10gp : 1exp)
+def_int $max_gold_accepted = calc($remaining_exp * 10);
+
+// Clamp amount to the fountain's capacity
+if ($amount > $max_gold_accepted) {
+    $amount = $max_gold_accepted;
+}
+
+// Ensure we only take gold in multiples of 10 to maintain the ratio
+def_int $exp_gain = calc($amount / 10);
+$amount = calc($exp_gain * 10);
+
+if ($amount <= 0) {
+    mes("The fountain only accepts donations in chunks of at least 10 gold.");
     return;
 }
 
-// Clamp the amount to the maximum limit of 5000 exp
-def_int $total = calc($amount + %donation_exp);
-if ($total > 5000){
-    def_int $difference = calc($total - 5000);
-    $amount = calc($amount - $difference);
-}
+inv_del(inv, $coins, $amount);
+// inv_add(golden_fountain, $coins, $amount); // Keep original behavior if golden_fountain is a valid container
 
-if ($amount > 0) {
-    inv_add(golden_fountain, $coins2, $amount);
-    inv_del(inv, $coins2, $amount);
-    
-    %donation_exp = calc(%donation_exp + $amount);
-    %fountain_donations = calc(%fountain_donations + $amount);
+%fountain_donations = calc(%fountain_donations + $amount);
+%donation_exp = calc(%donation_exp + $exp_gain);
 
-    anim(human_pickupfloor, 0);
-}
+anim(human_pickupfloor, 0);
+mes("You donate <tostring($amount)> gold and receive <tostring($exp_gain)> donation experience.");

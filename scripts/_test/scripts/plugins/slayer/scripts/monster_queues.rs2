@@ -21,6 +21,14 @@ if (%active_slayer_task = ^skeleton){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);  
 }
 
+[queue,mugger_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^mugger){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);  
+}
+
 [queue,dark_wizard_kill]
 if (~wilderness_level(coord) > 0){
     obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);

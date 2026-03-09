@@ -3,7 +3,9 @@ gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
 }
-
+if (npc_findhero = ^true) {
+    queue(mugger_kill, 0, 0);
+}
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
@@ -18,6 +20,10 @@ if ($random < 3) {
     obj_add(npc_coord, waterrune, 6, ^lootdrop_duration);
 } else if ($random < 7) {
     obj_add(npc_coord, earthrune, 5, ^lootdrop_duration);
+} else if ($random < 8) {
+    obj_add(npc_coord, ~grindingtable, ^lootdrop_duration);
+} else if ($random < 9) {
+    obj_add(npc_coord, ~low_tier_items, ^lootdrop_duration);
 } else if ($random < 20) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($random < 32) {

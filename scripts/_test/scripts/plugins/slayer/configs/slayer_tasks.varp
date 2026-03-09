@@ -9,3 +9,6 @@ scope=perm
 
 [slayer_points]
 scope=perm
+
+[slayer_tutorial]
+scope=perm

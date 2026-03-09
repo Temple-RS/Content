@@ -3,18 +3,21 @@
 ^goblin = 2
 ^skeleton = 3
 ^hobgoblin = 4
-^dark_wizard = 5
-^wizard = 6
-^giant = 7
-
-
-
-^fire_giant = 8
+^wizard = 5
+^giant = 6
+^mugger = 7
+^dark_wizard = 8
 ^moss_giant = 9
-^green_dragon = 10
-^blue_dragon = 11
-^red_dragon = 12
-^black_dragon = 13
-^ice_giant = 14
-^ice_warrior = 15
-^hellhound = 16
+^fire_giant = 10
+^green_dragon = 11
+^blue_dragon = 12
+^red_dragon = 13
+^black_dragon = 14
+^ice_giant = 15
+^ice_warrior = 16
+^hellhound = 17
+
+^slayertutorial_notcomplete = 0
+^slayertutorial_started = 1
+^slayertutorial_complete = 3
+^slayertutorial_goblins = 4

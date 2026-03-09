@@ -4,74 +4,115 @@
 [opheld1,slayer_gem] ~task_check;
 
 [label,slayer_menu]
+def_int $st = %slayer_tutorial;
 ~chatnpc("<p,shock>Hello <name>! I am the local Slayer expert!");
-def_int $choice = ~p_choice4_header("New Task.", 1, "Check Task.", 2, "Buy Provisions.", 3, "Cancel Task.", 4, "*Slayer Menu*");
-switch_int($choice){
-    case 1 : {
-        if (%active_slayer_task = 0){
-            def_int $diff = ~p_choice3_header("Easy.", 1, "Medium.", 2, "Hard.", 3, "*Difficulty Selection*");
-            switch_int($diff){
-                case 1 : {
-                    ~new_slayer_task(0);
-                }
-                case 2 : {
-                    ~new_slayer_task(25);
-                }
-                case 3 : {
-                    ~new_slayer_task(50);
-                }
-            }
-        } else {
-            mes("You need to finish your current task of killing <tostring(~task_amount)> more <~task_name>");
+switch_int($st){
+    case ^slayertutorial_notcomplete : {
+        ~chatnpc("<p,happy>I could use an adventurer like you!");
+        ~chatplayer("<p,confused>An adventurer like me...? How do you know me?");
+        ~chatnpc("<p,neutral>That does not matter! I can give you a task to kill a certain number of monsters.");
+        ~chatnpc("<p,neutral>If you complete the task you will be rewarded with slayer points.");
+        ~chatnpc("<p,neutral>You can use these points to purchase various provisions from me.");
+        ~chatnpc("<p,happy>First I need to show you the ropes!");
+        ~chatnpc("<p,happy>Go kill a goblin to show your might!");
+        %active_slayer_task = ^goblin;
+        %task_amount = 1;
+        %current_count = 0;
+        %slayer_tutorial = ^slayertutorial_started;
+    }
+    case ^slayertutorial_started : {
+        if (%active_slayer_task = ^goblin & %task_amount > 0){
+            ~chatnpc("<p,neutral>Return to me when you have killed the goblin!");
             return;
         }
+        ~chatnpc("<p,shock>You have killed a goblin!");
+        ~chatnpc("<p,happy>You have earned 10 slayer points!");
+
+        if (%prieststart = ^priest_complete){
+            ~chatnpc("<p,neutral>Now I think you have the courage to explore beneath the graveyard");
+            ~chatnpc("<p,neutral>Go use this spade and dig around inside the coffin.");
+            inv_add(inv, spade, 1);
+        } else {
+            ~chatnpc("<p,neutral>Go speak with the priest as him about the graveyard.");
+            ~chatnpc("<p,neutral>There are deeper mysteries to explore here..");
+        }
+        %slayer_tutorial = ^slayertutorial_complete;
     }
-    case 2 : {
-        ~task_check;
-    }
-    case 3 : {
-        def_int $choice2 = ~p_choice3_header("Light(25 points)", 1, "Medium(100 points)", 2, "Heavy(500 points)", 3, "*Provisions Selection*");
-        switch_int($choice2){
+    case ^slayertutorial_goblins : { %slayer_tutorial = ^slayertutorial_started; }
+    case ^slayertutorial_complete : {
+        def_int $choice = ~p_choice4_header("New Task.", 1, "Check Task.", 2, "Buy Provisions.", 3, "Cancel Task.", 4, "*Slayer Menu*");
+        switch_int($choice){
             case 1 : {
-                if (%slayer_points < 25) {
-                    mes("You do not have enough slayer points to buy this item.");
+                if (%active_slayer_task = 0){
+                    def_int $diff = ~p_choice3_header("Easy.", 1, "Medium.", 2, "Hard.", 3, "*Difficulty Selection*");
+                    switch_int($diff){
+                        case 1 : {
+                            ~new_slayer_task(0);
+                        }
+                        case 2 : {
+                            ~new_slayer_task(25);
+                        }
+                        case 3 : {
+                            ~new_slayer_task(50);
+                        }
+                    }
+                } else {
+                    mes("You need to finish your current task of killing <tostring(~task_amount)> more <~task_name>");
                     return;
                 }
-                %slayer_points = calc(%slayer_points - 25);
-                inv_add(inv,~buy_provisions(25));                
             }
             case 2 : {
-                if (%slayer_points < 100) {
-                    mes("You do not have enough slayer points to buy this item.");
-                    return;
-                }
-                %slayer_points = calc(%slayer_points - 100);
-                inv_add(inv,~buy_provisions(100));                
+                ~task_check;
             }
             case 3 : {
-                if (%slayer_points < 500) {
-                    mes("You do not have enough slayer points to buy this item.");
-                    return;
+                def_int $choice2 = ~p_choice3_header("Light(25 points)", 1, "Medium(100 points)", 2, "Heavy(500 points)", 3, "*Provisions Selection*");
+                switch_int($choice2){
+                    case 1 : {
+                        if (%slayer_points < 25) {
+                            mes("You do not have enough slayer points to buy this item.");
+                            return;
+                        }
+                        %slayer_points = calc(%slayer_points - 25);
+                        inv_add(inv,~buy_provisions(25));                
+                    }
+                    case 2 : {
+                        if (%slayer_points < 100) {
+                            mes("You do not have enough slayer points to buy this item.");
+                            return;
+                        }
+                        %slayer_points = calc(%slayer_points - 100);
+                        inv_add(inv,~buy_provisions(100));                
+                    }
+                    case 3 : {
+                        if (%slayer_points < 500) {
+                            mes("You do not have enough slayer points to buy this item.");
+                            return;
+                        }
+                        %slayer_points = calc(%slayer_points - 500);
+                        inv_add(inv,~buy_provisions(500));                
+                    }
                 }
-                %slayer_points = calc(%slayer_points - 500);
-                inv_add(inv,~buy_provisions(500));                
+            }
+            case 4 : {
+                if (%active_slayer_task = 0) {
+                    mes("You do not have an active task.");
+                    return;
+                } else {
+                    %active_slayer_task = 0;
+                    %task_amount = 0;
+                    %current_count = 0;
+                    mes("Your task has been cleared.");
+                    mes("Slayer Points: <tostring(%slayer_points)>");
+                }
             }
         }
+
     }
-    case 4 : {
-        if (%active_slayer_task = 0) {
-            mes("You do not have an active task.");
-            return;
-        } else {
-            %active_slayer_task = 0;
-            %task_amount = 0;
-            %current_count = 0;
-            mes("Your task has been cleared.");
-            mes("Slayer Points: <tostring(%slayer_points)>");
-        }
+    case default : {
+        mes("You do not have an active task.");
+        return;
     }
 }
-
 
 [label,slayer_kill](int $active_task, int $task_amount, int $current_count)
 if (~task_complete($active_task, $task_amount, $current_count) = false){
@@ -120,50 +161,54 @@ switch_int($random_task){
         $active_task = "Hobgoblin";
     }
     case 4 : {
-        %active_slayer_task = ^dark_wizard;
-        $active_task = "Dark Wizard";
-    }
-    case 5 : {
         %active_slayer_task = ^wizard;
         $active_task = "Wizard";
     }
-    case 6 : {
+    case 5 : {
         %active_slayer_task = ^giant;
         $active_task = "Giant";
     }
+    case 6 : {
+        %active_slayer_task = ^mugger;
+        $active_task = "Mugger";
+    }
     case 7 : {
+        %active_slayer_task = ^dark_wizard;
+        $active_task = "Dark Wizard";
+    }
+    case 8 : {
         %active_slayer_task = ^moss_giant;
         $active_task = "Moss Giant";
     }
-    case 8 : {
+    case 9 : {
         %active_slayer_task = ^fire_giant;
         $active_task = "Fire Giant";
     }
-    case 9 : {
+    case 10 : {
         %active_slayer_task = ^green_dragon;
         $active_task = "Green Dragon";
     }
-    case 10 : {
+    case 11 : {
         %active_slayer_task = ^blue_dragon;
         $active_task = "Blue Dragon";
     }
-    case 11 : {
+    case 12 : {
         %active_slayer_task = ^red_dragon;
         $active_task = "Red Dragon";
     }
-    case 12 : {
+    case 13 : {
         %active_slayer_task = ^black_dragon;
         $active_task = "Black Dragon";
     }
-    case 13 : {
+    case 14 : {
         %active_slayer_task = ^ice_giant;
         $active_task = "Ice Giant";
     }
-    case 14 : {
+    case 15 : {
         %active_slayer_task = ^ice_warrior;
         $active_task = "Ice Warrior";
     }
-    case 15 : {
+    case 16 : {
         %active_slayer_task = ^hellhound;
         $active_task = "Hellhound";
     }
@@ -199,18 +244,19 @@ switch_int($active_task){
     case 1 : { $string = "Goblin"; }
     case 2 : { $string = "Skeleton"; }
     case 3 : { $string = "Hobgoblin"; }
-    case 4 : { $string = "Dark Wizard"; }
-    case 5 : { $string = "Wizard"; }
+    case 4 : { $string = "Wizard"; }
+    case 5 : { $string = "Mugger"; }
     case 6 : { $string = "Giant"; }
-    case 7 : { $string = "Moss Giant"; }
-    case 8 : { $string = "Fire Giant"; }
-    case 9 : { $string = "Green Dragon"; }
-    case 10 : { $string = "Blue Dragon"; }
-    case 11 : { $string = "Red Dragon"; }
-    case 12 : { $string = "Black Dragon"; }
-    case 13 : { $string = "Ice Giant"; }
-    case 14 : { $string = "Ice Warrior"; }
-    case 15 : { $string = "Hellhound"; }
+    case 7 : { $string = "Dark Wizard"; }
+    case 8 : { $string = "Moss Giant"; }
+    case 9 : { $string = "Fire Giant"; }
+    case 10 : { $string = "Green Dragon"; }
+    case 11 : { $string = "Blue Dragon"; }
+    case 12 : { $string = "Red Dragon"; }
+    case 13 : { $string = "Black Dragon"; }
+    case 14 : { $string = "Ice Giant"; }
+    case 15 : { $string = "Ice Warrior"; }
+    case 16 : { $string = "Hellhound"; }
     case default : { $string = "None"; }
 }
 return($string);

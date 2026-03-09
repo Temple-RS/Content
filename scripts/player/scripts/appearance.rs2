@@ -111,11 +111,9 @@ if (p_finduid(uid) = true) {
 }
 ~update_weight_equipment; // replace weight-reducing equipment
 ~update_bas; // update appearance
+~update_weapon_category($previous_weapon); // the attack tab weapon category
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight
-if (%tutorial > ^newbie_combat_instructor_unequipping_items) {
-    ~update_weapon_category($previous_weapon); // the attack tab weapon category
-}
 ~player_combat_stat; // update combat varps
 
 [proc,.update_all](obj $previous_weapon)
@@ -134,9 +132,7 @@ if (.p_finduid(.uid) = true) {
 }
 .cam_reset;
 ~.update_bas; // update appearance
+~.update_weapon_category($previous_weapon); // the attack tab weapon category
 ~.update_bonuses; // update bonuses if
 ~.update_weight; // update weight
-if (.%tutorial > ^newbie_combat_instructor_unequipping_items) {
-   ~.update_weapon_category($previous_weapon); // the attack tab weapon category
-}
 ~.player_combat_stat; // update combat varps

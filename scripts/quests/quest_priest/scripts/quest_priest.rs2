@@ -62,6 +62,15 @@ if (last_useitem = ghostskull & %prieststart = ^priest_obtained_skull) {
     // https://youtu.be/QX-ieoyDXh4?t=978 - missing space after `wind...` is accurate.
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
     return;
+} else if (last_useitem = spade & %prieststart = ^priest_complete) {
+    if (%slayer_tutorial = ^slayertutorial_complete) {
+        mes("You find a small opening in the coffin.");
+        ~climb_ladder(0_50_151_8_21, false);
+        return;
+    } else {
+        ~chatplayer("<p,shock>I can't go down there, I'm too scared!");
+        return;
+    }
 }
 ~displaymessage(^dm_default);
 
