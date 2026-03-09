@@ -107,14 +107,16 @@ def_int $standard;
 if (inv_total(inv, expscroll) > 0) {
     ~expscroll_used;
     if (%donation_exp >= 100){
-        $standard = calc(multiply($base_level, 25) + 100);
+        $standard = add(multiply($base_level, 25), 100);
         %donation_exp = calc(%donation_exp - 100);
-        mes("Your donation to the fountain empowers the lamp!");
+        stat_advance($stat, multiply($standard, 10));
+        mes("Your donation to the fountain empowers you!");
     } else {
         $standard = calc(multiply($base_level, 25));
+        stat_advance($stat, multiply($standard, 10));
     }
 
-    stat_advance($stat, $standard);
+
     sound_synth(found_gem, 0, 0);
 
 } else {
@@ -123,16 +125,21 @@ if (inv_total(inv, expscroll) > 0) {
     %xplamp = ^xplamp_none;
 
     if (%donation_exp >= 500){
-        $standard = calc(multiply($base_level, 100) + 500);
+        $standard = add(multiply($base_level, 100), 500);
         %donation_exp = calc(%donation_exp - 500);
-        mes("Your donation to the fountain empowers the lamp!");
+        stat_advance($stat, multiply($standard, 10));
+        mes("Your donation to the fountain empowers you!");
     } else {
-        $standard = calc(multiply($base_level, 100));
+        $standard = multiply($base_level, 100);
+        stat_advance($stat, multiply($standard, 10));
     }
-
-    stat_advance($stat, $standard);
     sound_synth(found_gem, 0, 0);
 }
 
 
 ~mesbox("Your wish has been granted!|You have been awarded <tostring($standard)> <enum(stat, string, stat_names, $stat)> experience!");
+
+
+[proc,reset_donationexp]
+%donation_exp = 0;
+%fountain_donations = 0;

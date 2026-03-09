@@ -13,7 +13,7 @@ switch_obj(last_useitem){
     }
     case default : { ~displaymessage(^dm_default); }
 }
-
+// info: Donate 5,000 gp for 5,000 donation exp, if the amoutn donated is more than 5,000 gp, the difference is returned
 [proc,donate_to_fountain](namedobj $coins)
 ~mesbox("How much would you like to donate?");
 p_countdialog;
@@ -21,29 +21,38 @@ p_countdialog;
 def_namedobj $coins2;
 def_int $amount = last_int;
 
-if (%donation_exp >= 5000) {
-    mes("You already have donated enough!");
+if ($amount <= 0) {
     return;
-}
-
-def_int $remaining = calc(5000 - %donation_exp);
-
-if ($amount > $remaining) {
-    $amount = $remaining;
 }
 
 switch_namedobj($coins){
     case coins : { $coins2 = coins; }
 }
 
-if (inv_total(inv, $coins2) < $amount){ return; }
-
-if($amount > 0){
-    inv_add(golden_fountain, $coins2, $amount);
-    inv_del(inv, $coins2, $amount);
+// Clamp amount to what the player actually has in their inventory to prevent item deletion/dupe exploits
+def_int $held = inv_total(inv, $coins2);
+if ($amount > $held) {
+    $amount = $held;
 }
 
-%donation_exp = calc(%donation_exp + $amount);
-%fountain_donations = calc(%fountain_donations + $amount);
+if (%donation_exp >= 5000) {
+    mes("You already have donated enough!");
+    return;
+}
 
-anim(human_pickupfloor, 0);
+// Clamp the amount to the maximum limit of 5000 exp
+def_int $total = calc($amount + %donation_exp);
+if ($total > 5000){
+    def_int $difference = calc($total - 5000);
+    $amount = calc($amount - $difference);
+}
+
+if ($amount > 0) {
+    inv_add(golden_fountain, $coins2, $amount);
+    inv_del(inv, $coins2, $amount);
+    
+    %donation_exp = calc(%donation_exp + $amount);
+    %fountain_donations = calc(%fountain_donations + $amount);
+
+    anim(human_pickupfloor, 0);
+}
