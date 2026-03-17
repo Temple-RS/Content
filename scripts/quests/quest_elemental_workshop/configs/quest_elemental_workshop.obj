@@ -42,6 +42,7 @@ recol2s=16705
 recol2d=9513
 name=A stone bowl
 weight=5oz
+stackable=yes
 
 [elemental_workshop_lava_bowl_full]
 desc=This is a stone bowl full of lava.
@@ -59,6 +60,7 @@ recol2s=16705
 recol2d=25893
 name=A stone bowl
 weight=8oz
+stackable=no
 
 [elemental_shield]
 desc=A magic shield.
@@ -89,7 +91,7 @@ model=model_2748_obj
 2dxan=368
 members=true
 cost=5
-tradeable=no
+tradeable=yes
 recol1s=11488
 recol1d=10259
 name=Elemental ore
@@ -105,7 +107,7 @@ model=model_2408_obj
 2dxan=196
 members=true
 cost=8
-tradeable=no
+tradeable=yes
 recol1s=11488
 recol1d=10259
 name=Elemental metal

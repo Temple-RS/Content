@@ -276,6 +276,16 @@ if ($material3 ! null) {
 
 return(true);
 
+// info: Heat Check -- Do you have a heat element?
+[proc,heat_check](obj $used_item, int $required_amount)(boolean)
+def_int $tot = inv_total(inv, $used_item);
+if ($tot < $required_amount){
+    mes("You need more materials to do this.");
+    return(false);
+} else {
+    return(true);
+}
+
 // info: Eat Action
 [proc,eat_action](obj $used_item, int $slot, int $delay, int $effect)
 inv_delslot(inv, $slot);
@@ -418,10 +428,11 @@ p_delay(~stat_speed(crafting));
 // info: Returns the crafting speed based on the player's skill level. [ 90: 1t | 75: 2t | 50: 3t | 25: 4t | 1: 5t ]
 [proc,stat_speed](stat $skill)(int)
 def_int $level = stat_base($skill);
-def_int $speed = 4;
-if ($level > 25) { $speed = 3;}
-if ($level > 50) { $speed = 2;}
-if ($level > 75) { $speed = 1;}
+def_int $speed = 5;
+if ($level > 25) { $speed = 4;}
+if ($level > 50) { $speed = 3;}
+if ($level > 80) { $speed = 2;}
+if ($level > 95) { $speed = 1;}
 return($speed);
 
 // info: Checks your inventory for a tool and returns a true or false boolean.
@@ -474,6 +485,36 @@ switch_obj($worn){
     }
 }
 return(true);
+
+// info: String Maker
+[proc,string_maker](obj $obj, string $obj_name, int $amount, string $loc_name, string $action_name)
+switch_obj($obj){
+    case elemental_workshop_lava_bowl_full : {
+        mes("You <$action_name> to the <$loc_name>.");
+        return;
+    }
+}
+
+// info: Failure Chance
+[proc,action_failure](int $success_chance)(boolean)
+def_int $random = random(99);
+if ($random > $success_chance) {
+    return(true);
+}
+return(false);
+
+// info: Action Repeater
+[proc,action_repeat](stat $stat, int $exp, int $cycles, seq $anim, synth $sound, obj $resource, int $resource_amt, namedobj $product, int $product_amt)
+while($cycles > 0) {
+    if (inv_total(inv, $resource) < $resource_amt) {return;}
+    anim($anim, 0);
+    sound_synth($sound, 0, 0);
+    p_delay(calc(~stat_speed($stat) + 1));
+    inv_del(inv, $resource, $resource_amt);
+    if ($product ! null) {inv_add(inv, $product, $product_amt);}
+    if ($exp > 0) {stat_advance($stat, $exp);}
+    $cycles = calc($cycles - 1);
+}
 
 // info: Returns the bonus as an int. | $strings = "stab", "slash", "crush", "magic", "range", "strength", "prayer", "rangebonus" |
 [proc,bonus_checker](string $string)(int)

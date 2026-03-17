@@ -138,6 +138,10 @@ mes("You have used a Draynor Scroll!");
 if (inv_total(inv, yanillescroll) < 1){
     mes("You need to have a Yanille Scroll to use this portal!");
 }
+if (%itwatchtower ! ^itwatchtower_complete) {
+    ~mesbox("You must complete the Watchtower quest before using this!");
+    return;
+}
 if (~wilderness_level(coord) > 0) {
     // osrs
     mes("A mysterious force blocks your teleport.");

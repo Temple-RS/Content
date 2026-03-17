@@ -10,7 +10,10 @@
 [opheld1,pineapple]
 mes("You cant eat it whole; maybe you should cut it up.");
 [opheld1,_alcoholic_drinks] @player_consume_item(consume_effect_stat, 2, 3);
-
+[opheld1,pats_mug]{
+    spotanim_pl(stunned_thieving, 100, 0);
+    @player_consume_item(consume_effect_stat, 2, 3);
+}
 // Kebabs
 [opheld1,kebab] @player_consume_item(consume_effect_kebab, 2, 3);
 [opheld1,ugthanki_kebab_bad] @player_consume_item(consume_effect_ugthanki_kebab_bad, 2, 3);

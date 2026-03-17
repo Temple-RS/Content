@@ -157,3 +157,40 @@ recol1d=1349
 2dyan=1892
 2dxan=264
 weight=2oz
+
+
+[pats_mug]
+name=Paddy's Mug
+desc=A glass of frothy ale.
+cost=2
+iop1=Drink
+model=model_2491_obj
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=550g
+recol1s=25025
+recol1d=2434
+recol2s=31367
+recol2d=2690
+recol3s=32735
+recol3d=11819
+param=next_obj_stage,pats_mug_empty
+tradeable=no
+param=no_alchemy,^true
+
+[pats_mug_empty]
+name=Paddy's Mug
+desc=I need to fill this with beer.
+cost=2
+model=model_2548_obj
+2dxof=-3
+2dyof=2
+2dzoom=660
+2dyan=1904
+2dxan=140
+weight=50g
+tradeable=no
+param=no_alchemy,^true

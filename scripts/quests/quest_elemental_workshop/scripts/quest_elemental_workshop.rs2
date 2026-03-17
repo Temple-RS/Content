@@ -44,12 +44,8 @@ if(testbit(%elemental_workshop_bits, ^elemental_workshop_entered) = ^false) {
 p_teleport(0_42_54_21_41);
 
 [oploc1,elemental_workshop_box_1]
-if(inv_total(inv, elemental_workshop_lava_bowl) = 0) {
-    inv_add(inv, elemental_workshop_lava_bowl, 1);
-    mes("You find a stone bowl.");
-    return;
-}
-@elemental_workshop_box_empty;
+inv_add(inv, elemental_workshop_lava_bowl, 1);
+mes("You find a stone bowl.");
 
 [oploc1,elemental_workshop_box_2]
 if(inv_total(inv, needle) > 0 | testbit(%elemental_workshop_bits, ^elemental_workshop_needle_found) = ^true) {
@@ -149,10 +145,10 @@ mes("Nothing happens; the lever resets itself.");
 
 [oplocu,elemental_workshop_trough]
 if(last_useitem = elemental_workshop_lava_bowl) {
-    inv_del(inv, elemental_workshop_lava_bowl, 1);
-    inv_add(inv, elemental_workshop_lava_bowl_full, 1);
-    mes("You fill the bowl with hot lava.");
-    sound_synth(lava_bowl_fill, 0, 0);
+    p_arrivedelay;
+    facesquare(loc_coord);
+    ~action_repeat(smithing, 0, inv_total(inv, elemental_workshop_lava_bowl), human_pickuptable, lava_bowl_fill, elemental_workshop_lava_bowl, 1, elemental_workshop_lava_bowl_full, 1);
+    //mes("You fill the bowl with hot lava.");
     return;
 }
 if(last_useitem = elemental_workshop_lava_bowl_full) {
@@ -238,32 +234,181 @@ if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^false){
             mes("The furnace needs to be hotter to be of any use.");
             return;
         }
-        if(inv_total(inv, coal) < 4) {
-            mes("You need four heaps of coal to smelt elemental ore.");
+        if (~heat_check(elemental_workshop_lava_bowl_full, 6) = true ){
+            mes("You heat up the furnace.");
+            inv_del(inv, elemental_workshop_ore, 1);
+            inv_del(inv, elemental_workshop_lava_bowl_full, 6);
+            inv_add(inv, elemental_workshop_lava_bowl, 6);
+        } else if (~heat_check(coal, 4) = true){
+            inv_del(inv, elemental_workshop_ore, 1);
+            inv_del(inv, coal, 4);
+        } else {
+            mes("The furnace needs to be hotter to be of any use.");
             return;
         }
-        mes("You place the elemental ore and four heaps of coal into the furnace.");
-        inv_del(inv, elemental_workshop_ore, 1);
-        inv_del(inv, coal, 4);
         anim(human_furnace, 0);
         p_delay(3);
         stat_advance(smithing, 80);
         inv_add(inv, elemental_workshop_bar, 1);
         mes("You retrieve a bar of elemental metal.");
-        mes("The furnace is so hot it will destroy almost anything put in it."); // todo: does this mean anything functionally?
     }
 } else {
     switch_obj($last_useitem){
-        case elemental_workshop_ore : ~smelting_action(elemental_workshop_ore, 4, elemental_workshop_bar, 1, 650);
+        case elemental_workshop_ore : {
+            if (stat_base(smithing) < 20) {
+                mes("You need a Smithing level of at least 20 to smelt elemental ore.");
+                return;
+            }
+            if (~heat_check(elemental_workshop_lava_bowl_full, 6) = true){
+                ~action_repeat(smithing, 0, 6, human_furnace, furnace, elemental_workshop_lava_bowl_full, 1, elemental_workshop_lava_bowl, 1);
+                if (random(99) < 95) {
+                    ~smelting_action(elemental_workshop_ore, 0, elemental_workshop_bar, 1, 350);
+                } else {
+                    if (inv_total(worn, ring_of_forging) > 0){
+                        ~smelting_action(elemental_workshop_ore, 0, elemental_workshop_bar, 1, 350);
+                        ~lose_charge_ring_of_forging;
+                    } else {
+                        mes("You fail to smelt the elemental ore.");
+                        inv_del(inv, elemental_workshop_ore, 1);
+                        return;
+                    }
+                }
+                mes("You successfully smelt the elemental ore.");
+            } else {
+                if (inv_total(worn, ring_of_forging) > 0){
+                    ~smelting_action(elemental_workshop_ore, 2, elemental_workshop_bar, 1, 350);
+                    ~lose_charge_ring_of_forging;
+                } else {~smelting_action(elemental_workshop_ore, 4, elemental_workshop_bar, 1, 350);}
+                mes("You successfully smelt the elemental ore.");
+            }
+        }
         case tin_ore : mes("This furnace is too hot for this weak metal.");
         case copper_ore : mes("This furnace is too hot for this weak metal.");
         case iron_ore : mes("This furnace is too hot for this weak metal.");
-        case silver_ore : @smelt_ore(silver_ore);
-        case gold_ore : @smelt_ore(gold_ore);
-        case mithril_ore : @smelt_ore(mithril_ore);
-        case adamantite_ore : @smelt_ore(adamantite_ore);
-        case runite_ore : @smelt_ore(runite_ore);
-        case blurite_ore : ~smelting_action(blurite_ore, 2, blurite_bar, 1, 350);
+        case silver_ore : {
+            if (stat_base(smithing) < 20) {
+                mes("You need a Smithing level of at least 20 to smelt silver ore.");
+                return;
+            }
+            ~smelting_action(silver_ore, 0, silver_bar, 1, 137);
+        }
+        case gold_ore : {
+            if (stat_base(smithing) < 40) {
+                mes("You need a Smithing level of at least 40 to smelt gold ore.");
+                return;
+            }
+            ~smelting_action(gold_ore, 0, gold_bar, 1, 225);
+        }
+        case mithril_ore : {
+            if (stat_base(smithing) < 50) {
+                mes("You need a Smithing level of at least 50 to smelt mithril ore.");
+                return;
+            }
+            if (~heat_check(elemental_workshop_lava_bowl_full, 6) = true){
+                ~action_repeat(smithing, 0, 6, human_furnace, furnace, elemental_workshop_lava_bowl_full, 1, elemental_workshop_lava_bowl, 1);
+                if (random(99) < 90){
+                    ~smelting_action(mithril_ore, 0, mithril_bar, 1, 300);
+                } else {
+                    if (inv_total(worn, ring_of_forging) > 0){
+                        ~smelting_action(mithril_ore, 0, mithril_bar, 1, 300);
+                        ~lose_charge_ring_of_forging;
+                    }
+                    mes("You fail to smelt the mithril ore.");
+                    inv_del(inv, mithril_ore, 1);
+                }
+                mes("You successfully smelt the mithril ore.");
+            } else {
+                if (inv_total(worn, ring_of_forging) > 0){
+                    ~smelting_action(mithril_ore, 2, mithril_bar, 1, 300);
+                    ~lose_charge_ring_of_forging;
+                } else {~smelting_action(mithril_ore, 4, mithril_bar, 1, 300);}
+                mes("You successfully smelt the mithril ore.");
+            }
+        }
+        case adamantite_ore : {
+            if (stat_base(smithing) < 70) {
+                mes("You need a Smithing level of at least 70 to smelt adamantite ore.");
+                return;
+            }
+            if (~heat_check(elemental_workshop_lava_bowl_full, 8) = true){
+                ~action_repeat(smithing, 0, 8, human_furnace, furnace, elemental_workshop_lava_bowl_full, 1, elemental_workshop_lava_bowl, 1);
+                if (random(99) < 85) {
+                    ~smelting_action(adamantite_ore, 0, adamantite_bar, 1, 375);
+                } else {
+                    if (inv_total(worn, ring_of_forging) > 0){
+                        ~smelting_action(adamantite_ore, 0, adamantite_bar, 1, 375);
+                        ~lose_charge_ring_of_forging;
+                    }
+                    mes("You fail to smelt the adamantite ore.");
+                    inv_del(inv, adamantite_ore, 1);
+                }
+                mes("You successfully smelt the adamantite ore.");
+            } else {
+                if (inv_total(worn, ring_of_forging) > 0){
+                    ~smelting_action(adamantite_ore, 3, adamantite_bar, 1, 375);
+                    ~lose_charge_ring_of_forging;
+                } else {~smelting_action(adamantite_ore, 6, adamantite_bar, 1, 375);}
+                mes("You successfully smelt the adamantite ore.");
+            }
+        }
+        case runite_ore : {
+            if (stat_base(smithing) < 85) {
+                mes("You need a Smithing level of at least 85 to smelt runite ore.");
+                return;
+            }
+            if (~heat_check(elemental_workshop_lava_bowl_full, 12) = true){
+                ~action_repeat(smithing, 0, 12, human_furnace, furnace, elemental_workshop_lava_bowl_full, 1, elemental_workshop_lava_bowl, 1);
+                if (random(99) < 70) {
+                    ~smelting_action(runite_ore, 0, runite_bar, 1, 500);
+                } else {
+                    if (inv_total(worn, ring_of_forging) > 0){
+                        ~smelting_action(runite_ore, 0, runite_bar, 1, 500);
+                        ~lose_charge_ring_of_forging;
+                    } else {
+                        mes("You fail to smelt the runite ore.");
+                        inv_del(inv, runite_ore, 1);
+                        return;
+                    }
+                }
+                mes("You successfully smelt the runite ore.");
+            } else {
+                if (inv_total(worn, ring_of_forging) > 0){
+                    ~smelting_action(runite_ore, 4, runite_bar, 1, 500);
+                    ~lose_charge_ring_of_forging;
+                } else {~smelting_action(runite_ore, 8, runite_bar, 1, 500);}
+                mes("You successfully smelt the runite ore.");
+            }
+        }
+        case blurite_ore : {
+            if (stat_base(smithing) < 15) {
+                mes("You need a Smithing level of at least 15 to smelt blurite ore.");
+                return;
+            }
+            if (~heat_check(elemental_workshop_lava_bowl_full, 4) = true){
+                ~action_repeat(smithing, 0, 4, human_furnace, furnace, elemental_workshop_lava_bowl_full, 1, elemental_workshop_lava_bowl, 1);
+                if (random(99) < 95) {
+                    ~smelting_action(blurite_ore, 0, blurite_bar, 1, 175);
+                } else {
+                    if (inv_total(worn, ring_of_forging) > 0){
+                        ~smelting_action(blurite_ore, 0, blurite_bar, 1, 175);
+                        ~lose_charge_ring_of_forging;
+                    } else {
+                        mes("You fail to smelt the blurite ore.");
+                        inv_del(inv, blurite_ore, 1);
+                        return;
+                    }
+                }
+                mes("You successfully smelt the blurite ore.");
+            } else {
+                if (inv_total(worn, ring_of_forging) > 0){
+                    ~smelting_action(blurite_ore, 1, blurite_bar, 1, 175);
+                    ~lose_charge_ring_of_forging;
+                } else {~smelting_action(blurite_ore, 2, blurite_bar, 1, 175);}
+                mes("You successfully smelt the blurite ore.");
+            }
+        }
+        case gold_bar, perfect_gold_bar : { @craft_gold_interface; }
+        case silver_bar : { @craft_silver; }
     }
 }
 
@@ -295,6 +440,7 @@ switch_obj(last_useitem){
     }
     case elemental_nails : ~create_nail_box;
     case elemental_cog : ~create_cog_box;
+    case blurite_bar : @blurite_smithing;
     case default : {
         if(testbit(%elemental_workshop_bits, ^elemental_workshop_complete) = ^true) {
             if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);

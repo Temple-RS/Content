@@ -11,7 +11,7 @@ recol1d=15871
 2dyan=1180
 2dxan=196
 weight=4lb
-tradeable=no
+tradeable=yes
 param=no_alchemy,^true
 
 

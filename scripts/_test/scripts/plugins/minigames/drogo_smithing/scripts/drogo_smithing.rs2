@@ -8,16 +8,15 @@ if (%doricquest ! ^doric_complete){
 }
 switch_int(%drogo_status){
     case ^drogo_not_started : {
-        def_int $choice = ~p_choice5_header("Blurite.", 1, "Elemental Cog.", 2, "Elemental Nails.", 3, "Cog Box.", 4, "Nail Box.", 5, "Task List.");
+        def_int $choice = ~p_choice5_header("Blurite swords.", 1, "Elemental Cog.", 2, "Elemental Nails.", 3, "Cog Box.", 4, "Nail Box.", 5, "Task List.");
         switch_int($choice){
             case 1 : {
-                if (inv_total(inv, blurite_bar) > 9){
-                    ~chatnpc("<p,happy> Thank you for the blurite bars!");
-                    inv_del(inv, blurite_bar, 10);
-                    %drogo_status = ^drogo_not_started;
-                    stat_advance(smithing, 2500);
+                if (inv_total(inv, faladian_sword) > 24){
+                    ~chatnpc("<p,happy> Thank you for the faladian swords!");
+                    inv_del(inv, faladian_sword, 25);
+                    stat_advance(smithing, 250);
                 } else {
-                    ~chatnpc("<p,happy> You don't have enough blurite bars!");
+                    ~chatnpc("<p,happy> You don't have enough faladian swords!");
                     return;
                 }
             }
@@ -25,8 +24,7 @@ switch_int(%drogo_status){
                 if (inv_total(inv, elemental_cog) > 99){
                     ~chatnpc("<p,happy> Thank you for the elemental cogs!");
                     inv_del(inv, elemental_cog, 100);
-                    %drogo_status = ^drogo_not_started;
-                    stat_advance(smithing, 1000);
+                    stat_advance(smithing, 300);
                 } else {
                     ~chatnpc("<p,happy> You don't have enough elemental cogs!");
                     return;
@@ -36,8 +34,7 @@ switch_int(%drogo_status){
                 if (inv_total(inv, elemental_nails) > 99){
                     ~chatnpc("<p,happy> Thank you for the elemental nails!");
                     inv_del(inv, elemental_nails, 100);
-                    %drogo_status = ^drogo_not_started;
-                    stat_advance(smithing, 1000);
+                    stat_advance(smithing, 350);
                 } else {
                     ~chatnpc("<p,happy> You don't have enough elemental nails!");
                     return;
@@ -47,8 +44,7 @@ switch_int(%drogo_status){
                 if (inv_total(inv, elemental_cog_box) > 0){
                     ~chatnpc("<p,happy> Thank you for the elemental cog box!");
                     inv_del(inv, elemental_cog_box, 1);
-                    %drogo_status = ^drogo_not_started;
-                    stat_advance(smithing, 1100);
+                    stat_advance(smithing, 3600);
                 } else {
                     ~chatnpc("<p,happy> You don't have enough elemental cog boxes!");
                     return;
@@ -58,8 +54,7 @@ switch_int(%drogo_status){
                 if (inv_total(inv, elemental_nail_box) > 0){
                     ~chatnpc("<p,happy> Thank you for the elemental nail box!");
                     inv_del(inv, elemental_nail_box, 1);
-                    %drogo_status = ^drogo_not_started;
-                    stat_advance(smithing, 1200);
+                    stat_advance(smithing, 3700);
                 } else {
                     ~chatnpc("<p,happy> You don't have enough elemental nail boxes!");
                     return;
@@ -68,31 +63,79 @@ switch_int(%drogo_status){
         }
     }
 }
-[opnpcu,drogo]{
-    switch_obj(last_useitem){
-        case elemental_cog_box : {
-            inv_del(inv, elemental_cog_box, 1);
-            stat_advance(smithing, 900);
-            ~chatnpc("<p,happy> Thank you for the elemental cog box!");
+
+[opnpcu,drogo]
+if (%doricquest ! ^doric_complete){
+~chatnpc("<p,angry> You are not ready to help yet! Please help Doric with his quest first.");
+return;
+} else if (%squire ! ^squire_complete){
+~chatnpc("<p,angry> You are not ready to help yet! Please help the Squire with his quest first.");
+return;
+}
+
+switch_obj(last_useitem){
+    case faladian_sword : {
+        if (inv_total(inv, faladian_sword) >= 25){
+            inv_del(inv, faladian_sword, 25);
+            stat_advance(smithing, 250);
+            ~chatnpc("<p,happy> Thank you for the faladian swords!");
+        } else {
+            ~chatnpc("<p,happy> You need 25 faladian swords.");
         }
-        case elemental_nail_box : {
+    }
+
+    case elemental_cog : {
+        if (inv_total(inv, elemental_cog) >= 100){
+            inv_del(inv, elemental_cog, 100);
+            stat_advance(smithing, 300);
+            ~chatnpc("<p,happy> Thank you for the elemental cogs!");
+        } else {
+            ~chatnpc("<p,happy> You need 100 elemental cogs.");
+        }
+    }
+
+    case elemental_nails : {
+        if (inv_total(inv, elemental_nails) >= 100){
+            inv_del(inv, elemental_nails, 100);
+            stat_advance(smithing, 350);
+            ~chatnpc("<p,happy> Thank you for the elemental nails!");
+        } else {
+            ~chatnpc("<p,happy> You need 100 elemental nails.");
+        }
+    }
+
+    case elemental_cog_box : {
+        if (inv_total(inv, elemental_cog_box) >= 1){
+            inv_del(inv, elemental_cog_box, 1);
+            stat_advance(smithing, 3600);
+            ~chatnpc("<p,happy> Thank you for the elemental cog box!");
+        } else {
+            ~chatnpc("<p,happy> You don't have an elemental cog box.");
+        }
+    }
+
+    case elemental_nail_box : {
+        if (inv_total(inv, elemental_nail_box) >= 1){
             inv_del(inv, elemental_nail_box, 1);
-            stat_advance(smithing, 1200);
+            stat_advance(smithing, 3700);
             ~chatnpc("<p,happy> Thank you for the elemental nail box!");
+        } else {
+            ~chatnpc("<p,happy> You don't have an elemental nail box.");
         }
     }
 }
+
+
 [label,blurite_smithing]
-def_int $tot = inv_total(inv, blurite_bar);
+if (stat_base(smithing) < 15){
+    ~mesbox("You need a Smithing level of at least 15 to smith blurite bars.");
+    return;
+}
 if (%squire ! ^squire_complete){
     ~mesbox("You do not know how to smith blurite bars yet.");
     return;
 } else if (%doricquest ! ^doric_complete){
     ~mesbox("You do not know how to smith blurite bars yet.");
-    return;
-}
-if ($tot < 5){
-    ~mesbox("You do not have enough blurite bars.");
     return;
 }
 ~smithing_action(blurite_bar, 5, faladian_sword, 1, 2375);
@@ -110,8 +153,8 @@ def_int $exp;
 def_int $choice = ~p_choice3("Cog.", 1, "Nails.", 2, "[Next]", 3);
 switch_int($choice){
     case 1 : {
-        if (stat_base(smithing) < 40){
-            ~mesbox("You need level 40 smithing to make elemental cogs.");
+        if (stat_base(smithing) < 60){
+            ~mesbox("You need level 60 smithing to make elemental cogs.");
             return;
         }
         $product = elemental_cog;
@@ -124,8 +167,8 @@ switch_int($choice){
         ~workbench_action(elemental_workshop_bar, $count, $product, $count, $exp);
     }
     case 2 : {
-        if (stat_base(smithing) < 50){
-            ~mesbox("You need level 50 smithing to make elemental nails.");
+        if (stat_base(smithing) < 65){
+            ~mesbox("You need level 65 smithing to make elemental nails.");
             return;
         }
         $product = elemental_nails;
@@ -159,8 +202,8 @@ switch_int($choice){
 
 // info: Creates a cog box by using 100 elemental cogs and 5 planks on an elemental workbench.
 [proc,create_cog_box]
-if (stat_base(smithing) < 60){
-    ~mesbox("You need level 60 smithing to make elemental cog boxes.");
+if (stat_base(smithing) < 70){
+    ~mesbox("You need level 70 smithing to make elemental cog boxes.");
     return;
 }
 if (~material_checker(hammer, 1, elemental_cog, 100, woodplank, 5, null, 0) = true){
@@ -173,8 +216,8 @@ if (~material_checker(hammer, 1, elemental_cog, 100, woodplank, 5, null, 0) = tr
 
 // info: Creates a nail box by using 100 elemental nails and 5 planks on an elemental workbench.
 [proc,create_nail_box]
-if (stat_base(smithing) < 70){
-    ~mesbox("You need level 70 smithing to make elemental nail boxes.");
+if (stat_base(smithing) < 75){
+    ~mesbox("You need level 75 smithing to make elemental nail boxes.");
     return;
 }
 if (~material_checker(hammer, 1, elemental_nails, 100, woodplank, 5, null, 0) = true){

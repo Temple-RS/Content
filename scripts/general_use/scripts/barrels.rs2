@@ -1,22 +1,62 @@
 [oplocu,barrelwithtap]
-if (last_useitem ! beer_glass) {
-    ~displaymessage(^dm_default);
-    return;
+switch_obj(last_useitem){
+    case beer_glass : {
+        mes("Oooo a barrel of beer!");
+    }
+    case pats_mug_empty : {
+        mes("Oooo a barrel of beer!");
+        say("Aha! O' ho!!!");
+    }
+    case default : {
+        ~displaymessage(^dm_default);
+        return;
+    }
 }
-
 switch_coord(loc_coord) {
     case 0_48_53_9_44 : @beer_barrel_beatdown;
     case 0_48_53_5_53 : @beer_barrel_beatdown;
     case 0_48_53_4_53 : @beer_barrel_beatdown;
 
-    case default : @fill_beer_glass;
+    case default : {
+        switch_obj(last_useitem) {
+            case beer_glass : @fill_beer_glass(beer_glass);
+            case pats_mug_empty : @fill_beer_glass(pats_mug_empty);
+        }
+    }
 }
 
 [oplocu,barpumps]
-mes("I don't think I can get free beer here."); // any obj, think it might only be this loc specifcially (no 886 to check on osrs, other pumps dont work)
+switch_obj(last_useitem){
+    case beer_glass : {
+        mes("I don't think I can get free beer here.");
+        inv_del(inv,beer_glass,1);
+        inv_add(inv,beer,1);
+    }
+    case pats_mug_empty : {
+        mes("I think i'll help myself!");
+        say("*whistles*");
+        anim(human_pickuptable,0);
+        inv_del(inv,pats_mug_empty,1);
+        inv_add(inv,pats_mug,1);
+    }
+    case default : {
+        ~displaymessage(^dm_default);
+        return;
+    }
+} // any obj, think it might only be this loc specifcially (no 886 to check on osrs, other pumps dont work)
 
-[label,fill_beer_glass]
+[label,fill_beer_glass](obj $container)
 anim(human_pickupfloor, 0);
 mes("You fill the glass with beer.");
 sound_synth(tap_fill, 0, 0);
-inv_setslot(inv, last_useslot, beer, 1);
+switch_obj($container) {
+    case beer_glass : {
+        inv_del(inv, beer_glass, 1);
+        inv_add(inv, beer, 1);
+    }
+    case pats_mug_empty : {
+        say("Aha! O' ho!!! ");
+        inv_del(inv, pats_mug_empty, 1);
+        inv_add(inv, pats_mug, 1);
+    }
+}

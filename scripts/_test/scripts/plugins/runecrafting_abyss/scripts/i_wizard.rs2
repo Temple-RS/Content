@@ -86,10 +86,10 @@ switch_int(%runecraft_taskstatus) {
             case 1 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Air Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
@@ -100,10 +100,10 @@ switch_int(%runecraft_taskstatus) {
             case 2 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Mind Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
@@ -114,10 +114,10 @@ switch_int(%runecraft_taskstatus) {
             case 3 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Water Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
@@ -128,10 +128,10 @@ switch_int(%runecraft_taskstatus) {
             case 4 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Earth Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
@@ -142,10 +142,10 @@ switch_int(%runecraft_taskstatus) {
             case 5 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Fire Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
@@ -156,10 +156,10 @@ switch_int(%runecraft_taskstatus) {
             case 6 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Body Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
@@ -170,10 +170,10 @@ switch_int(%runecraft_taskstatus) {
             case 7 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Cosmic Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
@@ -184,10 +184,10 @@ switch_int(%runecraft_taskstatus) {
             case 8 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Chaos Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
@@ -198,10 +198,10 @@ switch_int(%runecraft_taskstatus) {
             case 9 : {
                 ~mesbox("You are currently on a task to craft [<tostring(%rc_taskamount)>x] Nature Runes.");
                 if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     %rc_taskamount = 0;
                     %rc_taskprogress = 0;
                     %runecraft_taskstatus = ^rc_notstarted;
-                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
                     spotanim_pl(levelup_anim, 124, 0);
                     midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
                     ~mesbox("You have completed your Runecrafting task!");
