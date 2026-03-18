@@ -1,0 +1,78 @@
+[proc,f2p_skip]
+def_int $arrav_choice = ~p_choice2_header("Black Arm Gang.", 0, "Phoenix Gang.", 1, "Choose a gang for Shield of Arrav:");
+queue(black_knights_fortress_quest_complete, 0, 0);
+queue(cooks_quest_complete, 0, 0);
+queue(demon_slayer_complete, 0, 0);
+queue(doric_quest_complete, 0, 0);
+queue(dragon_complete, 0, 0);
+~change_ernest;
+%haunted = ^haunted_complete;
+queue(haunted_quest_complete, 0, 0);
+queue(goblin_diplomacy_complete_quest, 0, 0);
+queue(squire_complete, 0, 0);
+queue(imp_quest_complete, 0, 0);
+queue(hunt_quest_complete, 0, 0);
+queue(prince_complete, 0, 0);
+queue(priest_quest_complete, 0, 0);
+queue(romeo_and_juliet_complete, 0, 0);
+queue(rune_mysteries_complete, 0, 0);
+queue(sheep_complete, 0, 0);
+queue(blackarmgang_quest_complete, 0, 0);
+queue(quest_vampire_complete, 0, 0);
+queue(hetty_quest_complete, 0, 0);
+queue(blackarmgang_quest_complete, 0, 0);
+if ($arrav_choice = 0) {
+    // Black Arm gang
+    %blackarmgang = ^blackarmgang_joined;
+    %phoenixgang = ^phoenixgang_not_started;
+} else {
+    // Phoenix gang
+    %phoenixgang = ^phoenixgang_joined;
+    %blackarmgang = 0;
+}
+queue(hero_quest_complete, 0, 0);
+~update_questlist;
+mes("All F2P quests have been completed.");
+return;
+
+
+
+[proc,pk_account]
+if_close;
+if (p_finduid(uid) = true) {
+    def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Reset account?");
+    if ($choice = 2) {
+        return;
+    }
+    inv_clear(bank);
+    inv_clear(inv);
+    inv_clear(worn);
+    p_teleport(0_50_50_22_22);
+    stat_reset2();
+    ~reset_all_quests;
+    %thieving_stall_timer = 0;
+    %cat_growth = 0;
+    %follower_obj = null;
+    %follower_uid = null;
+    %handelmort_traps_disabled = 0;
+    %thread_used = 0;
+    %magearena = 0;
+    %bunny_ears_unlocked = 0;
+    %scythe_unlocked = 0;
+    ~f2p_skip;
+    stat_advance(prayer, 503390);
+    def_int $ch = ~p_choice3_header("Melee", 1, "Ranged", 2, "Magic", 3, "Choose your combat style:");
+    if ($ch = 1) {
+        stat_advance(attack, 503390);
+        stat_advance(strength, 503390);
+        stat_advance(defence, 503390);
+    } else if ($ch = 2) {
+        stat_advance(ranged, 503390);
+        stat_advance(defence, 503390);
+    } else if ($ch = 3) {
+        stat_advance(magic, 503390);
+        stat_advance(defence, 503390);
+    }
+    p_logout;
+    %vip_level = ^pvp_vip;
+}

@@ -14,6 +14,14 @@ default=null
 type=namedobj
 default=null
 
+[hood]
+type=namedobj
+default=null
+
+[crafting_hoods_struct]
+type=struct
+default=null
+
 [crafting_capes_struct]
 type=struct
 default=null

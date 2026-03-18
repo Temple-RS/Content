@@ -11835,6 +11835,22 @@ frame4=anim_896
 frame5=anim_1176
 frame6=anim_1463
 
+
+[human_woodcutting_dragon_axe]
+replaceheldleft=dragon_axe
+replaceheldright=hide
+priority=0
+loops=6
+maxloops=4
+postanim_move=abortanim
+duplicatebehavior=reset
+frame1=anim_2020
+frame2=anim_2321
+frame3=anim_599
+frame4=anim_896
+frame5=anim_1176
+frame6=anim_1463
+
 [seq_868]
 replaceheldleft=rune_axe
 replaceheldright=hide

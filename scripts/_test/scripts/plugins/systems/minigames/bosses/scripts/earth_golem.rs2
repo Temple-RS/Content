@@ -1,0 +1,143 @@
+// --- Earth Elemental Boss Encounter ---
+// This script implements a custom boss encounter using the Earth Elemental.
+// The boss has a unique mechanic: "Shattering Ground", where it spawns sharp 
+// clay rocks directly under players, forcing them to stay mobile.
+
+[ai_queue1,earth_golem]
+/**
+ * Main AI loop for the Earth Golem.
+ */
+// Initialize phase on spawn (using NPC-local variable)
+if (%golem_phase = 0) {
+    %golem_phase = 1;
+}
+
+// Default to aggressive behavior
+if (npc_getmode = null) {
+    npc_sethuntmode(golem_hunt);
+}
+~npc_default_retaliate_ap;
+
+[ai_applayer2,earth_golem]
+/**
+ * Main AI decision loop (KQ Pattern).
+ * Handles pursuit, special attacks, and melee hits.
+ */
+if (%npc_action_delay > map_clock) {
+    return;
+}
+
+if (~npc_check_notcombat = false) {
+    npc_setmode(null);
+    return;
+}
+
+if (~npc_check_notcombat_self = false) {
+    return;
+}
+
+// 1. Special Attack Chance (Clay Rocks)
+// Can happen while pursuing or in melee range
+if (random(10) < 3) {
+    ~boss_earth_golem_rock_attack;
+    %npc_action_delay = add(map_clock, npc_param(attackrate));
+    return;
+}
+
+// 2. Melee Attack (Only if adjacent)
+if (npc_range(coord) <= 1) {
+    gosub(npc_default_attack);
+    %npc_action_delay = add(map_clock, npc_param(attackrate));
+    return;
+}
+
+// 3. Pursuit
+// If we reached here, we are not in range and didn't use a special.
+// The engine will handle movement due to golem_hunt settings.
+
+[ai_opplayer2,earth_golem]
+/**
+ * Redirect to main AI loop to maintain consistent behavior.
+ */
+npc_setmode(applayer2);
+
+[proc,boss_earth_golem_rock_attack]
+/**
+ * Triggers the shattering ground mechanic targeting all nearby players.
+ */
+npc_anim(elemental_earth_attack, 0);
+npc_say("The earth quivers... and SHATTERS!");
+
+// Search for all players within a 12-tile radius
+huntall(npc_coord, 12, 1);
+while (huntnext = true) {
+    // Spawn a trap at the player's current coordinate
+    ~boss_spawn_clay_rock_trap(coord);
+}
+
+[proc,boss_spawn_clay_rock_trap](coord $tile)
+/**
+ * Places a visual warning on the ground before the rock bursts.
+ */
+// Use an impact/dust effect to warn the player
+spotanim_map(rockfall, $tile, 150, 0);
+
+// Use a queue to delay the damage and the physical rock appearance
+// This gives players ~1.2 seconds to move
+queue*(boss_clay_rock_impact, 2)($tile);
+
+[queue,boss_clay_rock_impact](coord $tile)
+/**
+ * The rock bursts through the ground, damaging anyone standing on the tile.
+ */
+// Briefly spawn the clay rock loc (ID 334/clayrock1) for 4 ticks
+// Standard loc shape is 10 (centered)
+loc_add($tile, clayrock1, 0, centrepiece_straight, 120); 
+// Check for any player currently on that specific tile
+huntall($tile, 0, 1);
+while (huntnext = true) {
+    def_int $damage = add(random(6), random(4));
+    damage(uid, 1, $damage);
+    sound_synth(human_hit2, 0 , 0);
+    mes("A sharp clay rock bursts from the ground and strikes you!");
+    if (stat(hitpoints) = 0){
+        queue(player_death, 0, 0);
+    }
+    // Optional: mini stun or knockback if you have those procs
+    spotanim_pl(stunned_thieving, 124, 0);
+}
+
+[ai_queue3,earth_golem]
+/**
+ * When the boss dies, it drops its loot and can potentially reset or die permanently.
+ */
+def_int $gp = %golem_phase;
+switch_int($gp){
+    case 1 : {
+        // Transition to Phase 2 (gp=2)
+        ~boss_next_phase(earth_golem, elemental_earth_death, earth_elemental_attack, 1, 1);
+        return;
+    }
+    case 2 : {
+        // Transition to Phase 3 (gp=3)
+        ~boss_next_phase(earth_golem, elemental_earth_death, earth_elemental_attack, 2, 2);
+        return;
+    }
+    case 3 : {
+        // Final phase death
+        gosub(npc_death);
+    }
+    case default : {
+        // Fallback for phase 0/null
+        gosub(npc_death);
+    }
+}
+
+
+if (npc_findhero = ^false) {
+    return;
+}
+
+// Custom loot drop
+obj_add(npc_coord, swamprocks1, 10, ^lootdrop_duration);
+obj_add(npc_coord, cert_clay, 100, ^lootdrop_duration);

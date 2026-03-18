@@ -310,15 +310,15 @@ inv_add(inv, pot_empty, 1);
 inv_add(inv, bread, 1);
 inv_add(inv, bronze_pickaxe, 1);
 inv_add(inv, bronze_dagger, 1);
-inv_add(inv, bronze_sword, 1);
+inv_add(inv, bronze_longsword, 1);
 inv_add(inv, wooden_shield, 1);
 inv_add(inv, shortbow, 1);
-inv_add(inv, bronze_arrow, 25);
-inv_add(inv, airrune, 25);
-inv_add(inv, mindrune, 15);
-inv_add(inv, waterrune, 6);
-inv_add(inv, earthrune, 4);
-inv_add(inv, bodyrune, 2);
+inv_add(inv, bronze_arrow, 75);
+inv_add(inv, airrune, 100);
+inv_add(inv, mindrune, 100);
+inv_add(inv, waterrune, 25);
+inv_add(inv, earthrune, 25);
+inv_add(inv, bodyrune, 25);
 
 inv_clear(worn);
 inv_clear(bank);
@@ -328,5 +328,6 @@ inv_add(bank, coins, 25);
 
 ~initalltabs;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
+//~speedrun_selection_menu;
 
 session_log(^log_adventure, "Completed tutorial island");

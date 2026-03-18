@@ -3,6 +3,9 @@ gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
 }
+if (npc_findhero = ^true) {
+    queue(rat_kill, 0, 0);
+}
 // No default drop.
 
 // Drop Rats Tail only as long as quest is active.

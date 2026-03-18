@@ -14,9 +14,9 @@ if (p_finduid(uid) = true) {
     if (~check_spell_requirements($spell_data)= false) {
         return;
     }
-    if (~wilderness_level(coord) > 20) {
+    if (~wilderness_level(coord) > 0) {
         mes("A mysterious force blocks your teleport spell!");
-        mes("You can't use this teleport after level 20 wilderness.");
+        mes("You can't use this teleport in the wilderness.");
         return;
     }
     if($spell = ^ardougne_teleport & %elenaquest < ^elena_complete) {

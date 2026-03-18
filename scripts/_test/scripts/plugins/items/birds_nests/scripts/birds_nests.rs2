@@ -1,0 +1,25 @@
+[proc,drop_bird_nest]
+def_namedobj $nest = bird_nest_empty;
+if (random(5) < 2) {
+    $nest = bird_nest_ring;
+}
+mes("A bird's nest falls out of the tree.");
+obj_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk), $nest, 1, 50);
+
+[opheld1,bird_nest_ring]
+def_namedobj $ring = sapphire_ring;
+def_int $rand = random(100);
+if($rand < 1) $ring = diamond_ring;
+else if($rand < 10) $ring = ruby_ring;
+else if($rand < 25) $ring = emerald_ring;
+else if($rand < 60) $ring = gold_ring;
+@open_bird_nest($ring, last_slot, false);
+
+[label,open_bird_nest](namedobj $reward, int $slot, boolean $mes)
+if(inv_freespace(inv) < 1) {
+    ~mesbox("Your inventory is too full to take anything out of the bird's nest.");
+    return;
+}
+if($mes = true) mes("You take <enum(namedobj, string, bird_nest_mes, $reward)> out of the bird's nest.");
+inv_setslot(inv, $slot, bird_nest_empty, 1);
+inv_add(inv, $reward, 1);

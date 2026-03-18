@@ -1,0 +1,75 @@
+[proc,create_clan_instruct]
+mes("To create a clan, type the following command into your chatbox:");
+mes("::createclan [ClanName]");
+mes("Example: ::createclan Ironmen");
+
+[proc,join_clan_instruct]
+mes("To join a clan, type the following command into your chatbox:");
+mes("::joinclan [ClanName]");
+mes("Example: ::joinclan Ironmen");
+
+[proc,leave_delete_instruct]
+mes("To leave your clan, type the following command:");
+mes("::leaveclan");
+mes("To delete your clan completely, type:");
+mes("::deleteclan");
+
+[proc,broadcast_to_clan]
+p_stringdialog;
+def_string $message = last_string;
+clan_broadcast($message);
+
+[proc,clan_info]
+def_string $clan_name = clan_name;
+def_int $clan_online = clan_onlinecount;
+def_int $clan_score = clan_score;
+def_int $clan_membercount = clan_membercount;
+if (compare($clan_name, "") = 1) {
+    mes("You are not currently in a clan.");
+} else {
+    mes("Clan Name: <$clan_name>");
+    mes("Clan Score: <tostring(clan_score)>");
+    mes("Members: <tostring($clan_membercount)> (Online: <tostring($clan_online)>)");
+    if (clan_owner() = 1) {
+        mes("Rank: Owner");
+    } else {
+        mes("Rank: Member");
+    }
+    if (clan_locked() = 1) {
+        mes("Clan Status: Locked");
+    } else {
+        mes("Clan Status: Open");
+    }
+}
+
+[proc,manage_players_instruct]
+if (clan_owner() = 0) {
+    mes("Only the clan owner can invite, kick, or lock the clan.");
+    return;
+}
+mes("To invite a player, type ::claninvite [PlayerName]");
+mes("To kick a player, type ::clankick [PlayerName]");
+mes("To lock or unlock the clan (invite-only), type ::clanlock");
+
+[proc,p_chat5header](string $o1, int $r1, string $o2, int $r2, string $o3, int $r3, string $o4, int $r4, string $o5, int $r5, string $header)(int)
+def_int $res = ~p_choice5_header($o1, $r1, $o2, $r2, $o3, $r3, $o4, $r4, $o5, $r5, $header);
+return($res);
+[opheld3,clan_manual] ~clan_info;
+[opheld4,clan_manual]
+@clan_manual_menu;
+
+[label,clan_manual_menu]
+def_int $choice = ~p_chat5header("Create Clan", 1, "Join Clan", 2, "Leave / Delete", 3, "Clan Info", 4, "Manage Players", 5, "Clan Management Manual");
+
+if ($choice = 1) {
+    ~create_clan_instruct;
+} else if ($choice = 2) {
+    ~join_clan_instruct;
+} else if ($choice = 3) {
+    ~leave_delete_instruct;
+} else if ($choice = 4) {
+    ~clan_info;
+} else if ($choice = 5) {
+    ~manage_players_instruct;
+}
+;

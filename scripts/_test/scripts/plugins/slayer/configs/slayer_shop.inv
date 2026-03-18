@@ -1,6 +1,0 @@
-[slayer_shop]
-scope=shared
-size=40
-restock=yes
-stackall=yes
-stock1=slayer_gem,100,10

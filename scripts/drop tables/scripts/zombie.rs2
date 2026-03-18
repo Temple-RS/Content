@@ -7,6 +7,9 @@ gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
 }
+if (npc_findhero = ^true) {
+    queue(zombie_kill, 0, 0);
+}
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 def_int $dropint = random(128);
 if ($dropint < 4) {
@@ -54,6 +57,9 @@ if ($dropint < 4) {
 gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
+}
+if (npc_findhero = ^true) {
+    queue(zombie_kill, 0, 0);
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 def_int $dropint = random(128);
@@ -103,6 +109,9 @@ if ($dropint < 3) {
 gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
+}
+if (npc_findhero = ^true) {
+    queue(zombie_kill, 0, 0);
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 def_int $dropint = random(128);

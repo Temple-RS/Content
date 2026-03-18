@@ -1,0 +1,5 @@
+[grandfatherclock_fixed]
+name=Grandfather clock
+desc=Tick-tock, it's a clock.
+model=model_loc_683
+op1=Check

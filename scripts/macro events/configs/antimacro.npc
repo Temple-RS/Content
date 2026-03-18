@@ -142,7 +142,7 @@ strength=10
 // attack and hp is completely guessed
 attack=100
 hitpoints=255
-param=attackrate,3
+param=attackrate,5
 // these ranges are based off https://www.youtube.com/watch?v=ohRbhtCRL2c&list=PLn23LiLYLb1bhaCSJgRd1zQet3DFcY0yG&index=4
 wanderrange=3
 maxrange=3

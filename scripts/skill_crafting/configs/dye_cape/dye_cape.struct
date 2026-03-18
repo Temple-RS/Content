@@ -4,6 +4,7 @@ param=product,red_cape
 
 [black_cape]
 param=color,black
+param=product,black_cape
 
 [blue_cape]
 param=color,blue
@@ -25,8 +26,18 @@ param=product,purple_cape
 param=color,orange
 param=product,orange_cape
 
+[black_dye]
+param=cape,black_cape
+param=hood,hood_black
+param=color,black
+param=processmessage,a black
+param=ingredient,purpledye
+param=secondary_ingredient,swamp_tar
+param=product,blackdye
+
 [orange_dye]
 param=cape,orange_cape
+param=hood,hood_orange
 param=color,orange
 param=processmessage,an orange
 param=ingredient,reddye
@@ -35,6 +46,7 @@ param=product,orangedye
 
 [green_dye]
 param=cape,green_cape
+param=hood,hood_green
 param=color,green
 param=processmessage,a green
 param=ingredient,bluedye
@@ -43,6 +55,7 @@ param=product,greendye
 
 [purple_dye]
 param=cape,purple_cape
+param=hood,hood_purple
 param=color,purple
 param=processmessage,a purple
 param=ingredient,reddye
@@ -51,16 +64,71 @@ param=product,purpledye
 
 [red_dye]
 param=cape,red_cape
+param=hood,hood_red
 param=color,red
 param=product,reddye
 
 [yellow_dye]
 param=cape,yellow_cape
+param=hood,hood_yellow
 param=color,yellow
 param=product,yellowdye
 
 [blue_dye]
 param=cape,blue_cape
+param=hood,hood_blue
 param=color,blue
 param=product,bluedye
+
+[hood_orange]
+param=hood,hood_orange
+param=color,orange
+param=processmessage,an orange
+param=ingredient,reddye
+param=secondary_ingredient,yellowdye
+param=product,hood_orange
+
+[hood_green]
+param=hood,hood_green
+param=color,green
+param=processmessage,a green
+param=ingredient,bluedye
+param=secondary_ingredient,yellowdye
+param=product,hood_green
+
+[hood_purple]
+param=hood,hood_purple
+param=color,purple
+param=processmessage,a purple
+param=ingredient,reddye
+param=secondary_ingredient,bluedye
+param=product,hood_purple
+
+[hood_red]
+param=hood,hood_red
+param=color,red
+param=product,hood_red
+
+[hood_yellow]
+param=hood,hood_yellow
+param=color,yellow
+param=product,hood_yellow
+
+[hood_black]
+param=hood,hood_black
+param=color,black
+param=product,hood_black
+
+[hood_blue]
+param=hood,hood_blue
+param=color,blue
+param=product,hood_blue
+
+[hood]
+param=color,uncolored
+param=product,hood
+
+[hood_white]
+param=color,white
+param=product,hood_white
 

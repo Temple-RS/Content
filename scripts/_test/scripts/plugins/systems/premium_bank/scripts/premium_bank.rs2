@@ -1,0 +1,166 @@
+[inv_button1,premium_bank_main:inv] @premium_bank_withdraw(last_slot, 1);
+[inv_button2,premium_bank_main:inv] @premium_bank_withdraw(last_slot, 5);
+[inv_button3,premium_bank_main:inv] @premium_bank_withdraw(last_slot, 10);
+[inv_button4,premium_bank_main:inv] @premium_bank_withdraw(last_slot, ^max_32bit_int);
+[inv_button5,premium_bank_main:inv] @premium_bank_withdraw(last_slot, null);
+[inv_buttond,premium_bank_main:inv] 
+if(%bankinsert = 1) {
+    @insert_premium_bank(last_slot, last_targetslot);
+} else {
+    inv_movetoslot(premium_bank, premium_bank, last_slot, last_targetslot);
+}
+
+[inv_button1,premium_bank_side:inv] @premium_bank_deposit(last_slot, 1);
+[inv_button2,premium_bank_side:inv] @premium_bank_deposit(last_slot, 5);
+[inv_button3,premium_bank_side:inv] @premium_bank_deposit(last_slot, 10);
+[inv_button4,premium_bank_side:inv] @premium_bank_deposit(last_slot, ^max_32bit_int);
+[inv_button5,premium_bank_side:inv] @premium_bank_deposit(last_slot, null);
+[inv_buttond,premium_bank_side:inv] inv_movetoslot(inv, inv, last_slot, last_targetslot);
+[if_button,premium_bank_main:com_94] %bankcert = 0;
+[if_button,premium_bank_main:com_93] %bankcert = 1;
+[if_button,premium_bank_main:com_99] %bankinsert = 0;
+[if_button,premium_bank_main:com_100] %bankinsert = 1;
+[if_close,premium_bank_main] @closepremium_bank;
+
+[label,openpremium_bank]
+%bankcert = 0;
+~reorganize_inv(premium_bank);
+inv_transmit(inv, premium_bank_side:inv);
+inv_transmit(premium_bank, premium_bank_main:inv);
+if_openmain_side(premium_bank_main, premium_bank_side);
+
+[label,closepremium_bank]
+inv_stoptransmit(premium_bank_side:inv);
+inv_stoptransmit(premium_bank_main:inv);
+queue(reorganize_premium_bank, 0, 0); // confirmed queued
+
+// reorganize the bank like when you open the bank.
+// this is because a player can move objs around in the bank
+// to any slot that is available. so when they open the bank
+// we reorganize all of the slots towards the left of the bank.
+[queue,reorganize_premium_bank]
+~reorganize_inv(premium_bank);
+
+[label,premium_bank_withdraw](int $slot, int $requested_number)
+// Check if the slot was empty.
+def_obj $item = inv_getobj(premium_bank, $slot);
+// How many did they want to withdraw?
+if ($requested_number <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $requested_number = last_int;
+}
+// How many have they got?
+def_int $number = inv_total(premium_bank, $item);
+// How many should we withdraw?
+if ($requested_number < $number) $number = $requested_number;
+// Okay, withdraw it from the bank.
+~premium_bank_withdraw_request(inv, $item, $number, $slot);
+
+[label,premium_bank_deposit](int $slot, int $requested_number)
+// Check if the slot was empty.
+def_obj $item = inv_getobj(inv, $slot);
+// How many did they want to deposit?
+if ($requested_number <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $requested_number = last_int;
+}
+// How many have they got?
+def_int $number = inv_total(inv, $item);
+// How many should we deposit?
+if ($requested_number < $number) $number = $requested_number;
+// Is it actually bankable?
+if (~premium_bank_check_nobreak($item) = true) {
+    return;
+}
+// Okay, deposit it into the bank.
+~premium_bank_deposit_request(inv, $item, $number, $slot);
+
+[proc,premium_bank_withdraw_request](inv $inv, obj $obj, int $amount, int $slot)
+def_obj $cert_or_uncert = oc_uncert($obj);
+if (%bankcert ! 0) {
+    $cert_or_uncert = oc_cert($obj);
+}
+
+if (%bankcert = ^true & oc_cert($obj) = $obj) {
+    mes("This item can not be withdrawn as a note."); // 2005
+}
+
+if (inv_itemspace($inv, $cert_or_uncert, $amount, inv_size($inv)) = false){
+    if (inv_freespace($inv) = 0) {
+        // https://youtu.be/Zv7Wh3TIDOc?t=22
+        mes("You don't have enough inventory space.");
+        return;
+    } else if (oc_stackable($cert_or_uncert) = true) {
+        // https://youtu.be/8vNeG5bHg0Q?t=443
+        mes("You're not going to be able to carry all that!");
+    } else {
+        // https://youtu.be/HnEZFSGbYqM?t=79
+        mes("You don't have enough inventory space to withdraw that many.");
+    }
+}
+
+def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));
+def_int $withdraw = sub($amount, $overflow);
+if ($withdraw > 0) {
+    session_log(^log_moderator, "Withdrew <oc_debugname($obj)> x<tostring($withdraw)> from premium_bank");
+    switch_int (%bankcert) {
+        case 0 : inv_moveitem_uncert(premium_bank, $inv, $obj, $withdraw);
+        case default : inv_moveitem_cert(premium_bank, $inv, $obj, $withdraw);
+    }
+}
+
+[proc,premium_bank_deposit_request](inv $inv, obj $obj, int $amount, int $slot)
+def_int $overflow = inv_itemspace2(premium_bank, oc_uncert($obj), $amount, ^max_32bit_int);
+if (sub(^max_32bit_int, $amount) < inv_total(premium_bank, $obj)) {
+    mes("You already have a full stack of that item in the premium_bank."); // 2024 osrs
+} else if ($overflow >= $amount) {
+    // https://youtu.be/2BgXLZD-xgo?t=28
+    // https://youtu.be/Ep4gaI5ic1s?t=197
+    mes("You don't have enough space in your premium bank account."); // osrs
+    return;
+}
+def_int $deposit = sub($amount, $overflow);
+if ($deposit > 0) {
+    session_log(^log_moderator, "Deposited <oc_debugname($obj)> x<tostring($deposit)> into premium_bank");
+    inv_moveitem_uncert($inv, premium_bank, $obj, $deposit);
+}
+
+[proc,premium_bank_check_nobreak](obj $obj)(boolean)
+if (oc_param($obj, unbankable) = ^true) {
+    mes("A magical force prevents you from banking this item!"); // osrs
+    return(true);
+}
+
+// https://www.youtube.com/watch?v=W5iZgykts2A // No mes when creating boxes via actions
+if ($obj = macro_cube) {
+    ~try_add_macro_cube;
+    return(true);
+}
+
+if (playermember = ^false) {
+    // check for f2p bank limits, use the player's membership status rather than world type
+    if ((inv_total(premium_bank, oc_uncert($obj)) = 0) & (sub(inv_size(premium_bank), inv_freespace(premium_bank)) >= ^bank_free_slots)) {
+        // https://youtu.be/yv-H5-IoRLs?t=9 (2006)
+        // https://web.archive.org/web/20041126073829/http://img39.imageshack.us/img39/3412/firemaking.jpg (2004)
+        mes("You need to subscribe for a members account if you want to");
+        mes("store any more items in the premium_bank.");
+        return(true);
+    }
+}
+return(false);
+
+[label,insert_premium_bank](int $start_slot, int $target_slot)
+def_int $src = $start_slot;
+def_int $dst = $target_slot;
+
+while ($src ! $dst) {
+    if ($src > $dst) {
+        inv_movetoslot(premium_bank, premium_bank, sub($src, 1), $src);
+        $src = sub($src, 1);
+    } else if ($src < $dst) {
+        inv_movetoslot(premium_bank, premium_bank, add($src, 1), $src);
+        $src = add($src, 1);
+    }
+}

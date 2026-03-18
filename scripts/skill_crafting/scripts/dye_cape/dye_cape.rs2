@@ -4,6 +4,7 @@ switch_obj (last_useitem)
 {
     case bluedye : @craft_dyes(purpledye);
     case yellowdye : @craft_dyes(orangedye);
+    case hood, hood_red, hood_yellow, hood_purple, hood_blue, hood_black, hood_orange, hood_green : @craft_hoods(last_useitem, reddye);
     case black_cape, blue_cape, yellow_cape, green_cape, purple_cape, orange_cape : @craft_capes(last_useitem, reddye);
     case default : ~displaymessage(^dm_default);
 };
@@ -14,6 +15,7 @@ switch_obj (last_useitem)
     case reddye : @craft_dyes(purpledye);
     case yellowdye : @craft_dyes(greendye);
     case black_cape, red_cape, yellow_cape, green_cape, purple_cape, orange_cape : @craft_capes(last_useitem, bluedye);
+    case hood, hood_red, hood_yellow, hood_purple, hood_blue, hood_black, hood_orange, hood_green : @craft_hoods(last_useitem, bluedye);
     case goblin_armour : ~dye_goblin_mail_armour(bluedye, goblin_armour_darkblue, "blue");
     case default : ~displaymessage(^dm_default);
 };
@@ -24,6 +26,7 @@ switch_obj (last_useitem)
     case reddye : @craft_dyes(orangedye);
     case bluedye : @craft_dyes(greendye);
     case black_cape, red_cape, blue_cape, green_cape, purple_cape, orange_cape : @craft_capes(last_useitem, yellowdye);
+    case hood, hood_red, hood_yellow, hood_purple, hood_blue, hood_black, hood_orange, hood_green : @craft_hoods(last_useitem, yellowdye);
     case plainwig : @make_blonde_wig;
     case default : ~displaymessage(^dm_default);
 };
@@ -32,6 +35,7 @@ switch_obj (last_useitem)
 switch_obj (last_useitem) 
 {
     case black_cape, red_cape, blue_cape, yellow_cape, purple_cape, orange_cape : @craft_capes(last_useitem, greendye);
+    case hood, hood_red, hood_yellow, hood_purple, hood_blue, hood_black, hood_orange, hood_green : @craft_hoods(last_useitem, greendye);
     case default : ~displaymessage(^dm_default);
 };
 
@@ -39,6 +43,7 @@ switch_obj (last_useitem)
 switch_obj (last_useitem) 
 {
     case black_cape, red_cape, blue_cape, yellow_cape, green_cape, orange_cape : @craft_capes(last_useitem, purpledye);
+    case hood, hood_red, hood_yellow, hood_purple, hood_blue, hood_black, hood_orange, hood_green : @craft_hoods(last_useitem, purpledye);
     case default : ~displaymessage(^dm_default);
 };
 
@@ -46,6 +51,7 @@ switch_obj (last_useitem)
 switch_obj (last_useitem) 
 {
     case black_cape, red_cape, blue_cape, yellow_cape, green_cape, purple_cape : @craft_capes(last_useitem, orangedye);
+    case hood, hood_red, hood_yellow, hood_purple, hood_blue, hood_black, hood_orange, hood_green : @craft_hoods(last_useitem, orangedye);
     case goblin_armour : ~dye_goblin_mail_armour(orangedye, goblin_armour_orange, "orange");
     case default : ~displaymessage(^dm_default);
 };
@@ -91,20 +97,71 @@ switch_obj (last_useitem)
 [opheldu,purple_cape]
 switch_obj (last_useitem) 
 {
-
     case reddye, bluedye, yellowdye, greendye, orangedye : @craft_capes(purple_cape, last_useitem);
     case default : ~displaymessage(^dm_default);
 };
 [opheldu,orange_cape]
 switch_obj (last_useitem) 
 {
-
     case reddye, bluedye, yellowdye, greendye, purpledye : @craft_capes(orange_cape, last_useitem);
     case default : ~displaymessage(^dm_default);
 };
 //----------------------
 
+//--- Hoods
+[opheldu,hood]
+switch_obj (last_useitem) 
+{
+    case reddye, bluedye, yellowdye, greendye, purpledye, orangedye, blackdye : @craft_hoods(hood, last_useitem);
+    case default : ~displaymessage(^dm_default);
+};
 
+[opheldu,hood_red]
+switch_obj (last_useitem) 
+{
+    case bluedye, yellowdye, greendye, purpledye, orangedye, blackdye : @craft_hoods(hood_red, last_useitem);
+    case default : ~displaymessage(^dm_default);
+};
+
+[opheldu,hood_yellow]
+switch_obj (last_useitem) 
+{
+    case reddye, yellowdye, greendye, purpledye, orangedye, blackdye : @craft_hoods(hood_yellow, last_useitem);
+    case default : ~displaymessage(^dm_default);
+};
+
+[opheldu,hood_green]
+switch_obj (last_useitem) 
+{
+    case reddye, bluedye, yellowdye, purpledye, orangedye, blackdye : @craft_hoods(hood_green, last_useitem);
+    case default : ~displaymessage(^dm_default);
+};
+
+[opheldu,hood_purple]
+switch_obj (last_useitem) 
+{
+    case reddye, bluedye, yellowdye, purpledye, orangedye, blackdye : @craft_hoods(hood_purple, last_useitem);
+    case default : ~displaymessage(^dm_default);
+};
+
+[opheldu,hood_blue]
+switch_obj (last_useitem) 
+{
+    case reddye, bluedye, yellowdye, greendye, orangedye, blackdye : @craft_hoods(hood_blue, last_useitem);
+    case default : ~displaymessage(^dm_default);
+};
+[opheldu,hood_black]
+switch_obj (last_useitem) 
+{
+    case default : mes("I can't change this to any other colour.");
+};
+
+[opheldu,hood_orange]
+switch_obj (last_useitem) 
+{
+    case reddye, bluedye, yellowdye, greendye, purpledye, blackdye : @craft_hoods(hood_orange, last_useitem);
+    case default : ~displaymessage(^dm_default);
+};
 
 [label,craft_capes](obj $cape, obj $dye)
 def_struct $dye_struct = oc_param($dye, crafting_capes_struct);

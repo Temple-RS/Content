@@ -1,0 +1,26 @@
+[opheld2,keg_of_beer] ~equip(last_slot);
+[opheld2,facemask] ~equip(last_slot);
+[opheld2,earmuffs] ~equip(last_slot);
+[opheld2,chicken_wear] ~equip(last_slot);
+[opheld2,win05_hat1] ~equip(last_slot);
+[opheld2,win05_hat2] ~equip(last_slot);
+[opheld2,win05_hat3] ~equip(last_slot);
+[opheld2,win05_hat4] ~equip(last_slot);
+[opheld2,win05_scarf1] ~equip(last_slot);
+[opheld2,win05_scarf2] ~equip(last_slot);
+[opheld2,win05_scarf3] ~equip(last_slot);
+[opheld2,win05_scarf4] ~equip(last_slot);
+[opheld2,roguesden_helm] ~equip(last_slot);
+[opheld2,ghostspeak_enchanted] ~equip(last_slot);
+[opheld2,fez] ~equip(last_slot);
+[opheld2,hood_green] ~equip(last_slot);
+[opheld2,mining_helmet] ~equip(last_slot);
+[opheld5,stake_dagger] @drop_gauntlets;
+[opheld5,shield_of_arrav] @drop_gauntlets;
+
+
+[opheldu,pestle_and_mortar]
+switch_obj(last_useitem) {
+    case cannabis : @grind_cannabis;
+    case default : ~displaymessage(^dm_default);
+}

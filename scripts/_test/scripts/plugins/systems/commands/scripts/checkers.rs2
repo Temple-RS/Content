@@ -1,0 +1,181 @@
+
+// info: Checks your inventory for a tool and returns a true or false boolean.
+[proc,tool_check](obj $tool)(boolean)
+def_obj $worn = inv_getobj(worn, 3);
+if (inv_total(inv, $tool) < 1) {
+    ~mesbox("You need a <oc_param($tool, name)> to do this.");
+    return(false);
+}
+switch_obj($worn){
+
+    case bronze_pickaxe : {
+        return(true);
+    }
+    case iron_pickaxe : {
+        return(true);
+    }
+    case steel_pickaxe : {
+        return(true);
+    }
+    case mithril_pickaxe : {
+        return(true);
+    }
+    case adamant_pickaxe : {
+        return(true);
+    }
+    case rune_pickaxe : {
+        return(true);
+    }
+    case bronze_axe : {
+        return(true);
+    }
+    case iron_axe : {
+        return(true);
+    }
+    case steel_axe : {
+        return(true);
+    }
+    case black_axe : {
+        return(true);
+    }
+    case mithril_axe : {
+        return(true);
+    }
+    case adamant_axe : {
+        return(true);
+    }
+    case rune_axe : {
+        return(true);
+    }
+}
+return(true);
+
+
+
+// info: Returns the bonus as an int. | $strings = "stab", "slash", "crush", "magic", "range", "strength", "prayer", "rangebonus" |
+[proc,bonus_checker](string $string)(int)
+def_int $total;
+def_int $stabattack;
+def_int $slashattack;
+def_int $crushattack;
+def_int $magicattack;
+def_int $rangeattack;
+def_int $stabdefence;
+def_int $slashdefence;
+def_int $crushdefence;
+def_int $magicdefence;
+def_int $rangedefence;
+def_int $strengthbonus;
+def_int $prayerbonus;
+def_int $attack_prayer;
+def_int $defence_prayer;
+def_int $strength_prayer;
+def_int $rangebonus;
+
+$stabattack,
+$slashattack,
+$crushattack,
+$magicattack,
+$rangeattack,
+$stabdefence,
+$slashdefence,
+$crushdefence,
+$magicdefence,
+$rangedefence,
+$strengthbonus,
+$prayerbonus,
+$rangebonus = ~equip_get_bonuses;
+def_int $bonus = calc(
+    $stabattack +
+    $slashattack +
+    $crushattack +
+    $magicattack +
+    $rangeattack +
+    $stabdefence +
+    $slashdefence +
+    $crushdefence +
+    $magicdefence +
+    $rangedefence +
+    $strengthbonus +
+    $prayerbonus +
+    $rangebonus
+);
+return($total);
+
+// info: Checks if the player has an item in their inventory, bank, worn, or around them.
+[proc,find_item](obj $item)(boolean)
+def_int $count = 0;
+if (inv_total(inv, $item) > 0) {
+    $count = calc($count + 1);
+}
+if (inv_total(bank, $item) > 0) {
+    $count = calc($count + 1);
+}
+if (inv_total(worn, $item) > 0) {
+    $count = calc($count + 1);
+}
+if (obj_find(coord, $item) = true) {
+    $count = calc($count + 1);
+}
+switch_int($count){
+    case 0 : {
+        return(false);
+    }
+
+}
+return(true);
+
+
+// info: Heat Check -- Do you have a heat element?
+[proc,heat_check](obj $used_item, int $required_amount)(boolean)
+def_int $tot = inv_total(inv, $used_item);
+if ($tot < $required_amount){
+    mes("You need more materials to do this.");
+    return(false);
+} else {
+    return(true);
+}
+
+[proc,material_checker](obj $tool, int $count1, obj $material1, int $count2, obj $material2, int $count3, obj $material3, int $count4)(boolean)
+if (inv_total(inv, $tool) < 1){
+    mes("You need a tool to do this.");
+    return(false);
+}
+
+if ($material1 ! null) {
+    if ($count2 > 0){
+        if (inv_total(inv, $material1) < $count2){
+            mes("You need more materials to do this.");
+            return(false);
+        }
+    }
+}
+
+if ($material2 ! null) {
+    if ($count3 > 0){
+        if (inv_total(inv, $material2) < $count3){
+            mes("You need more materials to do this.");
+            return(false);
+        }
+    }
+}
+
+if ($material3 ! null) {
+    if ($count4 > 0){
+        if (inv_total(inv, $material3) < $count4){
+            mes("You need more materials to do this.");
+            return(false);
+        }
+    }
+}
+
+return(true);
+
+// info: Checks if the player is wearing an item in a specific slot. | Slots: 0 = hat, 1 = back, 2 = front, 3 = rhand, 4 = torso, 5 = lhand, 6 = arms, 7 = legs, 8 = head, 9 = hands, 10 = feet, 11 = jaw, 12 = ring, 13 = quiver
+[proc,slot_checker](int $slot, obj $item)(boolean)
+def_obj $worn = inv_getobj(worn, $slot);
+if ($worn = $item) {
+    return(true);
+} else {
+    return(false);
+}

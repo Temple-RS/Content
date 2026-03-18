@@ -1,0 +1,6 @@
+[vip_level]
+scope=perm
+
+[vip_bank_size]
+scope=perm
+type=int

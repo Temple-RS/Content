@@ -1,0 +1,146 @@
+// --- Phase Progression ---
+
+[proc,boss_next_phase](npc $next_npc, seq $transition_anim, synth $transition_sound, int $hunt_time, int $phase)
+/**
+ * Call this inside ai_queue3 (NPC death) to transition a boss to its next phase.
+ * It resets HP and changes the NPC type while maintaining combat state.
+ */
+if (npc_uid = null) {
+    return;
+}
+switch_npc($next_npc){
+    case earth_golem : {
+        switch_int($phase){
+            case 0 : {
+                %golem_phase = 1;
+            }
+            case 1 : {
+                %golem_phase = 2;
+            }
+            case 2 : {
+                %golem_phase = 3;
+            }
+        }
+    }
+}
+// Play transition effects
+if ($transition_anim ! null) {
+    npc_anim($transition_anim, 0);
+}
+
+if ($transition_sound ! null) {
+    ~sound_area($transition_sound, 0, npc_coord, 12);
+}
+
+// Change type and heal
+// npc_changetype_keepall ensures that current stats/state are mostly preserved
+npc_changetype_keepall($next_npc, 2000); 
+
+// Heal to full (100%)
+npc_statheal(hitpoints, 0, 100);
+switch_int($hunt_time){
+    case 0 : npc_sethuntmode(aggressive_melee);
+    case 1 : npc_sethuntmode(aggressive_ranged);
+    case 2 : npc_sethuntmode(aggressive_melee_extra);
+}
+npc_setmode(null);
+
+[proc,boss_check_phase_hp](int $hp_percent, npc $next_phase_npc, seq $transition_anim)
+/**
+ * Mid-combat phase transition check. Call this in ai_queue1 or applayer loops.
+ */
+def_int $current_hp = npc_stat(hitpoints);
+def_int $max_hp = npc_basestat(hitpoints);
+def_int $threshold = divide(multiply($max_hp, $hp_percent), 100);
+
+if ($current_hp <= $threshold) {
+    if ($transition_anim ! null) {
+        npc_anim($transition_anim, 0);
+    }
+    
+    npc_changetype_keepall($next_phase_npc, 2000);
+    npc_statheal(hitpoints, 0, 100);
+    npc_say("Your efforts are futile!");
+}
+
+// --- Add Summoning ---
+
+[proc,boss_summon_adds](npc $add_npc, int $count, int $radius, seq $spawn_anim, synth $spawn_sound)
+/**
+ * Spawns multiple 'minions' around the boss.
+ */
+def_int $i = 0;
+while ($i < $count) {
+    // 0 = standard search type (usually any valid tile)
+    def_coord $spawn_pos = map_findsquare(npc_coord, 1, $radius, 0); 
+    
+    if ($spawn_pos ! null) {
+        .npc_add($spawn_pos, $add_npc, 500); 
+        
+        if ($spawn_anim ! null) {
+            .npc_anim($spawn_anim, 0);
+        }
+        
+        if ($spawn_sound ! null) {
+            sound_synth($spawn_sound, 0, 0);
+        }
+    }
+    $i = add($i, 1);
+}
+
+// --- AOE Mechanics ---
+
+[proc,boss_aoe_attack](int $radius, int $max_hit, spotanim $projectile, spotanim $impact_anim, int $delay_step)
+/**
+ * Dynamic AOE attack hitting all players in a radius.
+ */
+huntall(npc_coord, $radius, 1); 
+
+while (huntnext = true) {
+    def_int $damage = randominc($max_hit);
+    def_int $duration = 0;
+    
+    if ($projectile ! null) {
+        // start_h=40, end_h=36, delay=0, angle=15, length=0, offset=11
+        $duration = ~player_projectile(npc_coord, coord, uid, $projectile, 40, 36, 0, 15, 0, 11, $delay_step);
+    }
+    
+    if ($impact_anim ! null) {
+        spotanim_pl($impact_anim, 124, $duration);
+    }
+    
+    // Apply damage and trigger retaliate
+    queue(combat_damage_player, divide($duration, 30), $damage);
+    queue*(playerhit_n_retaliate, divide($duration, 30))(npc_uid);
+}
+
+[proc,boss_aoe_debris](coord $center, int $radius, int $count, spotanim $projectile, spotanim $impact_anim, int $max_hit)
+/**
+ * 'Falling debris' style AOE. Targets random tiles in an area rather than players directly.
+ */
+def_int $i = 0;
+while ($i < $count) {
+    def_coord $target_tile = map_findsquare($center, 0, $radius, 0);
+    
+    if ($target_tile ! null) {
+        // Shoot projectile from 'sky' (height 255) to ground
+        def_int $duration = ~coord_projectile(movecoord($target_tile, 0, 255, 0), $target_tile, $projectile, 255, 0, 0, 15, 0, 11, 10);
+        
+        // At the end of the duration, check for players on that tile
+        queue*(boss_debris_hit, divide($duration, 30))($target_tile, $impact_anim, $max_hit);
+    }
+    $i = add($i, 1);
+}
+
+[queue,boss_debris_hit](coord $tile, spotanim $impact_anim, int $max_hit)
+if ($impact_anim ! null) {
+    spotanim_map($impact_anim, $tile, 0, 0);
+}
+
+// Find players on this specific tile
+huntall($tile, 0, 1);
+while (huntnext = true) {
+    def_int $damage = randominc($max_hit);
+    damage(uid, 0, $damage); // standard damage
+    mes("You are hit by falling debris!");
+}

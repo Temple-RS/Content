@@ -16,10 +16,10 @@ if ($choice = 5) {
     mes("You remain where you were.");
     return;
 }
-if (~wilderness_level(coord) > 30) {
+if (~wilderness_level(coord) > 0) {
     // osrs
     mes("A mysterious force blocks your teleport.");
-    mes("You can't use this teleport after level 30 wilderness.");
+    mes("You can't use this teleport in the wilderness.");
     return;
 }
 if (~pre_tele_checks(coord) = false) {
@@ -32,4 +32,8 @@ switch_int($choice) {
     case 3 : ~player_teleport_normal(0_48_50_33_51);
     case 4 : ~player_teleport_normal(0_51_49_29_27);
 }
-inv_setslot(inv, $slot, oc_param($item, next_obj_stage), 1);
+if (inv_getobj(worn, $slot) = $item) {
+    inv_setslot(worn, $slot, oc_param($item, next_obj_stage), 1);
+} else {
+    inv_setslot(inv, $slot, oc_param($item, next_obj_stage), 1);
+}

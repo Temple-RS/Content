@@ -1,0 +1,114 @@
+
+[opheldu,blankrune]
+switch_obj(last_useitem){
+    case rcu_pouch_small : ~fill_pouch(rcu_pouch_small, ^rune_pouch_small);
+    case rcu_pouch_medium : ~fill_pouch(rcu_pouch_medium, ^rune_pouch_medium);   
+    case rcu_pouch_large : ~fill_pouch(rcu_pouch_large, ^rune_pouch_large);
+    case rcu_pouch_giant : ~fill_pouch(rcu_pouch_giant, ^rune_pouch_giant);
+    case default : {
+        ~displaymessage(^dm_default);
+    }
+}
+
+
+[opheld1,rcu_pouch_small] ~fill_pouch(rcu_pouch_small, ^rune_pouch_small);
+[opheld1,rcu_pouch_medium] ~fill_pouch(rcu_pouch_medium, ^rune_pouch_medium);
+[opheld1,rcu_pouch_large] ~fill_pouch(rcu_pouch_large, ^rune_pouch_large);
+[opheld1,rcu_pouch_giant] ~fill_pouch(rcu_pouch_giant, ^rune_pouch_giant);
+
+[opheld2,rcu_pouch_small] ~empty_pouch(rcu_pouch_small, ^rune_pouch_small);
+[opheld2,rcu_pouch_medium] ~empty_pouch(rcu_pouch_medium, ^rune_pouch_medium);
+[opheld2,rcu_pouch_large] ~empty_pouch(rcu_pouch_large, ^rune_pouch_large);
+[opheld2,rcu_pouch_giant] ~empty_pouch(rcu_pouch_giant, ^rune_pouch_giant);
+
+[opheld3,rcu_pouch_small] mes("<tostring(~check_pouch(^rune_pouch_small))>/<tostring(^rune_pouch_small)> essence in your small pouch.");
+[opheld3,rcu_pouch_medium] mes("<tostring(~check_pouch(^rune_pouch_medium))>/<tostring(^rune_pouch_medium)> essence in your medium pouch.");
+[opheld3,rcu_pouch_large] mes("<tostring(~check_pouch(^rune_pouch_large))>/<tostring(^rune_pouch_large)> essence in your large pouch.");
+[opheld3,rcu_pouch_giant] mes("<tostring(~check_pouch(^rune_pouch_giant))>/<tostring(^rune_pouch_giant)> essence in your giant pouch.");
+
+
+[proc,check_pouch](int $pouch_size)(int)
+def_int $essence_count;
+switch_int($pouch_size){
+    case ^rune_pouch_small : $essence_count = %rune_pouch_small_count;
+    case ^rune_pouch_medium : $essence_count = %rune_pouch_medium_count;
+    case ^rune_pouch_large : $essence_count = %rune_pouch_large_count;
+    case ^rune_pouch_giant : $essence_count = %rune_pouch_giant_count;
+}
+return($essence_count);
+
+[proc,fill_pouch](obj $pouch, int $pouch_size)
+def_int $total_ess = inv_total(inv, blankrune);
+def_int $essence_count = ~check_pouch($pouch_size);
+if ($total_ess < 1){
+    mes("You don't have any essence to fill the pouch with.");
+    return;
+}
+
+def_int $space_left = calc($pouch_size - $essence_count);
+if ($space_left < 1){
+    mes("There is no room left in the pouch.");
+    return;
+}
+if ($total_ess > $space_left){
+    $total_ess = $space_left;
+}
+
+switch_obj($pouch){
+    case rcu_pouch_small : {
+        inv_del(inv, blankrune, $total_ess);
+        %rune_pouch_small_count = calc(%rune_pouch_small_count + $total_ess);
+    }
+    case rcu_pouch_medium : {
+        inv_del(inv, blankrune, $total_ess);
+        %rune_pouch_medium_count = calc(%rune_pouch_medium_count + $total_ess);
+    }
+    case rcu_pouch_large : {
+        inv_del(inv, blankrune, $total_ess);
+        %rune_pouch_large_count = calc(%rune_pouch_large_count + $total_ess);
+    }
+    case rcu_pouch_giant : {
+        inv_del(inv, blankrune, $total_ess);
+        %rune_pouch_giant_count = calc(%rune_pouch_giant_count + $total_ess);
+    }
+}
+mes("You fill the pouch with <tostring($total_ess)> essence.");
+
+
+[proc,empty_pouch](obj $pouch, int $pouch_size)
+def_int $essence_count = ~check_pouch($pouch_size);
+def_int $ess;
+if ($essence_count < 1){
+    mes("You don't have any essence to empty from the pouch.");
+    return;
+}
+def_int $free_space = inv_freespace(inv);
+if ($free_space < 1){
+    mes("You don't have enough space in your inventory to empty the pouch.");
+    return;
+}
+if ($essence_count > $free_space){
+    $ess = $free_space;
+} else {
+    $ess = $essence_count;
+}
+
+switch_obj($pouch){
+    case rcu_pouch_small : {
+        inv_add(inv, blankrune, $ess);
+        %rune_pouch_small_count = calc(%rune_pouch_small_count - $ess);
+    }
+    case rcu_pouch_medium : {
+        inv_add(inv, blankrune, $ess);
+        %rune_pouch_medium_count = calc(%rune_pouch_medium_count - $ess);
+    }
+    case rcu_pouch_large : {
+        inv_add(inv, blankrune, $ess);
+        %rune_pouch_large_count = calc(%rune_pouch_large_count - $ess);
+    }
+    case rcu_pouch_giant : {
+        inv_add(inv, blankrune, $ess);
+        %rune_pouch_giant_count = calc(%rune_pouch_giant_count - $ess);
+    }
+}
+mes("You empty <tostring($ess)> essence from the pouch.");

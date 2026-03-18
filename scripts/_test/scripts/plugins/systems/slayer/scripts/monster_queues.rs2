@@ -1,0 +1,253 @@
+[queue,goblin_kill]
+if (%active_slayer_task = ^goblin){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,rat_kill]
+if (%active_slayer_task = ^giant_rat){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,hobgoblin_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^hobgoblin){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,skeleton_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^skeleton){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);  
+}
+
+[queue,mugger_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^mugger){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);  
+}
+
+[queue,dark_wizard_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^dark_wizard){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,wizard_kill]
+if (%active_slayer_task = ^wizard){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,giant_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^giant){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,fire_giant_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^fire_giant){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,moss_giant_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^moss_giant){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,ice_giant_kill]
+if (~wilderness_level(coord) > 0) {
+    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^ice_giant){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,ice_warrior_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^ice_warrior){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,hellhound_kill]
+if (%active_slayer_task = ^hellhound){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,black_dragon_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^black_dragon){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,red_dragon_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^red_dragon){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,blue_dragon_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^blue_dragon){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,green_dragon_kill]
+if (~wilderness_level(coord) > 0){
+    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+}
+if (%active_slayer_task = ^green_dragon){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,bandit_kill]
+if (%active_slayer_task = ^bandit){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,barbarian_kill]
+if (%active_slayer_task = ^barbarian){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,bear_kill]
+if (%active_slayer_task = ^bear){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,black_demon_kill]
+if (%active_slayer_task = ^black_demon){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,chaos_druid_kill]
+if (%active_slayer_task = ^chaos_druid){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,chaos_druid_warrior_kill]
+if (%active_slayer_task = ^chaos_druid_warrior){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,chaos_dwarf_kill]
+if (%active_slayer_task = ^chaos_dwarf){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,chicken_kill]
+if (%active_slayer_task = ^chicken){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,cow_kill]
+if (%active_slayer_task = ^cow){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,druid_kill]
+if (%active_slayer_task = ^druid){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,dwarf_kill]
+if (%active_slayer_task = ^dwarf){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,earth_warrior_kill]
+if (%active_slayer_task = ^earth_warrior){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,farmer_kill]
+if (%active_slayer_task = ^farmer){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,greater_demon_kill]
+if (%active_slayer_task = ^greater_demon){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,guard_kill]
+if (%active_slayer_task = ^guard){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,highwayman_kill]
+if (%active_slayer_task = ^highwayman){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,imp_kill]
+if (%active_slayer_task = ^imp){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,jogre_kill]
+if (%active_slayer_task = ^jogre){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,lesser_demon_kill]
+if (%active_slayer_task = ^lesser_demon){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,man_kill]
+if (%active_slayer_task = ^man){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,pirate_kill]
+if (%active_slayer_task = ^pirate){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,rogue_kill]
+if (%active_slayer_task = ^rogue){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,thug_kill]
+if (%active_slayer_task = ^thug){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,tribesman_kill]
+if (%active_slayer_task = ^tribesman){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,unicorn_kill]
+if (%active_slayer_task = ^unicorn){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}
+
+[queue,zombie_kill]
+if (%active_slayer_task = ^zombie){
+    @slayer_kill(%active_slayer_task, %task_amount, %current_count);
+}

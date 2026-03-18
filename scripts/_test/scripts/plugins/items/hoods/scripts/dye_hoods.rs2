@@ -1,0 +1,8 @@
+[label,craft_hoods](obj $hood, obj $dye)
+def_struct $dye_struct = oc_param($dye, crafting_hoods_struct);
+def_struct $hood_struct = oc_param($hood, crafting_hoods_struct);
+inv_del(inv, $dye, 1);
+inv_del(inv, $hood, 1);
+inv_add(inv, struct_param($dye_struct, hood), 1);
+stat_advance(crafting, 25);
+mes("You dye the <struct_param($hood_struct, color)> hood <struct_param($dye_struct, color)>.");

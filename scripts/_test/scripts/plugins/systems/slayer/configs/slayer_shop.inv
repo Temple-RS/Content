@@ -1,0 +1,11 @@
+[slayer_shop]
+scope=shared
+size=40
+restock=yes
+stackall=yes
+stock1=slayer_gem,100,10
+stock2=grey_wolf_fur,0,100
+stock3=fur,0,100
+stock4=raw_rat_meat,0,100
+stock5=raw_beef,0,100s
+stock6=raw_chicken,0,100

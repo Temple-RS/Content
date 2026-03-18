@@ -1,0 +1,32 @@
+[opheld2,vip_guest] ~change_vip_status(last_item);
+[opheld2,vip_t1] ~change_vip_status(last_item);
+[opheld2,vip_t2] ~change_vip_status(last_item);
+[opheld2,vip_t3] ~change_vip_status(last_item);
+
+[proc,check_vip_status]
+~mesbox("You are VIP <tostring(%vip_level)>.");
+
+
+[proc,change_vip_status](obj $vip_ticket)
+switch_obj($vip_ticket){
+    case vip_guest : {
+        %vip_level = ^guest_t1;
+        inv_del(inv,$vip_ticket, 1);
+    }
+    case vip_t1 : {
+        %vip_level = ^t1;
+        inv_del(inv,$vip_ticket, 1);
+    } 
+    case vip_t2 : {
+        %vip_level = ^t2;
+        inv_del(inv,$vip_ticket, 1);
+    }
+    case vip_t3 : {
+        %vip_level = ^t3;
+        inv_del(inv,$vip_ticket, 1);
+    }
+}
+
+
+[proc,vip_bank_boost]
+~add_space_inv(vip_bank, 8);

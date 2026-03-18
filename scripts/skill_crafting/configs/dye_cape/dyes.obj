@@ -12,6 +12,7 @@ recol1d=30753
 weight=20g
 category=category_82
 param=crafting_capes_struct,red_dye
+param=crafting_hoods_struct,red_dye
 
 [yellowdye]
 name=Yellow dye
@@ -27,6 +28,7 @@ recol1d=31649
 weight=20g
 category=category_82
 param=crafting_capes_struct,yellow_dye
+param=crafting_hoods_struct,yellow_dye
 
 [bluedye]
 name=Blue dye
@@ -42,6 +44,7 @@ recol1d=31
 weight=20g
 category=category_82
 param=crafting_capes_struct,blue_dye
+param=crafting_hoods_struct,blue_dye
 
 [orangedye]
 name=Orange dye
@@ -57,6 +60,7 @@ recol1d=28097
 weight=20g
 category=category_82
 param=crafting_capes_struct,orange_dye
+param=crafting_hoods_struct,orange_dye
 
 [greendye]
 name=Green dye
@@ -72,6 +76,7 @@ recol1d=768
 weight=20g
 category=category_82
 param=crafting_capes_struct,green_dye
+param=crafting_hoods_struct,green_dye
 
 [purpledye]
 name=Purple dye
@@ -87,3 +92,20 @@ recol1d=19487
 weight=20g
 category=category_82
 param=crafting_capes_struct,purple_dye
+param=crafting_hoods_struct,purple_dye
+
+[blackdye]
+name=Black dye
+desc=A little bottle of black dye.
+cost=5
+model=model_2705_obj
+recol1s=15855
+recol1d=0
+2dyof=-2
+2dzoom=760
+2dyan=1920
+2dxan=124
+weight=20g
+category=category_82
+param=crafting_capes_struct,black_dye
+param=crafting_hoods_struct,black_dye

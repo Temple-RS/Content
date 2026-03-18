@@ -1,0 +1,5 @@
+[if_button,clan_settings:com_4]
+mes("To join a clan, type ::join clan_name");
+
+[if_button,clan_settings:com_5]
+mes("To leave a clan, type ::leave");

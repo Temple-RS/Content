@@ -1,0 +1,22 @@
+[bird_nest_ring]
+name=Bird nest
+desc=It's a bird's nest with a ring in it.
+model=obj_bird_nest_ring
+2dxof=2
+2dzoom=1100
+2dyan=60
+2dxan=172
+members=yes
+iop1=Search
+weight=2g
+
+[bird_nest_empty]
+name=Bird nest
+desc=It's an empty bird's nest.
+model=obj_bird_nest_empty
+2dxof=2
+2dzoom=1100
+2dyan=60
+2dxan=172
+members=yes
+weight=2g

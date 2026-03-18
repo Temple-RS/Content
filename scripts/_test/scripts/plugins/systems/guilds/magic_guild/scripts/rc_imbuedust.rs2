@@ -1,0 +1,13 @@
+[proc,imbue_runedust]
+def_int $runedust = inv_total(inv,rune_dust);
+if (stat_base(magic) > 59) {
+    if ($runedust > 0) {
+        ~chatplayer("<p,neutral>I have |[<tostring($runedust)>x] Rune Dust.");
+        inv_del(inv, rune_dust, $runedust);
+        inv_add(inv, imbued_dust, $runedust);
+        ~chatnpc("Huzzah! Here is |[<tostring($runedust)>x] Imbued Dust!");
+    }
+} else {
+    ~chatnpc("<p,sad>You must have at least 60 Magic for me to consider doing this.");
+    return;
+}

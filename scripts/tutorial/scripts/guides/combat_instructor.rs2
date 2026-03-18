@@ -134,14 +134,14 @@ if (%tutorial > ^newbie_combat_instructor_start
 if (%tutorial > ^newbie_combat_instructor_worn_inventory
     & %tutorial ! ^newbie_combat_instructor_after_rat_kill_melee
     & %tutorial ! ^newbie_combat_instructor_before_attacking_ranged) {
-    if (~tutorial_has_obj_on_person(bronze_sword) = false
+    if (~tutorial_has_obj_on_person(bronze_longsword) = false
         & ~tutorial_has_obj_on_person(wooden_shield) = false) {
-        inv_add(inv, bronze_sword, 1);
+        inv_add(inv, bronze_longsword, 1);
         inv_add(inv, wooden_shield, 1);
-        ~doubleobjbox(bronze_sword, wooden_shield, "The Combat Guide gives you a |@blu@Bronze sword@bla@ |and a |@blu@Wooden Shield!", 200);
-    }else if (~tutorial_has_obj_on_person(bronze_sword) = false) {
-        inv_add(inv, bronze_sword, 1);
-        ~objbox(bronze_sword, "The Combat Guide gives you a |@blu@Bronze sword!", 250, 0, 0);
+        ~doubleobjbox(bronze_longsword, wooden_shield, "The Combat Guide gives you a |@blu@Bronze sword@bla@ |and a |@blu@Wooden Shield!", 200);
+    }else if (~tutorial_has_obj_on_person(bronze_longsword) = false) {
+        inv_add(inv, bronze_longsword, 1);
+        ~objbox(bronze_longsword, "The Combat Guide gives you a |@blu@Bronze sword!", 250, 0, 0);
     }else if (~tutorial_has_obj_on_person(wooden_shield) = false) {
         inv_add(inv, wooden_shield, 1);
         ~objbox(wooden_shield, "The Combat Guide gives you a |@blu@Wooden Shield!", 250, 0, 0);
@@ -151,11 +151,11 @@ if (%tutorial > ^newbie_combat_instructor_worn_inventory
 if (%tutorial > ^newbie_combat_instructor_after_rat_kill_melee) {
     if (~tutorial_has_obj_on_person(bronze_arrow) = false
         & ~tutorial_has_obj_on_person(shortbow) = false) {
-        inv_add(inv, bronze_arrow, 50);
+        inv_add(inv, bronze_arrow, 75);
         inv_add(inv, shortbow, 1);
         ~doubleobjbox(bronze_arrow_5, shortbow, "The Combat Guide gives you some |@blu@Bronze arrows@bla@ |and a |@blu@Shortbow!", 200);
     }else if (~tutorial_has_obj_on_person(bronze_arrow) = false) {
-        inv_add(inv, bronze_arrow, 50);
+        inv_add(inv, bronze_arrow, 75);
         ~objbox(bronze_arrow_5, "The Combat Guide gives you some |@blu@Bronze arrows!", 250, 0, 0);
     }else if (~tutorial_has_obj_on_person(shortbow) = false) {
         inv_add(inv, shortbow, 1);

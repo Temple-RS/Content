@@ -1,0 +1,174 @@
+
+// Workbench repairing
+[oplocu,workbench] @attempt_workbench;
+[oplocu,workbench2] @attempt_workbench;
+
+[label,attempt_workbench]
+switch_obj(last_useitem){
+    // planks
+    case logs : {
+        def_int $calc =  max(1, random(max(2, random(5))));
+        ~workbench_action(logs, 1, woodplank, $calc, 15);
+        if ($calc > 1){
+            mes("You create <tostring($calc)>x Planks");
+        } else {
+            mes("You create a plank.");
+        }
+        return;
+    }
+    // pickaxes
+    case macro_broken_bronze_pickaxe : {
+        @workbench(last_useitem, human_smithing, 25, smithing, 1, "repaired");
+    }
+    case macro_broken_iron_pickaxe : {
+        @workbench(last_useitem, human_smithing, 50, smithing, 1, "repaired");
+    }
+    case macro_broken_steel_pickaxe : {
+        @workbench(last_useitem, human_smithing, 65, smithing, 5, "repaired");
+    }
+    case macro_broken_mithril_pickaxe : {
+        @workbench(last_useitem, human_smithing, 75, smithing, 20, "repaired");
+    }
+    case macro_broken_adamant_pickaxe : {
+        @workbench(last_useitem, human_smithing, 100, smithing, 40, "repaired");
+    }
+    case macro_broken_rune_pickaxe : {
+        @workbench(last_useitem, human_smithing, 150, smithing, 40, "repaired");
+    }
+
+    // hatchets
+    case macro_broken_bronze_hatchet : {
+        @workbench(last_useitem, human_smithing, 25, smithing, 1, "repaired");
+    }
+    case macro_broken_iron_hatchet : {
+        @workbench(last_useitem, human_smithing, 50, smithing, 1, "repaired");
+    }
+    case macro_broken_steel_hatchet : {
+        @workbench(last_useitem, human_smithing, 65, smithing, 5, "repaired");
+    }
+    case macro_broken_black_hatchet : {
+        @workbench(last_useitem, human_smithing, 70, smithing, 10, "repaired");
+    }
+    case macro_broken_mithril_hatchet : {
+        @workbench(last_useitem, human_smithing, 75, smithing, 20, "repaired");
+    }
+    case macro_broken_adamant_hatchet : {
+        @workbench(last_useitem, human_smithing, 100, smithing, 30, "repaired");
+    }
+    case macro_broken_rune_hatchet : {
+        @workbench(last_useitem, human_smithing, 150, smithing, 40, "repaired");
+    }
+    case nails : {
+        if (~material_checker(hammer, 1, iron_bar, 5, nails, 5, woodplank, 5) = true){
+            if (stat_base(smithing) < 15) {
+                mes("You need a higher smithing level to do this.");
+                return;
+            }
+            switch_obj(last_useitem){
+                case nails : {
+                    inv_del(inv, iron_bar, 5);
+                    inv_del(inv, nails, 5);
+                    ~workbench_action(woodplank, 5, empty_casket, 1, 3125);
+                    mes("You have created an empty casket!");
+                    jump(end_label);
+                }
+            }
+        }        
+    }
+}
+
+//info Uses a workbench to repair items. (last_use, exp to gain, animation, stat, level requirement, string)
+[label,workbench](obj $last_object, seq $anim, int $exp, stat $stat, int $level_required, string $string)
+if (stat_base($stat) < $level_required) {
+    ~chatplayer("<p,neutral>You need a level of <tostring($level_required)> <~stat_name($stat)> to repair this item.");
+    return;
+}
+switch_obj($last_object){
+    // planks
+    case logs : {
+        def_int $calc =  max(1, random(max(2, random(5))));
+        ~workbench_action(logs, 1, woodplank, $calc, 15);
+        if ($calc > 1){
+            mes("You create <tostring($calc)>x Planks");
+        } else {
+            mes("You create a plank.");
+        }
+        return;
+    }
+    // pickaxes
+    case macro_broken_bronze_pickaxe : {
+        inv_del(inv, macro_broken_bronze_pickaxe, 1);
+        inv_add(inv, bronze_pickaxe, 1);
+    }
+    case macro_broken_iron_pickaxe : {
+        inv_del(inv, macro_broken_iron_pickaxe, 1);
+        inv_add(inv, iron_pickaxe, 1);
+    }
+    case macro_broken_steel_pickaxe : {
+        inv_del(inv, macro_broken_steel_pickaxe, 1);
+        inv_add(inv, steel_pickaxe, 1);
+    }
+    case macro_broken_mithril_pickaxe : {
+        inv_del(inv, macro_broken_mithril_pickaxe, 1);
+        inv_add(inv, mithril_pickaxe, 1);
+    }
+    case macro_broken_adamant_pickaxe : {
+        inv_del(inv, macro_broken_adamant_pickaxe, 1);
+        inv_add(inv, adamant_pickaxe, 1);
+    }
+    case macro_broken_rune_pickaxe : {
+        inv_del(inv, macro_broken_rune_pickaxe, 1);
+        inv_add(inv, rune_pickaxe, 1);
+    }
+
+    // hatchets
+    case macro_broken_bronze_hatchet : {
+        inv_del(inv, macro_broken_bronze_hatchet, 1);
+        inv_add(inv, bronze_axe, 1);
+    }
+    case macro_broken_iron_hatchet : {
+        inv_del(inv, macro_broken_iron_hatchet, 1);
+        inv_add(inv, iron_axe, 1);
+    }
+    case macro_broken_steel_hatchet : {
+        inv_del(inv, macro_broken_steel_hatchet, 1);
+        inv_add(inv, steel_axe, 1);
+    }
+    case macro_broken_black_hatchet : {
+        inv_del(inv, macro_broken_black_hatchet, 1);
+        inv_add(inv, black_axe, 1);
+    }
+    case macro_broken_mithril_hatchet : {
+        inv_del(inv, macro_broken_mithril_hatchet, 1);
+        inv_add(inv, mithril_axe, 1);
+    }
+    case macro_broken_adamant_hatchet : {
+        inv_del(inv, macro_broken_adamant_hatchet, 1);
+        inv_add(inv, adamant_axe, 1);
+    }
+    case macro_broken_rune_hatchet : {
+        inv_del(inv, macro_broken_rune_hatchet, 1);
+        inv_add(inv, rune_axe, 1);
+    }
+    case default : {
+        mes("Nothing happened.");
+    }
+}
+~crafting_action;
+stat_advance($stat, $exp);
+mes("You have <$string> your tool.");
+
+// info: Advanced Workbench action
+[proc,workbench_action](obj $used_material, int $amount, namedobj $product, int $count, int $exp)
+if (~tool_check(hammer) = false) {return;}
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+anim(human_pickuptable,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+inv_del(inv, $used_material, $amount);
+inv_add(inv, $product, $count);
+stat_advance(smithing, $exp);
+stat_advance(crafting, min(75, $exp));

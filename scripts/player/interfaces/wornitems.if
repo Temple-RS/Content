@@ -422,6 +422,8 @@ colour=0x2E2B23
 
 [wear]
 type=inv
+operable=yes
+interactable=yes
 x=24
 y=44
 width=3

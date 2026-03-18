@@ -19,12 +19,15 @@ if (npc_range(coord) > 2) {
 // todo: Confirm this for 2004.
 ~chatnpcrange("<p,quiz>Good day, how may I help you?");
 
-def_int $option = ~p_choice2("I'd like to access my bank account, please.", 1, "What is this place?", 2);
+def_int $option = ~p_choice3("I'd like to access my main account, please.", 1, "I'd like to access my premium account, please.", 2, "What is this place?", 3);
 switch_int ($option) {
     case 1 :
-        ~chatplayer("<p,quiz>I'd like to access my bank account, please.");
+        ~chatplayer("<p,quiz>I'd like to access my main account, please.");
         @openbank;
     case 2 :
+        ~chatplayer("<p,quiz>I'd like to access my premium account, please.");
+        @openpremium_bank;
+    case 3 :
         ~chatplayer("<p,neutral>What is this place?");
         ~chatnpcrange("<p,happy>This is a branch of the Bank of RuneScape. We have branches in many towns.");
         $option = ~p_choice2("And what do you do?", 1, "Didn't you used to be called the Bank of Varrock?", 2);

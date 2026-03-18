@@ -1,0 +1,25 @@
+// Clock Repairing
+[oploc1,grandfatherclock_fixed] 
+mes("It's ticking away nicely.");
+
+[oploc1,grandfatherclock] 
+mes("This could be fixed...");
+[oploc2,grandfatherclock] @fix_clock;
+
+[label,fix_clock]
+if (~material_checker(hammer, 1, woodplank, 2, nails, 5, null, 0) = true) {
+    if (stat_base(crafting) < 30){
+        mes("You need a 30 crafting level to do this.");
+        if (stat_base(smithing) < 15){
+            mes("You need a 15 smithing level to do this.");
+            return;
+        }
+        return;
+    }
+    ~crafting_action;
+    inv_del(inv, woodplank, 2);
+    inv_del(inv, nails, 5);
+    loc_change(grandfatherclock_fixed, max(100, random(180)));
+    stat_advance(crafting, 75);
+    stat_advance(smithing, 75);
+}

@@ -1,0 +1,9 @@
+// https://www.youtube.com/watch?v=bbAO8HPc_tE
+[bird_nest_mes]
+inputtype=namedobj
+outputtype=string
+val=sapphire_ring,a sapphire ring
+val=ruby_ring,a ruby ring
+val=emerald_ring,an emerald ring
+val=gold_ring,a gold ring
+val=diamond_ring,a diamond ring

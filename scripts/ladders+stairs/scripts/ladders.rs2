@@ -90,8 +90,8 @@ p_arrivedelay;
 if(loc_coord = 0_50_149_22_52) { // Zanaris ladder (entrance room)
     ~climb_ladder(0_50_49_1_33, true);
     return;
-} else if (loc_coord = 0_50_149_8_18){
-    ~climb_ladder(0_50_49_50_57, true);
+} else if (loc_coord = 0_50_151_8_18){
+    ~climb_ladder(0_50_49_50_58, true);
     return;
 }
 ~climb_ladder(movecoord(coord(), 0, 0, -6400), true);

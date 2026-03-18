@@ -1,0 +1,14 @@
+[attack_exp]
+scope=perm
+
+[strength_exp]
+scope=perm
+
+[defence_exp]
+scope=perm
+
+[ranged_exp]
+scope=perm
+
+[magic_exp]
+scope=perm

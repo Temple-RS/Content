@@ -3502,6 +3502,8 @@ desc=Tick-tock, it's a clock.
 model=model_loc_683
 op1=Check
 op2=Fix
+recol1s=12613
+recol1d=6307 
 
 [weathervane]
 name=Weather vane

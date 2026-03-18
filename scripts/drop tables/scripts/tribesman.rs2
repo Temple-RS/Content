@@ -67,5 +67,3 @@ if ($random < 7){
 } else if ($random < 137) {
     obj_add(npc_coord, ~mid_tier_items, ^lootdrop_duration);
 }
-
-[queue,tribesman_kill]

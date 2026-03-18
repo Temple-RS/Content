@@ -51,6 +51,7 @@ switch_obj(last_useitem) {
 [opheldu,macro_mithril_hatchethead] @check_axe_head;
 [opheldu,macro_adamant_hatchethead] @check_axe_head;
 [opheldu,macro_rune_hatchethead] @check_axe_head;
+[opheldu,macro_dragon_hatchethead] @check_axe_head;
 
 [label,check_axe_head]
 if (last_useitem = macro_hatchethandle) {

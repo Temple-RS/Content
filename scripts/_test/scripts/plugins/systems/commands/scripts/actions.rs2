@@ -1,0 +1,143 @@
+
+// info: Eat Action
+[proc,eat_action](obj $used_item, int $slot, int $delay, int $effect)
+inv_delslot(inv, $slot);
+anim(human_eat, 0);
+sound_synth(eat, 0, 0);
+switch_int($effect){
+    case 1 : {
+        stat_heal(hitpoints, 10, 1);
+    }
+}
+p_delay($delay);
+
+// info: Cutting Action
+[proc,cutting_action](obj $used_item, int $slot, namedobj $product, int $delay)
+inv_delslot(inv, $slot);
+p_delay($delay);
+switch_obj($used_item){
+    case watermelon : {
+        anim(human_watermelon_cutting, 0);
+    }
+    case default : {
+        anim(human_cutting, 0);
+    }
+}
+sound_synth(sliced, 0, 0);
+inv_add(inv, $product, 1);
+
+// info: Standard smelting action with variable smithing speeds.
+[proc,smelting_action](obj $used_ore, int $coal_amount, namedobj $product, int $count, int $exp)
+if (inv_total(inv, coal) < $coal_amount){
+    mes("You need more coal to do this.");
+    return;
+}
+if ($coal_amount = 0) {
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
+    p_delay(~stat_speed(smithing));
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
+    p_delay(~stat_speed(smithing));
+    inv_del(inv, $used_ore, $count);
+} else {
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
+    p_delay(~stat_speed(smithing));
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
+    p_delay(~stat_speed(smithing));
+    inv_del(inv, $used_ore, $count);
+    inv_del(inv, coal, $coal_amount);
+}
+inv_add(inv, $product, $count);
+stat_advance(smithing, $exp);
+
+// info: Standard stat action with variable magic speeds.
+[proc,stat_action](stat $skill, int $exp)
+spotanim_pl(highlvlalchemy_casting, 92, 0);
+anim(human_casthighlvlalchemy, 0);
+sound_synth(high_alchemy, 2, 0);
+p_delay(~stat_speed($skill));
+if ($exp > 1){
+    stat_advance($skill, $exp);
+}
+
+// info: Standard smithing action with variable smithing speeds.
+[proc,smithing_action](obj $used_bar, int $count, namedobj $product, int $count2, int $exp)
+if (~tool_check(hammer) = false) {return;}
+if (inv_total(inv, $used_bar) < $count){
+    mes("You need more materials to do this.");
+    return;
+}
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+inv_del(inv, $used_bar, $count);
+inv_add(inv, $product, $count2);
+stat_advance(smithing, $exp);
+
+// info: Standard magic action with variable magic speeds.
+[proc,magic_action]
+spotanim_pl(highlvlalchemy_casting, 92, 0);
+anim(human_casthighlvlalchemy, 0);
+sound_synth(high_alchemy, 2, 0);
+p_delay(~stat_speed(magic));
+
+
+// info: Basic workbench action
+[proc,crafting_action]
+if (~tool_check(hammer) = false) {return;}
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+anim(human_smithing, ~stat_speed(crafting));
+sound_synth(anvil, ~stat_speed(crafting), 0);
+anim(human_pickuptable,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+
+
+// info: Standard grind action with variable crafting speeds.
+[proc,grinding_action](obj $used_item, namedobj $product)
+if (inv_total(inv, $used_item) < 1){
+    mes("You cannot create a <oc_param($product,name)>.");
+    return;
+}
+inv_del(inv, $used_item, 1);
+anim(human_herbing_grind,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+anim(human_herbing_grind,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+inv_add(inv, $product, 1);
+
+// info: Standard fill action with variable crafting speeds.
+[proc,filling_action]
+anim(human_opencupboard,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+anim(human_redtopazcutting,0);
+sound_synth(grind, ~stat_speed(crafting), 0);
+p_delay(~stat_speed(crafting));
+
+// info: Failure Chance
+[proc,action_failure](int $success_chance)(boolean)
+def_int $random = random(99);
+if ($random > $success_chance) {
+    return(true);
+}
+return(false);
+
+// info: Action Repeater
+[proc,action_repeat](stat $stat, int $exp, int $cycles, seq $anim, synth $sound, obj $resource, int $resource_amt, namedobj $product, int $product_amt)
+while($cycles > 0) {
+    if (inv_total(inv, $resource) < $resource_amt) {return;}
+    anim($anim, 0);
+    sound_synth($sound, 0, 0);
+    p_delay(calc(~stat_speed($stat) + 1));
+    inv_del(inv, $resource, $resource_amt);
+    if ($product ! null) {inv_add(inv, $product, $product_amt);}
+    if ($exp > 0) {stat_advance($stat, $exp);}
+    $cycles = calc($cycles - 1);
+}

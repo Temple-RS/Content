@@ -1,0 +1,27 @@
+[earth_golem]
+desc=A powerful abomination.
+huntmode=golem_hunt
+readyanim=elemental_earth_ready
+walkanim=elemental_earth_walk
+op2=Attack
+vislevel=35
+name=Earth Golem
+model1=model_175
+respawnrate=100
+hitpoints=255
+attack=80
+strength=80
+defence=80
+magic=80
+ranged=80
+size=2
+param=attackrate,6
+param=damagetype,^crush_style
+param=attack_anim,elemental_earth_attack
+param=defend_anim,elemental_earth_defend
+param=death_anim,elemental_earth_death
+param=attack_sound,earth_elemental_attack
+param=defend_sound,earth_elemental_hit
+param=death_sound,earth_elemental_death
+maxrange=20
+huntrange=20

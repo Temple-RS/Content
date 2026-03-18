@@ -146,6 +146,30 @@
 [command,last_com]()(component)
 // info: Get the last int (number) that was input
 [command,last_int]()(int)
+// info: Get the last string that was input
+[command,last_string]()(string)
+// info: Create a new clan for the player
+[command,clan_create](string $name)(int)
+// info: Get the current player's clan name
+[command,clan_name]()(string)
+// info: Get the current player's clan score
+[command,clan_score]()(int)
+// info: Check if the current player is the owner of their clan
+[command,clan_owner]()(int)
+// info: Get the number of members in the current player's clan
+[command,clan_membercount]()(int)
+// info: Get the number of online members in the current player's clan
+[command,clan_onlinecount]()(int)
+// info: Broadcast a message to the current player's clan
+[command,clan_broadcast](string $message)
+// info: Join a clan with $name
+[command,clan_join](string $name)
+// info: Leave the current clan
+[command,clan_leave]
+// info: Check if the current player's clan is locked
+[command,clan_locked]()(int)
+// info: Invite a player with $name to the current clan
+[command,clan_invite](string $name)
 // info: Get the last item that was selected
 [command,last_item]()(obj) // unconfirmed, inferred from useitem and useslot
 // info: Get the last item's slot
@@ -168,6 +192,8 @@
 [command,p_arrivedelay]
 // info: Requires protected access - open a number input dialog
 [command,p_countdialog]
+// info: Requires protected access - open a string input dialog
+[command,p_stringdialog]
 // info: Requires protected access - delay this script/the player for $delay cycles
 [command,p_delay](int $delay)
 // info: Requires protected access - delay this script/the secondary player for $delay cycles
@@ -216,6 +242,14 @@
 [command,stat_base](stat $stat)(int)
 // info: Get the base level of $stat for the secondary player
 [command,.stat_base](stat $stat)(int)
+// info: Get the total experience of $stat
+[command,stat_xp](stat $stat)(int)
+// info: Get the total experience of $stat for the secondary player
+[command,.stat_xp](stat $stat)(int)
+// info: Set the total experience of $stat
+[command,stat_setxp](stat $stat, int $xp)
+// info: Set the total experience of $stat for the secondary player
+[command,.stat_setxp](stat $stat, int $xp)
 // info: Add to $stat
 [command,stat_add](stat $stat, int $constant, int $percent)
 // info: Add to $stat for the secondary player
@@ -242,6 +276,8 @@
 [command,.stat_random](stat $stat, int $low, int $high)(boolean)
 // info: Get the player's UID to use in finduid/p_finduid later
 [command,uid]()(player_uid)
+// info: Get the player's total level
+[command,stat_total]()(int)
 // info: Get the secondary player's UID to use in finduid/p_finduid later
 [command,.uid]()(player_uid)
 // info: Request the player to log out
@@ -758,6 +794,8 @@
 // Obj config ops (4200-4299)
 // info: Get the obj config's name
 [command,oc_name](obj $obj)(string)
+// info: Set the obj config's name
+[command,oc_setname](obj $obj, string $name)
 // info: Get a param from an obj config
 [command,oc_param]/*(obj $obj, param $param)(dynamic)*/
 // info: Get the category from an obj config
@@ -776,6 +814,8 @@
 [command,oc_wearpos3](obj $obj)(int)
 // info: Get the cost from an obj config
 [command,oc_cost](obj $obj)(int)
+// info: Set the cost from an obj config
+[command,oc_setcost](obj $obj, int $cost)
 // info: Return true if an obj is tradeable
 [command,oc_tradeable](obj $obj)(boolean)
 // info: Get the internal debug name from an obj config
@@ -797,6 +837,8 @@
 [command,inv_allstock](inv $inv)(boolean)
 // info: Get the inv config's size
 [command,inv_size](inv $inv)(int)
+// info: Set the inv config's size
+[command,inv_setsize](inv $inv, int $size)
 // info: Get the secondary inv config's size
 [command,.inv_size](inv $inv)(int) // todo: remove this
 // info: Get the base stock of $obj in the inv config

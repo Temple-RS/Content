@@ -1,0 +1,44 @@
+[proc,create_clan_flow]()
+if (stat_total() < 500) {
+    mes("You need a total level of at least 500 to create a clan.");
+    return;
+}
+if (compare(clan_name(), "") ! 0) {
+    mes("You must leave your current clan before creating a new one.");
+    return;
+}
+mes("Enter the name of the clan you wish to create:");
+p_stringdialog;
+if (compare(last_string(), "") = 0) return;
+def_int $success = clan_create(last_string());
+if ($success = 1) {
+    mes("Clan '<last_string()>' created successfully!");
+}
+
+[command,createclan](string $name)
+if (stat_total() < 500) {
+    mes("You need a total level of at least 500 to create a clan.");
+    return;
+}
+clan_create($name);
+
+[command,joinclan](string $name)
+clan_join($name);
+
+[command,leaveclan]()
+clan_leave();
+
+[command,claninvite](string $name)
+if (clan_owner() = 0) {
+    mes("Only the clan owner can invite players.");
+    return;
+}
+clan_invite($name);
+mes("Invited <$name> to the clan.");
+
+[command,clanscore]()
+if (compare(clan_name(), "") = 0) {
+    mes("You are not in a clan.");
+    return;
+}
+mes("Your clan '<clan_name()>' has a score of: <tostring(clan_score())>");

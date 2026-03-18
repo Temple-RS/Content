@@ -8,6 +8,9 @@ gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
 }
+if (npc_findhero = ^true) {
+    queue(jogre_kill, 0, 0);
+}
 
 // Normal drop
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);

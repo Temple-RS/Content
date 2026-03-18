@@ -1,0 +1,11 @@
+[proc,add_space_inv](inv $inv, int $amount)
+inv_setsize($inv, $amount);
+mes("Added <tostring($amount)> space to inventory.");
+return;
+
+[proc,remove_space_inv](inv $inv, int $amount)
+def_int $size_before = inv_size($inv);
+def_int $newsize = calc($size_before - $amount);
+inv_setsize($inv, $newsize);
+mes("Removed <tostring(calc($size_before - $amount))> space from inventory.");
+return;

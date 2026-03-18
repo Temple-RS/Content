@@ -1,0 +1,10 @@
+[opheld1,roll] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheld1,triangle_sandwich] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheld1,square_sandwich] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheld1,watermelon] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheld1,watermelon_slice] ~eat_action(last_item, last_slot, ~stat_speed(hitpoints), 1);
+[opheldu,watermelon]
+switch_obj(last_useitem){
+    case knife : ~cutting_action(last_useitem, last_slot, watermelon_slice, ~stat_speed(crafting));
+    case default : ~displaymessage(^dm_default);
+}

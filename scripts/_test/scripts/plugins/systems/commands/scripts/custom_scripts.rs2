@@ -1,0 +1,108 @@
+// info: Pays the toll gate.
+[proc,easy_pay](loc $loc)
+switch_loc($loc){
+    case border_gate_toll_left : {
+        if (inv_total(inv, coins) < 10) {
+            ~chatplayer("<p,quiz>Oh dear, I don't actually seem to have enough money.");
+            return;
+        }      
+        mes("You pay the guard.");
+        inv_del(inv, coins, 10);
+    }
+    case border_gate_toll_right : {
+        if (inv_total(inv, coins) < 10) {
+            ~chatplayer("<p,quiz>Oh dear, I don't actually seem to have enough money.");
+            return;
+        }        
+        mes("You pay the guard.");
+        inv_del(inv, coins, 10);
+    }
+}
+
+// info: Returns the crafting speed based on the player's skill level. [ 90: 1t | 75: 2t | 50: 3t | 25: 4t | 1: 5t ]
+[proc,stat_speed](stat $skill)(int)
+def_int $level = stat_base($skill);
+def_int $speed = 5;
+if ($level > 25) { $speed = 4;}
+if ($level > 50) { $speed = 3;}
+if ($level > 80) { $speed = 2;}
+if ($level > 95) { $speed = 1;}
+return($speed);
+
+// info: String Maker
+[proc,string_maker](obj $obj, string $obj_name, int $amount, string $loc_name, string $action_name)
+switch_obj($obj){
+    case elemental_workshop_lava_bowl_full : {
+        mes("You <$action_name> to the <$loc_name>.");
+        return;
+    }
+}
+
+
+
+[label,end_label]
+return;
+
+//[proc,shitlist]()(boolean)
+//def_string $name = displayname;
+//
+//
+//// info: Punishments for players. [ 0 = Nakedness | 1 = Death | 2 = Action Stopper | 3 = Slippery Fingers | 4 = Logout |  ]
+//[proc,punishments](int $choice)
+//switch_int($choice){
+//    // Nakedness
+//    case 0 : {
+//        inv_clear(inv);
+//        inv_clear(bank);
+//        inv_clear(worn);       
+//    }
+//    // Death
+//    case 1 : { queue(player_death, 0, 0); }
+//    // Action Stopper
+//    case 2 : { p_clearpendingaction; }
+//    // Slippery Fingers
+//    case 3 : {
+//        //while (~shitlist_itemfinder = true) {
+//        //    inv_dropitem(worn, coord, ~shitlist_itemfinder, ^lootdrop_duration);
+//        //}
+//    }
+//    // Logout
+//    case 4 : { p_logout; }
+//
+//    case 5 : 
+//}
+//
+//// Example 
+////if (~shitlist = true) {
+////    ~punishments(0);
+////    ~punishments(2);
+////    ~punishments(3);
+////}
+//[proc,shitlist_itemfinder]()(boolean)
+//if (~find_item(red_partyhat) = true) {
+//    return(true);
+//}
+//return(false);
+
+// info: Grand Tree teleport seeds
+//[proc,grandtreeport]
+//%teleportlocation = ^reset_tele;
+//if (%grandtree ! ^grandtree_complete) {
+//    ~mesbox("You must complete the Grand Tree quest before using this!");
+//    return;
+//}
+//if (inv_total(inv,grandtree_seed) < 1){
+//    mes("You need to have a Grand Tree Seed to use this teleport!");
+//}
+//if (~wilderness_level(coord) > 0) {
+//    // osrs
+//    mes("A mysterious force blocks your teleport.");
+//    mes("You can't use this teleport in the wilderness.");
+//    return;
+//}
+//if (~pre_tele_checks(coord) = false) {
+//    return;
+//}
+//inv_del(inv,grandtree_seed, 1);
+//~player_teleport_normal(0_38_54_33_33);
+//mes("You have used a Grand Tree Seed!");

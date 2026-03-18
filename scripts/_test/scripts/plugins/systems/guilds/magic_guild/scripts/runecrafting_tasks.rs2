@@ -1,0 +1,251 @@
+[label,runecrafting_task]
+//if (%gamemode_selected = ^gamemode_pvp) {
+//    mes("You cannot do this.");
+//    return;
+//}
+switch_int(%runecraft_taskstatus) {
+    case ^rc_notstarted : {
+        ~chatnpc("<p,happy>Hello! Would you like to get a new task or check your reputation?");
+        def_int $r3 = ~p_choice2("Get a new task.", 1, "Check my reputation.", 2);
+        switch_int($r3) {
+            case 1 : {
+                ~chatplayer("<p,neutral>I would like to get a new task.");
+                ~chatnpc("<p,neutral>Which rune type would you like to focus your crafting efforts on?");
+                def_int $r1 = ~p_choice5("Air.", 1, "Mind.", 2, "Water.", 3, "Earth.", 4, "More...", 5);
+                switch_int($r1) {
+                    case 1 : 
+                        %runecraft_task = ^air;
+                    case 2 : 
+                        %runecraft_task = ^mind;
+                    case 3 : 
+                        %runecraft_task = ^water;
+                    case 4 : 
+                        %runecraft_task = ^earth;
+                    case 5 : {
+                        def_int $r2 = ~p_choice5("Fire.", 1, "Body.", 2, "Cosmic.", 3, "Chaos.", 4, "Nature.", 5);
+                        switch_int($r2) {
+                            case 1 : %runecraft_task = ^fire;
+                            case 2 : %runecraft_task = ^body;
+                            case 3 : %runecraft_task = ^cosmic;
+                            case 4 : %runecraft_task = ^chaos;
+                            case 5 : %runecraft_task = ^nature;
+                        }
+                    }
+                }
+            }
+            case 2 : {
+                ~chatplayer("<p,neutral>I would like to check my reputation.");
+                ~rc_rep_check;
+            }
+        }
+        ~chatnpc("<p,neutral>Which difficulty would you like your task to be?");
+        def_int $diff = ~p_choice4("Easy.", 1, "Medium.", 2, "Hard.", 3, "Insane.", 4);
+        switch_int($diff) {
+            case 1 : %rc_taskamount = ^rc_easy;
+            case 2 : %rc_taskamount = ^rc_medium;
+            case 3 : %rc_taskamount = ^rc_hard;
+            case 4 : %rc_taskamount = ^rc_insane;
+        }
+        
+        %runecraft_taskstatus = ^rc_inprogress;
+    }
+
+    case ^rc_inprogress : {
+        ~chatnpc("<p,neutral>What would you like to do?");
+        def_int $choice2 = ~p_choice3("Check Task.", 1, "Reputation.", 2, "Cancel Task.", 3);
+        switch_int($choice2) {
+            case 1 : {
+                ~chatplayer("<p,neutral>I would like to check my task.");
+                ~rc_ct;
+            }
+            case 2 : {
+                ~chatplayer("<p,neutral>I would like to check my reputation.");
+                ~rc_rep_check;
+            }
+            case 3 : {
+                ~chatplayer("<p,neutral>I would like to cancel my task.");
+                ~rc_canceltask;
+            }
+        }
+    }
+}
+
+[proc,rc_canceltask]
+~chatnpc("<p,neutral>Are you sure you want to abandon this Runecrafting task?");
+def_int $choice3 = ~p_choice2("Yes.", 1, "No.", 2);
+switch_int($choice3) {
+    case 1 : 
+        %runecraft_taskstatus = ^rc_notstarted;
+        %rc_taskamount = 0;
+        %rc_taskprogress = 0;
+    case 2 : return;
+}
+
+[proc,rc_rep_check]
+~mesbox("Runecrafting Reputation: |<tostring(%rc_rep)>");
+return;
+
+[proc,rc_rep_multi]()(int)
+switch_int(%rc_taskamount) {
+    case 250 : %rc_repmulti = 250;
+    case 750 : %rc_repmulti = 750;
+    case 15000 : %rc_repmulti = 15000;
+    case 30000 : %rc_repmulti = 30000;
+}
+return(%rc_repmulti);
+
+// info: Checks what Runecrafting Task you are on.
+[proc,rc_ct]
+def_int $taskamount = %rc_taskamount;
+
+switch_int(%runecraft_taskstatus) {
+    case 0 : {
+        ~mesbox("You are currently not on a task!");
+    }
+    case 1 : {
+        switch_int(%runecraft_task) {
+
+            case 1 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Air Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+
+            case 2 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Mind Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+
+            case 3 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Water Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+
+            case 4 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Earth Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+
+            case 5 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Fire Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+
+            case 6 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Body Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+
+            case 7 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Cosmic Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+
+            case 8 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Chaos Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+
+            case 9 : {
+                ~chatnpc("<p,neutral>You are currently on a task to craft |[<tostring(%rc_taskamount)>x] Nature Runes.");
+                if (%rc_taskprogress >= %rc_taskamount) {
+                    %rc_rep = add(%rc_rep, ~rc_rep_multi);
+                    %rc_taskamount = 0;
+                    %rc_taskprogress = 0;
+                    %runecraft_taskstatus = ^rc_notstarted;
+                    spotanim_pl(levelup_anim, 124, 0);
+                    midi_jingle(^advance_magic_jingle, ^advance_magic_millis);
+                    ~chatnpc("<p,happy>You have completed your Runecrafting task!");
+                    return;
+                }
+            }
+        }
+    }
+}
+
+[opheld1,rune_fragment]
+def_int $tot = inv_total(inv,rune_fragment);
+def_int $tot2 = inv_total(inv,rune_dust);
+def_int $base = stat_base(runecraft);
+def_int $new = calc($base + 25);
+def_int $diff = calc($new - $base);
+if ($tot >= 100 & $tot2 >= 100) {
+    inv_del(inv, rune_fragment, 100);
+    inv_del(inv, rune_dust, 100);
+    inv_add(inv, blankrune, 1);
+    ~stat_action(runecraft, $diff);
+} else {
+    mes("You need at least 100 Fragments and 100 Rune Dust to combine them together.");
+}
+

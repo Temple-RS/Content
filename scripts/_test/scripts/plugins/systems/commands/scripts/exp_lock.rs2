@@ -1,0 +1,53 @@
+[proc,exp_lock]
+def_int $int = ~p_choice5_header("Attack", 1, "Strength", 2, "Defence", 3, "Ranged", 4, "Magic", 5, "EXP Lock:");
+if ($int = 1) {
+    ~mesbox("Enter Which Level You Want To Lock:");
+    p_countdialog;
+    def_int $input = last_int;
+    if ($input > 99){
+        ~mesbox("You can't lock your level above 99!");
+        return;
+    }
+    %attack_exp = $input;
+    ~mesbox("Attack Level is locked at <tostring($input)>");
+} else if ($int = 2) {
+    ~mesbox("Enter Which Level You Want To Lock:");
+    p_countdialog;
+    def_int $input = last_int;
+    if ($input > 99){
+        ~mesbox("You can't lock your level above 99!");
+        return;
+    }
+    %strength_exp = $input;
+    ~mesbox("Strength Level is locked at <tostring($input)>");
+} else if ($int = 3) {
+    ~mesbox("Enter Which Level You Want To Lock:");
+    p_countdialog;
+    def_int $input = last_int;
+    if ($input > 99){
+        ~mesbox("You can't lock your level above 99!");
+        return;
+    }
+    %defence_exp = $input;
+    ~mesbox("Magic Level is locked at <tostring($input)>");
+} else if ($int = 4) {
+    ~mesbox("Enter Which Level You Want To Lock:");
+    p_countdialog;
+    def_int $input = last_int;
+    if ($input > 99){
+        ~mesbox("You can't lock your level above 99!");
+        return;
+    }
+    %ranged_exp = $input;
+    ~mesbox("Ranged Level is locked at <tostring($input)>");
+} else if ($int = 5) {
+    ~mesbox("Enter Which Level You Want To Lock:");
+    p_countdialog;
+    def_int $input = last_int;
+    if ($input > 99){
+        ~mesbox("You can't lock your level above 99!");
+        return;
+    }
+    %magic_exp = $input;
+    ~mesbox("Magic Level is locked at <tostring($input)>");
+}
