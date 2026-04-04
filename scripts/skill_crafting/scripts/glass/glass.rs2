@@ -25,34 +25,29 @@ if (map_members = ^false) {
     mes(^mes_members_feature);
     return;
 }
-// just a guess for now. level failure:
 if (stat(crafting) < 1) {
     ~mesbox("You need at least 1 Crafting to make Glass.");
     return;
 }
-// check if enough soda ash
 if (inv_total(inv, soda_ash) < 1) {
     ~mesbox("You need some Soda Ash to make Glass.");
     return;
 }
-// check if enough sand
 if (inv_total(inv, bucket_sand) < 1) {
     ~mesbox("You need some Sand to make Glass.");
     return;
 }
-// delete and add items in this order
-inv_del(inv, bucket_sand, 1);
-inv_add(inv, bucket_empty, 1);
-inv_del(inv, soda_ash, 1);
-inv_add(inv, molten_glass, 1);
-// play anim and sound
-anim(human_furnace,0);
-sound_synth(furnace,0,0);
-// success message
-mes("You heat the sand and soda ash in the furnace to make glass.");
-// give xp
-stat_advance(crafting, 200);
-
+def_int $make_options = ~make_options;
+while (~make_x(soda_ash, $make_options) ! 0 | ~make_x(bucket_empty, $make_options) ! 0){
+    inv_del(inv, bucket_sand, 1);
+    inv_add(inv, bucket_empty, 1);
+    inv_del(inv, soda_ash, 1);
+    inv_add(inv, molten_glass, 1);
+    anim(human_furnace,0);
+    sound_synth(furnace,0,0);
+    mes("You heat the sand and soda ash in the furnace to make glass.");
+    stat_advance(crafting, 200);
+}
 
 [label,craft_glass_interface]
 if (map_members = ^false) {
@@ -80,13 +75,11 @@ if (stat(crafting) < $level) {
     mes("You need level <tostring($level)> Crafting to make <$name>.");
     return;
 }
-// delete molten glass
-inv_del(inv, molten_glass, 1);
-// add item
-inv_add(inv, $glass_item, 1);
-// play anim
-anim(human_glassblowing,0);
-// display game message
-mes("You make <$name>.");
-// give xp
-stat_advance(crafting, struct_param($struct, productexp));
+def_int $make_options = ~make_options;
+while (~make_x(molten_glass, $make_options) ! 0){
+    inv_del(inv, molten_glass, 1);
+    inv_add(inv, $glass_item, 1);
+    anim(human_glassblowing,0);
+    mes("You make <$name>.");
+    stat_advance(crafting, struct_param($struct, productexp));
+}

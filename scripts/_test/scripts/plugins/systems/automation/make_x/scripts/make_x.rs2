@@ -1,41 +1,21 @@
-[proc,make_x](obj $obj)(int)
-def_int $inv_total = inv_total(inv, $obj);
-def_int $difference;
+[proc,make_options](obj $obj)(int)
 def_int $choice = ~p_choice4("1.", 1, "5.", 2, "10.", 3, "X.", 4);
-def_int $total_count = 0;
 switch_int($choice){
-    case 1 : {
-        $total_count = 1;
-        if ($inv_total < 1){
-            return($inv_total);
-        }
-    }
-    case 2 : {
-        $total_count = 5;
-        if ($inv_total < 5){
-            return($inv_total);
-        }
-    }
-    case 3 : {
-        $total_count = 10;
-        if ($inv_total < 10){
-            return($inv_total);
-        }
-    }
+    case 1 : return(1);
+    case 2 : return(5);
+    case 3 : return(10);
     case 4 : {
         p_countdialog;
-        $total_count = last_int;
-        if ($inv_total < $total_count){
-            $total_count = $inv_total;
-        }
-    }
+        def_int $last_int = last_int;
+        if ($last_int > inv_total($obj) | $last_int > 28){
+           def_int $difference = calc($last_int - inv_total($obj)); 
+        } 
+        return($last_int);
+    } 
 }
+
+[proc,make_x](obj $obj, int $count)(int)
+def_int $inv_total = inv_total(inv, $obj);
 if ($inv_total < 1){
-    mes("You don't have any of that item.");
     return(0);
 }
-$difference = calc($inv_total - $total_count);
-if ($difference < 0){
-    $difference = 0;
-}
-return($difference);

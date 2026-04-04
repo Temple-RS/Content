@@ -116,38 +116,41 @@ def_int $experience = db_getfield($data,cooking_generic:experience,0);
 
 // i put this in a label so its easier to transition to weak queues later on
 [label,cook_item](boolean $passes_roll, seq $anim, string $cookmessage, string $succesmessage, string $burnmessage, obj $uncooked_item, namedobj $cooked_item, namedobj $burnt_item, namedobj $additional_item, int $experience)
-mes($cookmessage);
-anim($anim, 0);
-sound_synth(fry, 0, 0);
-switch_obj($uncooked_item) {
-    case half_baked_batta : $cooked_item = ~gnome_batta;
-    case half_baked_bowl : $cooked_item = ~gnome_bowl;
-    case half_baked_crunchy : $cooked_item = ~gnome_crunchies;
-}
-// rsc delays for about 3 ticks.
-// This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."
-// https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update
-p_delay(1);
-inv_del(inv, $uncooked_item, 1);
+def_int $make_options = ~make_options;
+while (~make_x($uncooked_item, $make_options) ! 0){
+    mes($cookmessage);
+    anim($anim, 0);
+    sound_synth(fry, 0, 0);
+    switch_obj($uncooked_item) {
+        case half_baked_batta : $cooked_item = ~gnome_batta;
+        case half_baked_bowl : $cooked_item = ~gnome_bowl;
+        case half_baked_crunchy : $cooked_item = ~gnome_crunchies;
+    }
+    // rsc delays for about 3 ticks.
+    // This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."
+    // https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update
+    p_delay(1);
+    inv_del(inv, $uncooked_item, 1);
 
-if ($passes_roll = true) {
-    inv_add(inv, $cooked_item, 1);
-    if (compare($succesmessage, "0") ! 0) {
-        mes($succesmessage);
-    }
-    stat_advance(cooking, $experience);
-    // these dont give additional items
-    if ($cooked_item = half_baked_batta | $cooked_item = half_baked_bowl | $cooked_item = half_baked_crunchy) {
-        return;
-    }
-    if ($additional_item ! null) {
-        inv_add(inv, $additional_item, 1);
-    }
-} else {
-    inv_add(inv, $burnt_item, 1);
-    mes($burnmessage);
-    // for tins and what not
-    if ($additional_item ! null) {
-        inv_add(inv, $additional_item, 1);
+    if ($passes_roll = true) {
+        inv_add(inv, $cooked_item, 1);
+        if (compare($succesmessage, "0") ! 0) {
+            mes($succesmessage);
+        }
+        stat_advance(cooking, $experience);
+        // these dont give additional items
+        if ($cooked_item = half_baked_batta | $cooked_item = half_baked_bowl | $cooked_item = half_baked_crunchy) {
+            return;
+        }
+        if ($additional_item ! null) {
+            inv_add(inv, $additional_item, 1);
+        }
+    } else {
+        inv_add(inv, $burnt_item, 1);
+        mes($burnmessage);
+        // for tins and what not
+        if ($additional_item ! null) {
+            inv_add(inv, $additional_item, 1);
+        }
     }
 }
