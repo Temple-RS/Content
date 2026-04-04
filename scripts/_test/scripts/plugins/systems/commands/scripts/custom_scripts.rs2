@@ -106,3 +106,17 @@ return;
 //inv_del(inv,grandtree_seed, 1);
 //~player_teleport_normal(0_38_54_33_33);
 //mes("You have used a Grand Tree Seed!");
+
+
+// info: Checks to see which slot is empty and returns the slot number
+[proc,open_slot](int $inv_size, inv $inv)(int)
+def_int $i = 0;
+def_int $empty_slot;
+while ($i < $inv_size) {
+    if (inv_getobj($inv, $i) = null) {
+        $empty_slot = $i;
+        return($empty_slot);
+    } else {
+        $i = calc($i + 1);
+    }
+}

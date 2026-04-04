@@ -512,6 +512,7 @@ def_int $random = 0;
 $random = random(128);
 def_int $r2 = random(128);
 if ($r2 < 126){
+    return(coins, 250);
 } else {
     if ($random < 8) {
         return (mithril_sword, 1);
@@ -566,6 +567,7 @@ def_int $random = 0;
 $random = random(128);
 def_int $r2 = random(128);
 if ($r2 < 126){
+    return(coins, 100);
 } else {
     if ($random < 8) {
         return (mithril_sword, 1);

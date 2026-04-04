@@ -6,15 +6,16 @@ model=model_2706_obj
 2dzoom=2160
 2dyan=88
 2dxan=308
-cost=5
+cost=500000
 weight=10lb
 members=yes
 tradeable=no
+param=no_alchemy,^true
 
 [unpacked_snow]
 name=Snow
 desc=A pile of unpacked snow.
-cost=2
+cost=2500
 model=model_2742_obj
 recol1s=21140
 recol1d=28539
@@ -27,11 +28,12 @@ iop1=Pack
 members=yes
 tradeable=yes
 iop3=Eat
+param=no_alchemy,^true
 
 [unpacked_yellow_snow]
 name=Yellow snow
 desc=A pile of unpacked yellow snow.
-cost=2
+cost=2500
 model=model_2742_obj
 recol1s=21140
 recol1d=31683
@@ -44,6 +46,7 @@ iop1=Pack
 members=yes
 tradeable=yes
 iop3=Eat
+param=no_alchemy,^true
 
 [snowball]
 name=Snowball
@@ -58,10 +61,10 @@ recol1s=25
 recol1d=32767
 recol2s=0
 recol2d=32767
-cost=1
+cost=15000
 weight=80g
 members=yes
-
+param=no_alchemy,^true
 
 [yellow_snowball]
 name=Yellow snowball
@@ -78,15 +81,15 @@ recol2s=0
 recol2d=31683
 recol3s=32767
 recol3d=31683
-cost=1
+cost=15000
 weight=80g
 members=yes
-
+param=no_alchemy,^true
 
 [berret_green]
 name=Berret
 desc=Pouvez-vous parler francais?
-cost=80
+cost=80000
 weight=40g
 members=yes
 model=model_3373_obj
@@ -103,11 +106,12 @@ manwear=model_198_obj_wear,0
 womanwear=model_373_obj_wear,0
 manhead=model_40_obj_wear
 womanhead=model_98_obj_wear
+param=no_alchemy,^true
 
 [cabbage_hat]
 name=Chef's hat (i)
 desc=Imbued with the power of cabbage!
-cost=2
+cost=80000
 model=model_2782_obj
 recol1s=15855
 recol1d=2692
@@ -126,7 +130,7 @@ manhead=model_41_obj_wear
 womanhead=model_99_obj_wear
 iop2=Wear
 weight=2lb
-
+param=no_alchemy,^true
 
 
 
@@ -162,7 +166,7 @@ weight=2oz
 [pats_mug]
 name=Paddy's Mug
 desc=A glass of frothy ale.
-cost=2
+cost=2000000
 iop1=Drink
 model=model_2491_obj
 2dxof=-3
@@ -184,7 +188,7 @@ param=no_alchemy,^true
 [pats_mug_empty]
 name=Paddy's Mug
 desc=I need to fill this with beer.
-cost=2
+cost=2000000
 model=model_2548_obj
 2dxof=-3
 2dyof=2

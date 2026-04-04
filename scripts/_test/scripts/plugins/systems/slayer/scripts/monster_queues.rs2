@@ -10,7 +10,7 @@ if (%active_slayer_task = ^giant_rat){
 
 [queue,hobgoblin_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+    @wilderness_drop(0);
 }
 if (%active_slayer_task = ^hobgoblin){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -18,7 +18,7 @@ if (%active_slayer_task = ^hobgoblin){
 
 [queue,skeleton_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+    @wilderness_drop(0);
 }
 if (%active_slayer_task = ^skeleton){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);  
@@ -26,7 +26,7 @@ if (%active_slayer_task = ^skeleton){
 
 [queue,mugger_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+    @wilderness_drop(0);
 }
 if (%active_slayer_task = ^mugger){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);  
@@ -34,7 +34,7 @@ if (%active_slayer_task = ^mugger){
 
 [queue,dark_wizard_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+    @wilderness_drop(0);
 }
 if (%active_slayer_task = ^dark_wizard){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -47,7 +47,7 @@ if (%active_slayer_task = ^wizard){
 
 [queue,giant_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+    @wilderness_drop(0);
 }
 if (%active_slayer_task = ^giant){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -55,7 +55,7 @@ if (%active_slayer_task = ^giant){
 
 [queue,fire_giant_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+    @wilderness_drop(1);
 }
 if (%active_slayer_task = ^fire_giant){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -63,7 +63,7 @@ if (%active_slayer_task = ^fire_giant){
 
 [queue,moss_giant_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+    @wilderness_drop(1);
 }
 if (%active_slayer_task = ^moss_giant){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -71,7 +71,7 @@ if (%active_slayer_task = ^moss_giant){
 
 [queue,ice_giant_kill]
 if (~wilderness_level(coord) > 0) {
-    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+    @wilderness_drop(1);
 }
 if (%active_slayer_task = ^ice_giant){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -79,7 +79,7 @@ if (%active_slayer_task = ^ice_giant){
 
 [queue,ice_warrior_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table_low, ^lootdrop_duration);
+    @wilderness_drop(0);
 }
 if (%active_slayer_task = ^ice_warrior){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -92,7 +92,7 @@ if (%active_slayer_task = ^hellhound){
 
 [queue,black_dragon_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+    @wilderness_drop(1);
 }
 if (%active_slayer_task = ^black_dragon){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -100,7 +100,7 @@ if (%active_slayer_task = ^black_dragon){
 
 [queue,red_dragon_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+    @wilderness_drop(1);
 }
 if (%active_slayer_task = ^red_dragon){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -108,7 +108,7 @@ if (%active_slayer_task = ^red_dragon){
 
 [queue,blue_dragon_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+    @wilderness_drop(1);
 }
 if (%active_slayer_task = ^blue_dragon){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -116,7 +116,7 @@ if (%active_slayer_task = ^blue_dragon){
 
 [queue,green_dragon_kill]
 if (~wilderness_level(coord) > 0){
-    obj_add(coord, ~wilderness_table, ^lootdrop_duration);
+    @wilderness_drop(1);
 }
 if (%active_slayer_task = ^green_dragon){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
@@ -143,16 +143,25 @@ if (%active_slayer_task = ^black_demon){
 }
 
 [queue,chaos_druid_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^chaos_druid){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
 
 [queue,chaos_druid_warrior_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^chaos_druid_warrior){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
 
 [queue,chaos_dwarf_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^chaos_dwarf){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
@@ -168,6 +177,9 @@ if (%active_slayer_task = ^cow){
 }
 
 [queue,druid_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^druid){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
@@ -188,6 +200,9 @@ if (%active_slayer_task = ^farmer){
 }
 
 [queue,greater_demon_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(1);
+}
 if (%active_slayer_task = ^greater_demon){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
@@ -213,6 +228,9 @@ if (%active_slayer_task = ^jogre){
 }
 
 [queue,lesser_demon_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^lesser_demon){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
@@ -228,6 +246,9 @@ if (%active_slayer_task = ^pirate){
 }
 
 [queue,rogue_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^rogue){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
@@ -248,6 +269,9 @@ if (%active_slayer_task = ^unicorn){
 }
 
 [queue,zombie_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^zombie){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }

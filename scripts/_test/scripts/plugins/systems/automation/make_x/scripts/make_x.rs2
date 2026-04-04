@@ -1,0 +1,41 @@
+[proc,make_x](obj $obj)(int)
+def_int $inv_total = inv_total(inv, $obj);
+def_int $difference;
+def_int $choice = ~p_choice4("1.", 1, "5.", 2, "10.", 3, "X.", 4);
+def_int $total_count = 0;
+switch_int($choice){
+    case 1 : {
+        $total_count = 1;
+        if ($inv_total < 1){
+            return($inv_total);
+        }
+    }
+    case 2 : {
+        $total_count = 5;
+        if ($inv_total < 5){
+            return($inv_total);
+        }
+    }
+    case 3 : {
+        $total_count = 10;
+        if ($inv_total < 10){
+            return($inv_total);
+        }
+    }
+    case 4 : {
+        p_countdialog;
+        $total_count = last_int;
+        if ($inv_total < $total_count){
+            $total_count = $inv_total;
+        }
+    }
+}
+if ($inv_total < 1){
+    mes("You don't have any of that item.");
+    return(0);
+}
+$difference = calc($inv_total - $total_count);
+if ($difference < 0){
+    $difference = 0;
+}
+return($difference);
