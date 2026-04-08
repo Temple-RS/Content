@@ -99,25 +99,25 @@ if (inv_total(worn, gauntlets_of_cooking) > 0 & ($low_gauntlets > null | $high_g
     $low = $low_cookomatic;
     $high = $high_cookomatic;
 }
-def_boolean $passes_roll;
-// field can specify 0 to always burn, or 1 to always cook
-if ($low = 0 & $high = 0) {
-    $passes_roll = false;
-} else if ($low = 1 & $high = 1) {
-    $passes_roll = true;
-} else {
-    $passes_roll = stat_random(cooking, $low, $high);
-}
 def_namedobj $burnt_item = db_getfield($data,cooking_generic:burnt,0);
 def_namedobj $additional_item = db_getfield($data,cooking_generic:additional,0);
 def_int $experience = db_getfield($data,cooking_generic:experience,0);
-@cook_item($passes_roll, $anim, $cookmessage, $succesmessage, $burnmessage, $uncooked_item, $cooked_item, $burnt_item, $additional_item, $experience);
+@cook_item($low, $high, $anim, $cookmessage, $succesmessage, $burnmessage, $uncooked_item, $cooked_item, $burnt_item, $additional_item, $experience);
 
 
 // i put this in a label so its easier to transition to weak queues later on
-[label,cook_item](boolean $passes_roll, seq $anim, string $cookmessage, string $succesmessage, string $burnmessage, obj $uncooked_item, namedobj $cooked_item, namedobj $burnt_item, namedobj $additional_item, int $experience)
+[label,cook_item](int $low, int $high, seq $anim, string $cookmessage, string $succesmessage, string $burnmessage, obj $uncooked_item, namedobj $cooked_item, namedobj $burnt_item, namedobj $additional_item, int $experience)
 ~make_options($uncooked_item);
 while (~make_x($uncooked_item) = true){
+    def_boolean $passes_roll;
+    // field can specify 0 to always burn, or 1 to always cook
+    if ($low = 0 & $high = 0) {
+        $passes_roll = false;
+    } else if ($low = 1 & $high = 1) {
+        $passes_roll = true;
+    } else {
+        $passes_roll = stat_random(cooking, $low, $high);
+    }
     mes($cookmessage);
     anim($anim, 0);
     sound_synth(fry, 0, 0);
@@ -129,7 +129,7 @@ while (~make_x($uncooked_item) = true){
     // rsc delays for about 3 ticks.
     // This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."
     // https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update
-    p_delay(1);
+    p_delay(2);
     inv_del(inv, $uncooked_item, 1);
 
     if ($passes_roll = true) {
