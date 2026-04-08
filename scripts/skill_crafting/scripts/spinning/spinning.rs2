@@ -14,8 +14,8 @@ switch_obj (last_useitem)
 };
 
 [label,craft_spinning](obj $spinning_obj)
-def_int $make_options = ~make_options;
-while (~make_x($spinning_obj, $make_options) ! 0){
+~make_options($spinning_obj);
+while (~make_x($spinning_obj) = true){
     def_struct $struct = oc_param($spinning_obj, crafting_spinning_struct);
     // check if we have the required level
     def_int $level = struct_param($struct, levelrequire);

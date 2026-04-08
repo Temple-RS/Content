@@ -1,0 +1,37 @@
+[opheld4,scrying_orb_full] ~save_location(coord);
+[opheld3,scrying_orb_full]
+mes("You gaze into the orb...");
+p_delay(0);
+~chatplayer("<p,confused>I can't see anything...");
+p_delay(random(2));
+mes("You try to focus on a location...");
+p_delay(random(2));
+mes("You concentrate on where you want to go...");
+p_delay(random(2));
+~chatplayer("<p,happy>I think I've got it!");
+~teleport_to_location;
+
+[opheld3,scrying_orb_empty]
+mes("The orb is empty.");
+
+[proc,save_location](coord $new_coord)
+if (~wilderness_level($new_coord) > 0){
+    mes("A strange force prohibits you from doing this..");
+    return;
+}
+%scrying_orb_coord = $new_coord;
+mes("Location saved.");
+
+[proc,teleport_to_location]
+if (%scrying_orb_coord = null) {
+    mes("No location saved.");
+    return;
+}
+spotanim_pl(saradomin_lightning, 150, 0);
+~player_teleport_normal(%scrying_orb_coord);
+inv_del(inv,scrying_orb_full,1);
+inv_add(inv,scrying_orb_empty,1);
+p_delay(0);
+sound_synth(prayer_drain, 0, 0);
+%scrying_orb_coord = null;
+mes("The orb is now empty.");

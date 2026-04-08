@@ -25,8 +25,8 @@ switch_obj (last_useitem)
 // https://youtu.be/48JsDRNXWAc?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=240
 /// clay works the same as rsc
 
-def_int $make_options = ~make_options;
-while (~make_x(clay, $make_options) ! 0){
+~make_options(clay);
+while (~make_x(clay) = true){
     while ($water_source ! null){
         def_namedobj $empty_source = oc_param($water_source, next_obj_stage);
         mes("You mix the clay and water.");
@@ -72,8 +72,8 @@ if (stat(crafting) < $level)
     ~objbox($item, "You need a Crafting level of <tostring($level)> to make a <$name>.", 250, 0, divide(^objbox_height, 2));
     return;
 }
-def_int $make_options = ~make_options;
-while (~make_x(softclay, $make_options) ! 0){
+~make_options($item);
+while (~make_x(softclay) = true){
     sound_synth(pottery, 0, 0);
     anim(human_potterywheel, 0);
     p_delay(1);
@@ -86,8 +86,8 @@ while (~make_x(softclay, $make_options) ! 0){
 [label,fire_pottery](int $last)
 def_obj $last_obj = inv_getobj(inv, $last);
 def_struct $struct = oc_param($last_obj, crafting_pottery_struct);
-def_int $make_options = ~make_options;
-while (~make_x($last_obj, $make_options) ! 0){
+~make_options($last_obj);
+while (~make_x($last_obj) = true){
     mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
     sound_synth(furnace, 0, 0);
     anim(human_furnace, 0);

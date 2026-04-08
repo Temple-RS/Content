@@ -1,0 +1,22 @@
+[label,mining_helmet_light](obj $worn_item, int $slot)
+switch_obj($worn_item){
+    case mining_helmet : {
+        if (inv_total(inv, mining_helmet) > 0) {
+            inv_del(inv, mining_helmet, 1);
+            inv_add(inv, mining_helmet_unlit, 1);
+        } else if (inv_total(worn, mining_helmet) > 0) {
+            inv_del(worn, mining_helmet, 1);
+            inv_add(worn, mining_helmet_unlit, 1);
+        }
+    }
+    case mining_helmet_unlit : {
+        if (inv_total(inv, mining_helmet_unlit) > 0) {
+            inv_del(inv, mining_helmet_unlit, 1);
+            inv_add(inv, mining_helmet, 1);
+        } else if (inv_total(worn, mining_helmet_unlit) > 0) {
+            inv_del(worn, mining_helmet_unlit, 1);
+            inv_add(worn, mining_helmet, 1);
+        }
+    }
+}
+buildappearance(worn);

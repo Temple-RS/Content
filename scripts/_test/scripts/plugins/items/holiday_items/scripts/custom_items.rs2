@@ -14,13 +14,35 @@
 [opheld2,ghostspeak_enchanted] ~equip(last_slot);
 [opheld2,fez] ~equip(last_slot);
 [opheld2,hood_green] ~equip(last_slot);
+
 [opheld2,mining_helmet] ~equip(last_slot);
+[opheld2,mining_helmet_unlit] ~equip(last_slot);
+
+[opheld3,mining_helmet] @mining_helmet_light(last_item, last_slot);
+[opheld3,mining_helmet_unlit] @mining_helmet_light(last_item, last_slot);
+
 [opheld5,stake_dagger] @drop_gauntlets;
 [opheld5,shield_of_arrav] @drop_gauntlets;
-
+[opheld2,easter_basket] ~equip(last_slot);
+[opheld2,easter_ring] ~equip(last_slot);
 
 [opheldu,pestle_and_mortar]
 switch_obj(last_useitem) {
     case cannabis : @grind_cannabis;
     case default : ~displaymessage(^dm_default);
 }
+
+[opheld1,ee06_01] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,ee06_02] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,ee06_03] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,ee06_04] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,ee06_05] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,ee06_06] ~eat_action(last_item, last_slot, 1, 1);
+
+[opheld1,easter_egg_lightblue] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,easter_egg_darkblue] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,easter_egg_white] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,easter_egg_purple] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,easter_egg_red] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,easter_egg_green] ~eat_action(last_item, last_slot, 1, 1);
+[opheld1,easter_egg_pink] ~eat_action(last_item, last_slot, 1, 1);

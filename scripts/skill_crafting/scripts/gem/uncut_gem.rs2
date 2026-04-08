@@ -33,8 +33,8 @@ if (stat(crafting) < $level) {
     ~objbox($uncut_gem, "You need a Crafting level of <tostring($level)> to cut <$level_fail_name>.", 250, 0, divide(^objbox_height, 2));
     return;
 }
-def_int $make_options = ~make_options;
-while (~make_x($uncut_gem, $make_options) ! 0){
+~make_options($uncut_gem);
+while (~make_x($uncut_gem) = true){
     anim(db_getfield($data, gem_cutting_table:skill_anim, 0), 0);
     sound_synth(chisel, 0, 0);
 
@@ -60,5 +60,6 @@ while (~make_x($uncut_gem, $make_options) ! 0){
     mes("You cut the <$product_name>.");
     inv_add(inv, $cut_gem, 1);
     stat_advance(crafting, db_getfield($data, gem_cutting_table:experience, 0));
+    p_delay(2);
 }
 //-----------------------

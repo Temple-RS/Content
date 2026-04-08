@@ -19,8 +19,10 @@ if (inv_total(inv, tray_empty) > 0) {
 [label,panning_action]
 // The panning anims were seemingly added with the 2006 rework, not sure what happens here, i'm mixing a bit of RSC + osrs behavior.
 mes("You scrape the tray along the bottom");
+anim(human_pickupfloor, 0);
 p_delay(2);
 mes("You swirl away the excess water");
+anim(human_pickupfloor, 0);
 p_delay(1);
 inv_del(inv, tray_empty, 1);
 inv_add(inv, tray_mud, 1);

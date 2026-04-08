@@ -198,3 +198,216 @@ model=model_2548_obj
 weight=50g
 tradeable=no
 param=no_alchemy,^true
+
+[easter_egg_lightblue]
+name=Blue sweets
+desc=Not likely to last until next Halloween.
+recol1s=12927
+recol1d=18207
+model=obj_easter_egg_lightblue
+resizex=90
+resizey=90
+resizez=90
+2dxof=7
+2dyof=5
+2dzoom=1460
+2dyan=1268
+2dxan=484
+cost=0
+iop1=Eat
+weight=10g
+
+[easter_egg_darkblue]
+name=Deep blue sweets
+desc=Not likely to last until next Halloween.
+recol1s=12927
+recol1d=4442
+model=obj_easter_egg_lightblue
+resizex=90
+resizey=90
+resizez=90
+2dxof=7
+2dyof=5
+2dzoom=1460
+2dyan=1268
+2dxan=484
+cost=0
+iop1=Eat
+weight=10g
+
+[easter_egg_white]
+name=White sweets
+desc=Not likely to last until next Halloween.
+recol1s=12927
+recol1d=30653
+model=obj_easter_egg_lightblue
+resizex=90
+resizey=90
+resizez=90
+2dxof=7
+2dyof=5
+2dzoom=1460
+2dyan=1268
+2dxan=484
+cost=0
+iop1=Eat
+weight=10g
+
+[easter_egg_purple]
+name=Purple sweets
+desc=Not likely to last until next Halloween.
+recol1s=12927
+recol1d=19679
+model=obj_easter_egg_lightblue
+resizex=90
+resizey=90
+resizez=90
+2dxof=7
+2dyof=5
+2dzoom=1460
+2dyan=1268
+2dxan=484
+cost=0
+iop1=Eat
+weight=10g
+
+[easter_egg_red]
+name=Red sweets
+desc=Not likely to last until next Halloween.
+recol1s=12927
+recol1d=30951
+model=obj_easter_egg_lightblue
+resizex=90
+resizey=90
+resizez=90
+2dxof=7
+2dyof=5
+2dzoom=1460
+2dyan=1268
+2dxan=484
+cost=0
+iop1=Eat
+weight=10g
+
+[easter_egg_green]
+name=Green sweets
+desc=Not likely to last until next Halloween.
+recol1s=12927
+recol1d=6944
+model=obj_easter_egg_lightblue
+resizex=90
+resizey=90
+resizez=90
+2dxof=7
+2dyof=5
+2dzoom=1460
+2dyan=1268
+2dxan=484
+cost=0
+iop1=Eat
+weight=10g
+
+[easter_egg_pink]
+name=Pink sweets
+desc=Not likely to last until next Halloween.
+recol1s=12927
+recol1d=31166
+model=obj_easter_egg_lightblue
+resizex=90
+resizey=90
+resizez=90
+2dxof=7
+2dyof=5
+2dzoom=1460
+2dyan=1268
+2dxan=484
+cost=0
+iop1=Eat
+weight=10g
+
+[easter_basket]
+name=Basket of eggs
+desc=Hand them out to spread the Easter happiness.
+model=obj_easter_basket
+iop2=Wield
+manwear=obj_easter_basket_manwear,0
+womanwear=obj_easter_basket_manwear,6
+cost=0
+2dxof=2
+2dyof=-4
+2dzoom=960
+2dyan=184
+2dxan=136
+wearpos=righthand
+weight=100g
+
+[easter_ring]
+name=Easter Ring
+desc=A ring given to you by the Easter Bunny.
+model=obj_easter06_ring_of_egg
+2dxof=-5
+2dyof=-5
+2dzoom=680
+2dyan=194
+2dxan=581
+iop2=Wear
+wearpos=ring
+weight=1g
+
+[ee06_01]
+name=Easter egg
+desc="Best before 24th April."
+model=obj_easter06_egg_01
+2dyof=-1
+2dzoom=789
+2dyan=166
+iop1=Eat
+weight=1g
+
+[ee06_02]
+name=Easter egg
+desc="Best before 24th April."
+model=obj_easter06_egg_02
+2dyof=-1
+2dzoom=789
+2dyan=166
+iop1=Eat
+weight=1g
+
+[ee06_03]
+name=Easter egg
+desc="Best before 24th April."
+model=obj_easter06_egg_03
+2dyof=-1
+2dzoom=789
+2dyan=1632
+iop1=Eat
+weight=1g
+
+[ee06_04]
+name=Easter egg
+desc="Best before 24th April."
+model=obj_easter06_egg_04
+2dzoom=789
+2dyan=41
+iop1=Eat
+weight=1g
+
+[ee06_05]
+name=Easter egg
+desc="Best before 24th April."
+model=obj_easter06_egg_05
+2dzoom=789
+2dyan=1411
+iop1=Eat
+weight=1g
+
+[ee06_06]
+name=Easter egg
+desc="Best before 24th April."
+model=obj_easter06_egg_06
+2dzoom=789
+2dyan=1425
+2dxan=124
+iop1=Eat
+weight=1g

@@ -1,4 +1,3 @@
-
 // info: Eat Action
 [proc,eat_action](obj $used_item, int $slot, int $delay, int $effect)
 inv_delslot(inv, $slot);

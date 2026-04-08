@@ -6,7 +6,6 @@
 [opheld1,unpacked_yellow_snow] @pack_snow(last_item);
 [opheld3,unpacked_yellow_snow] @eat_snow(last_item);
 
-
 [oplocu,snow_pile] 
 switch_obj(last_useitem){
     case spade : {

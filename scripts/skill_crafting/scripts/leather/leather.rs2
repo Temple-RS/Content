@@ -74,9 +74,10 @@ if (stat(crafting) < $level) {
 }
 def_namedobj $leather;
 def_int $leather_count;
-def_int $make_options = ~make_options;
-while (~make_x($leather, $make_options) ! 0){
-    $leather, $leather_count = db_getfield($product_data, craft_leather_table:leather, 0);
+$leather, $leather_count = db_getfield($product_data, craft_leather_table:leather, 0);
+
+~make_options($leather);
+while (~make_x($leather) = true){
     if (inv_total(inv, $leather) < $leather_count) {
         mes("You don't have enough leather to make <db_getfield($product_data, craft_leather_table:name, 0)>.");
         return;
@@ -96,6 +97,7 @@ while (~make_x($leather, $make_options) ! 0){
     inv_add(inv, $product, 1);
     stat_advance(crafting, db_getfield($product_data, craft_leather_table:productexp, 0));
     mes("You make <db_getfield($product_data, craft_leather_table:name, 0)>.");
+    p_delay(1);
 }
 [label,craft_leather_interface]
 if (inv_total(inv, thread) < 1) {

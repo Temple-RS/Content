@@ -1130,6 +1130,27 @@ womanhead=obj_mining_helmet_lit_womanhead
 cost=600
 members=yes
 iop2=Wear
+iop3=Extinguish
+weight=2lb
+wearpos=hat
+
+[mining_helmet_unlit]
+name=Mining helmet
+desc=A helmet with a lamp on it.
+model=obj_mining_helmet_unlit
+manwear=obj_mining_helmet_unlit_manwear,0
+womanwear=obj_mining_helmet_unlit_womanwear,0
+manhead=obj_mining_helmet_lit_manhead
+womanhead=obj_mining_helmet_lit_womanhead
+2dxof=-5
+2dyof=-2
+2dzoom=730
+2dyan=1880
+2dxan=4
+cost=600
+members=yes
+iop2=Wear
+iop3=Light
 weight=2lb
 wearpos=hat
 

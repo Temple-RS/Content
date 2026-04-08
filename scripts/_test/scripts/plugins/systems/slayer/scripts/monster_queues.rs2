@@ -8,6 +8,11 @@ if (%active_slayer_task = ^giant_rat){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
 
+[queue,scorpion_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
+
 [queue,hobgoblin_kill]
 if (~wilderness_level(coord) > 0){
     @wilderness_drop(0);
@@ -254,6 +259,9 @@ if (%active_slayer_task = ^rogue){
 }
 
 [queue,thug_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^thug){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }
@@ -264,6 +272,9 @@ if (%active_slayer_task = ^tribesman){
 }
 
 [queue,unicorn_kill]
+if (~wilderness_level(coord) > 0){
+    @wilderness_drop(0);
+}
 if (%active_slayer_task = ^unicorn){
     @slayer_kill(%active_slayer_task, %task_amount, %current_count);
 }

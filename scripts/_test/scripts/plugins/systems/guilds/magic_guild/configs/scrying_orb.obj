@@ -1,0 +1,19 @@
+[scrying_orb_full]
+name=Scrying orb
+desc=This contains mystical teleport information...
+2dyof=-1
+2dzoom=540
+model=obj_scrying_orb_full
+members=yes
+weight=1kg
+iop3=Teleport
+iop4=Save Location
+
+[scrying_orb_empty]
+name=Scrying orb
+desc=This orb apparently contains a cypher spell.
+2dyof=-1
+2dzoom=540
+model=obj_scrying_orb_empty
+members=yes
+weight=50g

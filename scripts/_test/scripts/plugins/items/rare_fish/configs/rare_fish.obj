@@ -1,0 +1,15 @@
+[karamthulhu]
+name=Karamthulhu
+desc=A sinister looking squid.
+model=obj_karamthulhu
+members=yes
+2dxof=-9
+2dyof=2
+2dzoom=1740
+2dyan=1964
+2dxan=512
+weight=1g
+param=no_alchemy,^true
+stackable=no
+tradeable=yes
+category=rare_fish

@@ -369,3 +369,8 @@
 368=speedrun_best_champions
 369=vip_bank_size
 370=task_difficulty
+371=make_x_amount
+372=make_x_coord
+373=make_x_combat
+374=make_x_combat_pvp
+375=scrying_orb_coord

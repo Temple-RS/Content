@@ -1,21 +1,34 @@
-[proc,make_options](obj $obj)(int)
-def_int $choice = ~p_choice4("1.", 1, "5.", 2, "10.", 3, "X.", 4);
+[proc,make_options](obj $obj)
+%make_x_coord = coord;
+%make_x_combat = %lastcombat;
+%make_x_combat_pvp = %lastcombat_pvp;
+def_int $choice = ~p_choice4_header("1", 1, "5", 2, "10", 3, "X", 4, "How many would you like to make?");
 switch_int($choice){
-    case 1 : return(1);
-    case 2 : return(5);
-    case 3 : return(10);
+    case 1 : { %make_x_amount = 1; return; }
+    case 2 : { %make_x_amount = 5; return; }
+    case 3 : { %make_x_amount = 10; return; }
     case 4 : {
         p_countdialog;
         def_int $last_int = last_int;
-        if ($last_int > inv_total($obj) | $last_int > 28){
-           def_int $difference = calc($last_int - inv_total($obj)); 
-        } 
-        return($last_int);
+        if ($last_int > inv_total(inv, $obj) | $last_int > 28){
+           %make_x_amount = inv_total(inv, $obj);
+           if_close;
+           return;
+        }
+        if_close; 
+        %make_x_amount = $last_int;
+        return;
     } 
 }
+%make_x_amount = 0;
 
-[proc,make_x](obj $obj, int $count)(int)
-def_int $inv_total = inv_total(inv, $obj);
-if ($inv_total < 1){
-    return(0);
+[proc,make_x](obj $obj)(boolean)
+if (%make_x_amount < 1 | inv_total(inv, $obj) < 1){
+    return(false);
 }
+if (coordx(coord) ! coordx(%make_x_coord) | coordz(coord) ! coordz(%make_x_coord) | coordy(coord) ! coordy(%make_x_coord) | %lastcombat > %make_x_combat | %lastcombat_pvp > %make_x_combat_pvp) {
+    %make_x_amount = 0;
+    return(false);
+}
+%make_x_amount = calc(%make_x_amount - 1);
+return(true);

@@ -1,0 +1,12 @@
+[make_x_amount]
+protect=no
+
+[make_x_coord]
+type=coord
+protect=no
+
+[make_x_combat]
+protect=no
+
+[make_x_combat_pvp]
+protect=no

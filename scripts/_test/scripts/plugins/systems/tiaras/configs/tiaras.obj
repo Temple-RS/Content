@@ -1,0 +1,208 @@
+[tiara_mould]
+name=Tiara mould
+desc=A mould for tiaras.
+model=obj_tiara_mould
+2dzoom=700
+2dyan=1024
+2dxan=400
+cost=100
+weight=1kg
+
+[tiara]
+name=Tiara
+desc=Makes me feel like a Princess.
+model=obj_tiara
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_manwear,0
+womanwear=obj_tiara_womanwear,0
+manhead=obj_tiara_manhead
+womanhead=obj_tiara_manhead
+cost=100
+wearpos=hat
+weight=1kg
+
+[tiara_air]
+name=Air tiara
+desc=A tiara infused with the properties of air.
+recol1s=22198
+recol1d=25368
+model=obj_tiara_air
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_air_manwear,0
+womanwear=obj_tiara_air_womanwear,0
+manhead=obj_tiara_air_manhead
+womanhead=obj_tiara_air_manhead
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^air
+
+[tiara_mind]
+name=Mind tiara
+desc=A tiara infused with the properties of the mind.
+recol1s=22198
+recol1d=27316
+model=obj_tiara_mind
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_mind_manwear,0
+womanwear=obj_tiara_mind_womanwear,0
+manhead=obj_tiara_mind_manhead
+womanhead=obj_tiara_mind_manhead
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^mind
+
+[tiara_water]
+name=Water tiara
+desc=A tiara infused with the properties of water.
+recol1s=22198
+recol1d=21176
+model=obj_tiara_water
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_water_manwear,0
+womanwear=obj_tiara_water_womanwear,0
+manhead=obj_tiara_water_manhead
+womanhead=obj_tiara_water_manhead
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^water
+
+[tiara_body]
+name=Body tiara
+desc=A tiara infused with the properties of the body.
+recol1s=22198
+recol1d=20083
+model=obj_tiara_body
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_body_manwear,0
+womanwear=obj_tiara_body_womanwear,0
+manhead=obj_tiara_body_manhead
+womanhead=obj_tiara_body_manhead
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^body
+
+[tiara_earth]
+name=Earth tiara
+desc=A tiara infused with the properties of the earth.
+recol1s=22198
+recol1d=22130
+model=obj_tiara_earth
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_earth_manwear,0
+womanwear=obj_tiara_earth_womanwear,0
+manhead=obj_tiara_earth_manhead
+womanhead=obj_tiara_earth_manhead
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^earth
+
+[tiara_fire]
+name=Fire tiara
+desc=A tiara infused with the properties of fire.
+recol1s=22198
+recol1d=24179
+model=obj_tiara_fire
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_fire_manwear,0
+womanwear=obj_tiara_fire_womanwear,0
+manhead=obj_tiara_fire_manhead
+womanhead=obj_tiara_fire_manhead
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^fire
+
+[tiara_cosmic]
+name=Cosmic tiara
+desc=A tiara infused with the properties of the cosmos.
+recol1s=22198
+recol1d=23252
+model=obj_tiara_cosmic
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_cosmic_manwear,0
+womanwear=obj_tiara_cosmic_womanwear,0
+manhead=obj_tiara_cosmic_manhead
+womanhead=obj_tiara_cosmic_manhead
+members=yes
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^cosmic
+
+[tiara_nature]
+name=Nature tiara
+desc=A tiara infused with the properties of nature.
+recol1s=22198
+recol1d=21204
+model=obj_tiara_nature
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_nature_manwear,0
+womanwear=obj_tiara_nature_womanwear,0
+manhead=obj_tiara_nature_manhead
+womanhead=obj_tiara_nature_manhead
+members=yes
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^nature
+
+[tiara_chaos]
+name=Chaos tiara
+desc=A tiara infused with the properties of chaos.
+recol1s=22198
+recol1d=24243
+model=obj_tiara_chaos
+iop2=Wear
+2dyof=-25
+2dzoom=480
+2dxan=232
+manwear=obj_tiara_chaos_manwear,0
+womanwear=obj_tiara_chaos_womanwear,0
+manhead=obj_tiara_chaos_manhead
+womanhead=obj_tiara_chaos_manhead
+members=yes
+cost=100
+wearpos=hat
+weight=1kg
+category=runecraft_tiaras
+param=rune_type,^chaos

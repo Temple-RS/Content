@@ -63,10 +63,11 @@ if (stat(fletching) < $level) {
     ~doubleobjbox($log, $product, "You need a Fletching level of at least <tostring($level)> to make <~add_article(lowercase(oc_name($product)))>.", 200);
     return;
 }
-def_int $make_options = ~make_options;
-while (~make_x($log, $make_options) ! 0){
+~make_options($log);
+while (~make_x($log) = true){
     inv_del(inv, $log, 1);
     mes($message);
     stat_advance(fletching, $fletching_experience);
     inv_add(inv, $product, $count);
+    p_delay(3);
 }

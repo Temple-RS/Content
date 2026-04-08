@@ -6,7 +6,7 @@ if (random(128) > 126){
     def_npc $npc;
     def_seq $seq;
     def_string $string;
-    switch_int(random(2)){
+    switch_int(random(1)){
         case 0 : {
             $npc = imp_wild;
             switch_int(random(2)){
@@ -22,21 +22,21 @@ if (random(128) > 126){
             }
             $seq = null;
         }
+        //case 1 : {
+        //    $npc = yeti_wild;
+        //    switch_int(random(2)){
+        //        case 0 : {
+        //            $string = "Glah Daah!";
+        //        }
+        //        case 1 : {
+        //            $string = "Derr Roogar!";
+        //        }
+        //        case 2 : {
+        //            $string = "Ad Rog Doofah!";
+        //        }
+        //    }
+        //    $seq = null;        }
         case 1 : {
-            $npc = yeti_wild;
-            switch_int(random(2)){
-                case 0 : {
-                    $string = "Glah Daah!";
-                }
-                case 1 : {
-                    $string = "Derr Roogar!";
-                }
-                case 2 : {
-                    $string = "Ad Rog Doofah!";
-                }
-            }
-            $seq = null;        }
-        case 2 : {
             $npc = mysterious_old_man;
             switch_int(random(2)){
                 case 0 : {
@@ -54,7 +54,7 @@ if (random(128) > 126){
     }
     npc_add($event_coord, $npc, 1000);
     npc_setmode(playerfollow);
-    npc_delay(2);
+    npc_delay(0);
     def_int $openslot = ~open_slot(28, inv);
     switch_int($tier) {
         case 0 : {
@@ -66,12 +66,15 @@ if (random(128) > 126){
     }
     def_obj $obj = inv_getobj(inv, calc($openslot + 1));
     def_int $count = inv_total(inv, $obj);
-    mes("You received <tostring($count)>x <oc_param($obj, name)>!");
+    if ($count > 1){
+        mes("You received some items!");
+    } else {
+        mes("You received an item!");
+    }
     npc_say("<$string>");
     if ($seq ! null){
         npc_anim($seq, 0);
     }
-    npc_delay(0);
     spotanim_map(smokepuff, npc_coord, 124, 0);
     sound_synth(smokepuff, 0, 0);
     npc_del;
