@@ -38,16 +38,25 @@ if (inv_total(inv, bucket_sand) < 1) {
     return;
 }
 ~make_options(soda_ash);
-while (~make_x(soda_ash) = true | ~make_x(bucket_sand) = true){
+if_close;
+while (~make_x(soda_ash) = true){
+    if (inv_total(inv, bucket_sand) < 1) {
+        mes("You need some Sand to make Glass.");
+        return;
+    }
+    if (inv_total(inv, soda_ash) < 1) {
+        mes("You need some Soda Ash to make Glass.");
+        return;
+    }
     inv_del(inv, bucket_sand, 1);
     inv_add(inv, bucket_empty, 1);
     inv_del(inv, soda_ash, 1);
     inv_add(inv, molten_glass, 1);
-    anim(human_furnace,0);
-    sound_synth(furnace,0,0);
+    anim(human_furnace, 0);
+    sound_synth(furnace, 0, 0);
     mes("You heat the sand and soda ash in the furnace to make glass.");
     stat_advance(crafting, 200);
-    p_delay(3);
+    p_delay(calc(random(2) + 2));
 }
 
 [label,craft_glass_interface]
@@ -77,11 +86,12 @@ if (stat(crafting) < $level) {
     return;
 }
 ~make_options(molten_glass);
+if_close;
 while (~make_x(molten_glass) = true){
     inv_del(inv, molten_glass, 1);
     inv_add(inv, $glass_item, 1);
-    anim(human_glassblowing,0);
+    anim(human_glassblowing, 0);
     mes("You make <$name>.");
     stat_advance(crafting, struct_param($struct, productexp));
-    p_delay(3);
+    p_delay(calc(random(2) + 2));
 }
