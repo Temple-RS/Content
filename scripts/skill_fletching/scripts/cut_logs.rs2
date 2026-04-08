@@ -65,6 +65,7 @@ if (stat(fletching) < $level) {
 }
 ~make_options($log);
 while (~make_x($log) = true){
+    ~cutting_animation;
     inv_del(inv, $log, 1);
     mes($message);
     stat_advance(fletching, $fletching_experience);

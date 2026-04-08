@@ -60,6 +60,6 @@ while (~make_x($uncut_gem) = true){
     mes("You cut the <$product_name>.");
     inv_add(inv, $cut_gem, 1);
     stat_advance(crafting, db_getfield($data, gem_cutting_table:experience, 0));
-    p_delay(2);
+    p_delay(max(2, random(5)));
 }
 //-----------------------

@@ -83,5 +83,5 @@ while (~make_x(molten_glass) = true){
     anim(human_glassblowing,0);
     mes("You make <$name>.");
     stat_advance(crafting, struct_param($struct, productexp));
-    world_delay(3);
+    p_delay(3);
 }

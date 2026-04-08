@@ -27,23 +27,21 @@ switch_obj (last_useitem)
 
 ~make_options(clay);
 while (~make_x(clay) = true){
-    while ($water_source ! null){
-        def_namedobj $empty_source = oc_param($water_source, next_obj_stage);
-        mes("You mix the clay and water.");
-        inv_del(inv, clay, 1);
-        //delete water source
-        inv_del(inv, oc_param($empty_source, next_obj_stage), 1);
-        //add empty water source BEFORE soft clay
-        inv_add(inv, $empty_source, 1);
-        //add soft clay
-        //p_delay(2); // 2 ticks
-        inv_add(inv, softclay, 1);
-        mes("You now have some soft workable clay.");
-    }
-    if ($water_source = null){
+    if (inv_total(inv, $water_source) < 1) {
         mes("You have run out of water!");
         return;
     }
+    def_namedobj $empty_source = oc_param($water_source, next_obj_stage);
+    mes("You mix the clay and water.");
+    inv_del(inv, clay, 1);
+    // delete the filled water source
+    inv_del(inv, $water_source, 1);
+    // add empty water source BEFORE soft clay
+    inv_add(inv, $empty_source, 1);
+    // add soft clay
+    p_delay(2);
+    inv_add(inv, softclay, 1);
+    mes("You now have some soft workable clay.");
 }
 [label,craft_pottery_interface] 
 def_namedobj $choice = ~multiobj3(
@@ -76,7 +74,7 @@ if (stat(crafting) < $level)
 while (~make_x(softclay) = true){
     sound_synth(pottery, 0, 0);
     anim(human_potterywheel, 0);
-    p_delay(1);
+    p_delay(3);
     inv_del(inv, softclay, 1);
     inv_add(inv, $item, 1);
     stat_advance(crafting, struct_param($struct, processexp));
@@ -91,7 +89,7 @@ while (~make_x($last_obj) = true){
     mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
     sound_synth(furnace, 0, 0);
     anim(human_furnace, 0);
-    p_delay(1);
+    p_delay(3);
     mes("The <oc_name(struct_param($struct, product))> hardens in the oven.");
     //p_delay(1);
     def_namedobj $product = struct_param($struct, product);
