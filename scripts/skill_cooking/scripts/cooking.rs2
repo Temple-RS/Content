@@ -132,9 +132,8 @@ while (~make_x($uncooked_item) = true){
     // rsc delays for about 3 ticks.
     // This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."
     // https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update
-    p_delay(3);
     inv_del(inv, $uncooked_item, 1);
-
+    p_delay(2);
     if ($passes_roll = true) {
         inv_add(inv, $cooked_item, 1);
         if (compare($succesmessage, "0") ! 0) {
@@ -156,4 +155,5 @@ while (~make_x($uncooked_item) = true){
             inv_add(inv, $additional_item, 1);
         }
     }
+    p_delay(1);
 }
