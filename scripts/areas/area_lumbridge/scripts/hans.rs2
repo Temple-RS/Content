@@ -1,4 +1,24 @@
 [opnpc1,hans]
+// Easter Event
+if (~event_settings(^easter) = true) {
+    if (%easter_miniquest = ^emq_completed) {
+        ~chatplayer("<p,happy>Hi, Hans. Happy Easter.");
+        ~chatnpc("<p,happy>Happy Easter, <displayname>. He is risen!");
+        mes("Hans gives you some gifts.");
+        inv_add(inv, bunnyears, 1);
+        inv_add(inv, easter_egg, 1);
+        %easter_miniquest = 13; // ^emq_reward_claimed
+        return;
+    } else if (%easter_miniquest = 13) {
+        def_int $ch = ~p_choice2_header("Yes.",1, "No.", 2, "Do you want another egg?");
+        if ($ch = 1) {
+            ~chatplayer("<p,neutral>Do you think I could get a second egg?");
+            ~chatnpc("<p,neutral>Pal, I wouldn’t even eat that one. I’ve been told where it came from.");
+            inv_add(inv, easter_egg, 1);
+        }
+    }
+}
+
 // Treasure Trail
 if(map_members = ^true) {
     if(inv_total(inv, trail_clue_hard_riddle012) > 0) {

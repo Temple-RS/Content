@@ -1,3 +1,4 @@
+// info: Options 1-X and takes your resource as input for total checking
 [proc,make_options](obj $obj)
 %make_x_coord = coord;
 %make_x_combat = %lastcombat;
@@ -22,6 +23,7 @@ switch_int($choice){
 }
 %make_x_amount = 0;
 
+// info: Checks if you're still at the same spot and combat level
 [proc,make_x](obj $obj)(boolean)
 if (%make_x_amount < 1 | inv_total(inv, $obj) < 1){
     return(false);

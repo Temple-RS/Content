@@ -329,10 +329,9 @@ weight=10g
 name=Basket of eggs
 desc=Hand them out to spread the Easter happiness.
 model=obj_easter_basket
-iop2=Wield
 manwear=obj_easter_basket_manwear,0
 womanwear=obj_easter_basket_manwear,6
-cost=0
+cost=75000
 2dxof=2
 2dyof=-4
 2dzoom=960
@@ -361,7 +360,6 @@ model=obj_easter06_egg_01
 2dyof=-1
 2dzoom=789
 2dyan=166
-iop1=Eat
 weight=1g
 
 [ee06_02]
@@ -371,7 +369,6 @@ model=obj_easter06_egg_02
 2dyof=-1
 2dzoom=789
 2dyan=166
-iop1=Eat
 weight=1g
 
 [ee06_03]
@@ -381,7 +378,6 @@ model=obj_easter06_egg_03
 2dyof=-1
 2dzoom=789
 2dyan=1632
-iop1=Eat
 weight=1g
 
 [ee06_04]
@@ -390,7 +386,6 @@ desc="Best before 24th April."
 model=obj_easter06_egg_04
 2dzoom=789
 2dyan=41
-iop1=Eat
 weight=1g
 
 [ee06_05]
@@ -399,7 +394,6 @@ desc="Best before 24th April."
 model=obj_easter06_egg_05
 2dzoom=789
 2dyan=1411
-iop1=Eat
 weight=1g
 
 [ee06_06]
@@ -409,5 +403,4 @@ model=obj_easter06_egg_06
 2dzoom=789
 2dyan=1425
 2dxan=124
-iop1=Eat
 weight=1g

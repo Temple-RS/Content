@@ -1,0 +1,8 @@
+^event_none = 0
+^easter = 1
+^st_patricks = 2
+^christmas = 3
+^halloween = 4
+^new_year = 5
+^fourtwenty = 6
+^valentines = 7

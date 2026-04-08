@@ -14,6 +14,7 @@ stock5=needle,3,100
 stock6=thread,100,5
 stock7=holy_symbol_mould,3,100
 stock8=sickle_mould,6,15
+stock9=tiara_mould,2,100
 
 [generalshop6]
 // https://classic.runescape.wiki/w/Rimmington_General_Store

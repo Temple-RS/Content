@@ -1,0 +1,29 @@
+[oploc1,_rc_ruins]
+def_obj $tiara = inv_getobj(worn, ^wearpos_hat);
+if ($tiara ! null & oc_category($tiara) = runecraft_tiaras) {
+    if (oc_param($tiara, rune_type) = loc_param(rune_type)) {
+        ~tiara_tele($tiara);
+        return;
+    }
+}
+~displaymessage(^dm_default);
+
+[proc,tiara_tele](obj $tiara)
+def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
+if (db_getfield($data, runecraft_table:members, 0) = ^true) {
+    if (map_members = ^false) {
+        mes(^mes_members_do_that);
+        return;
+    }
+}
+anim(human_pickupfloor, 0);
+sound_synth(teleport_all, 0, 0);
+mes("You hold the <oc_name($tiara)> towards the mysterious ruins.");
+mes("You feel a powerful force take hold of you...");
+p_delay(1);
+p_telejump(map_findsquare(db_getfield($data, runecraft_table:enter_coord, random(db_getfieldcount($data, runecraft_table:enter_coord)))));
+%teleportlocation = ^reset_tele;

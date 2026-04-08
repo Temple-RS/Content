@@ -4,6 +4,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,1
 
@@ -35,6 +36,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,2
 
@@ -99,6 +101,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,4
 
@@ -130,6 +133,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_2456
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,5
 
@@ -163,6 +167,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,6
 
@@ -196,6 +201,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,7
 
@@ -227,6 +233,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,8
 
@@ -247,6 +254,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,9
 
@@ -278,6 +286,7 @@ desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
+op1=Investigate
 category=rc_ruins
 param=rune_type,10
 

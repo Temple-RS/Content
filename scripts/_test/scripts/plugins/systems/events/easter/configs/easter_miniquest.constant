@@ -1,0 +1,14 @@
+^emq_not_started = 0
+^emq_started = 1
+^emq_fetch_egg_1 = 2
+^emq_return_egg_1 = 3
+^emq_fetch_egg_2 = 4
+^emq_return_egg_2 = 5
+^emq_fetch_egg_3 = 6
+^emq_return_egg_3 = 7
+^emq_fetch_egg_4 = 8
+^emq_return_egg_4 = 9
+^emq_fetch_egg_5 = 10
+^emq_return_egg_5 = 11
+^emq_completed = 12
+^emq_reward_claimed = 13

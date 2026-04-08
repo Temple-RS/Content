@@ -1,0 +1,213 @@
+[oplocu,rc_air_altar] 
+    switch_obj(last_useitem){
+        case air_talisman : 
+            ~tiara_crafting(tiara_air, air_talisman);
+        case tiara : {
+            if (inv_total(inv, air_talisman) < 1){
+                mes("You need an Air talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara_air, air_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+[oplocu,rc_mind_altar] 
+    switch_obj(last_useitem){
+        case mind_talisman : 
+            ~tiara_crafting(tiara_mind, mind_talisman);
+        case tiara : {
+            if (inv_total(inv, mind_talisman) < 1){
+                mes("You need an Mind talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara, mind_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+[oplocu,rc_water_altar] 
+    switch_obj(last_useitem){
+        case water_talisman : 
+            ~tiara_crafting(tiara_water, water_talisman);
+        case tiara : {
+            if (inv_total(inv, water_talisman) < 1){
+                mes("You need an Water talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara_water, water_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+[oplocu,rc_body_altar] 
+    switch_obj(last_useitem){
+        case body_talisman : 
+            ~tiara_crafting(tiara_body, body_talisman);
+        case tiara : {
+            if (inv_total(inv, body_talisman) < 1){
+                mes("You need an Body talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara_body, body_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+[oplocu,rc_earth_altar] 
+    switch_obj(last_useitem){
+        case earth_talisman : 
+            ~tiara_crafting(tiara_earth, earth_talisman);
+        case tiara : {
+            if (inv_total(inv, earth_talisman) < 1){
+                mes("You need an Earth talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara_earth, earth_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+[oplocu,rc_fire_altar] 
+    switch_obj(last_useitem){
+        case fire_talisman : 
+            ~tiara_crafting(tiara_fire, fire_talisman);
+        case tiara : {
+            if (inv_total(inv, fire_talisman) < 1){
+                mes("You need an Fire talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara_fire, fire_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+[oplocu,rc_cosmic_altar] 
+    switch_obj(last_useitem){
+        case cosmic_talisman : 
+            ~tiara_crafting(tiara_cosmic, cosmic_talisman);
+        case tiara : {
+            if (inv_total(inv, cosmic_talisman) < 1){
+                mes("You need an Cosmic talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara_cosmic, cosmic_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+[oplocu,rc_nature_altar] 
+    switch_obj(last_useitem){
+        case nature_talisman : 
+            ~tiara_crafting(tiara_nature, nature_talisman);
+        case tiara : {
+            if (inv_total(inv, nature_talisman) < 1){
+                mes("You need an Nature talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara_nature, nature_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+[oplocu,rc_chaos_altar]
+    switch_obj(last_useitem){
+        case chaos_talisman : 
+            ~tiara_crafting(tiara_chaos, chaos_talisman);
+        case tiara : {
+            if (inv_total(inv, chaos_talisman) < 1){
+                mes("You need an Chaos talisman to do this.");
+                return;
+            }
+            ~tiara_crafting(tiara_chaos, chaos_talisman);
+        }
+        case default : ~displaymessage(^dm_default);
+    }
+
+
+
+
+
+[proc,tiara_checker](loc $loc, obj $tiara)(boolean)
+switch_loc($loc){
+    case rc_air_altar : if (oc_param($tiara, rune_type) = ^air){
+        return(true);
+    }
+    case rc_mind_altar : if (oc_param($tiara, rune_type) = ^mind){
+        return(true);
+    }
+    case rc_water_altar : if (oc_param($tiara, rune_type) = ^water){
+        return(true);
+    }
+    case rc_body_altar : if (oc_param($tiara, rune_type) = ^body){
+        return(true);
+    }
+    case rc_earth_altar : if (oc_param($tiara, rune_type) = ^earth){
+        return(true);
+    }
+    case rc_fire_altar : if (oc_param($tiara, rune_type) = ^fire){
+        return(true);
+    }
+    case rc_cosmic_altar : if (oc_param($tiara, rune_type) = ^cosmic){
+        return(true);
+    }
+    case rc_nature_altar : if (oc_param($tiara, rune_type) = ^nature){
+        return(true);
+    }
+    case rc_chaos_altar : if (oc_param($tiara, rune_type) = ^chaos){
+        return(true);
+    }
+    case default : return(false);
+}
+
+[proc,tiara_smelting]
+if (stat_base(crafting) < 23){
+    mes("You need at least 23 Crafting to do this.");
+    return;
+}
+if (inv_total(inv, tiara_mould) < 1){
+    mes("You need a Tiara mould to do this.");
+    return;
+}
+~make_options(silver_bar);
+while (~make_x(silver_bar) = true){
+    ~smelting_action(silver_bar, 0, tiara, 1, 52);
+}
+
+[proc,tiara_crafting](obj $tiara, obj $talisman)
+if (stat_base(runecraft) < 23){
+    mes("You need at least 23 Runecraft to do this.");
+    return;
+}
+~make_options(tiara);
+while (~make_x(tiara) = true & ~make_x($talisman) = true){
+    spotanim_pl(saradomin_lightning, 150, 0);
+    p_delay(1);
+    anim(human_castchargeorb, 0);
+    spotanim_pl(lowlvlalchemy_casting, 96, 0);
+    sound_synth(charge, 0, 0);
+    inv_del(inv, tiara, 1);
+    inv_del(inv, $talisman, 1);
+    p_delay(2);
+    switch_obj($talisman){
+        case air_talisman : 
+            inv_add(inv, tiara_air, 1);
+            stat_advance(runecraft, 25);
+        case mind_talisman : 
+            inv_add(inv, tiara_mind, 1);
+            stat_advance(runecraft, 27);
+        case water_talisman : 
+            inv_add(inv, tiara_water, 1);
+            stat_advance(runecraft, 30);
+        case body_talisman : 
+            inv_add(inv, tiara_body, 1);
+            stat_advance(runecraft, 37);
+        case earth_talisman : 
+            inv_add(inv, tiara_earth, 1);
+            stat_advance(runecraft, 33);
+        case fire_talisman : 
+            inv_add(inv, tiara_fire, 1);
+            stat_advance(runecraft, 35);
+        case cosmic_talisman : 
+            inv_add(inv, tiara_cosmic, 1);
+            stat_advance(runecraft, 40);
+        case nature_talisman : 
+            inv_add(inv, tiara_nature, 1);
+            stat_advance(runecraft, 45);
+        case chaos_talisman : 
+            inv_add(inv, tiara_chaos, 1);
+            stat_advance(runecraft, 42);
+    }
+}

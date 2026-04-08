@@ -36,6 +36,7 @@ if (inv_total(inv, coal) < $coal_amount){
     mes("You need more coal to do this.");
     return;
 }
+p_arrivedelay;
 if ($coal_amount = 0) {
     anim(human_furnace, 0);
     sound_synth(furnace, 0, 0);

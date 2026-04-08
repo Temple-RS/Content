@@ -17,12 +17,17 @@ switch_obj(last_useitem) {
 [oploc1,_rc_altar] @runecraft_runes;
 
 [oplocu,_rc_ruins]
-if (oc_category(last_useitem) = talismans) {
+if (oc_category(last_useitem) = runecraft_tiaras) {
+    if (oc_param(last_useitem, rune_type) = loc_param(rune_type)) {
+        ~tiara_tele(last_useitem);
+    } else {
+        ~displaymessage(^dm_default);
+    }
+} else if (oc_category(last_useitem) = talismans) {
     @teleport_to_ruins;
 } else {
     ~displaymessage(^dm_default);
 }
-
 
 [label,teleport_to_ruins]
 def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));

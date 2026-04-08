@@ -1,0 +1,30 @@
+[proc,event_settings](int $event)(boolean)
+switch_int($event){
+    case ^event_none : {
+        return(false);
+    }
+    case ^easter : {
+        return(true);
+    }
+    case ^st_patricks : {
+        return(false);
+    }
+    case ^christmas : {
+        return(false);
+    }
+    case ^halloween : {
+        return(false);
+    }
+    case ^new_year : {
+        return(false);
+    }
+    case ^fourtwenty : {
+        return(false);
+    }
+    case ^valentines : {
+        return(false);
+    }
+    case default : {
+        return(false);
+    }
+}

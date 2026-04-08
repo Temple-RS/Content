@@ -6,7 +6,6 @@ if(inv_total(inv, trail_clue_medium_anagram010) > 0) {
     ~progress_clue_medium(trail_clue_medium_anagram010, "Party Pete has given you another clue scroll!");
     return;
 }
-
 // dialogue from OSRS, but I think it's mostly unchanged (besides the new option which I didn't include)
 // since it references the gold chest (falador one is white) and Kandarin (which is where seers is, not falador)
 ~chatnpc("<p,happy>Hi! I'm Party Pete.|Welcome to the Party Room!");

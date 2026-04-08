@@ -1,0 +1,21 @@
+[oplocu,chaosaltar] ~offer_bones(last_useitem, last_useslot);
+
+[proc,offer_bones](obj $last_offering, int $slot)
+p_stopaction;
+switch_obj($last_offering){
+    case bones : {
+        stat_advance(prayer, oc_param($last_offering, bone_exp));
+    }
+    case dragon_bones : {
+        stat_advance(prayer, oc_param($last_offering, bone_exp));
+    }
+    case default : {
+        ~displaymessage(^dm_default);
+        return;
+    }
+}
+anim(human_pickuptable, 0);
+sound_synth(bones_down, 1, 0);
+def_obj $last_item = inv_getobj(inv, $slot);
+inv_delslot(inv, $slot);
+p_delay(0);

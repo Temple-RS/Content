@@ -1,0 +1,310 @@
+[opnpc1,fred] @easter_miniquest;
+[label,easter_miniquest]
+def_int $ch;
+if (~event_settings(^easter) = false) {
+    mes("The Easter event is not active.");
+    return;
+}
+switch_int(%easter_miniquest){
+    case ^emq_not_started : {
+        ~chatplayer("<p,happy>Hi there. Happy Easter!");
+        ~chatnpc("<p,sad>Maybe.. for.. you..");
+        npc_anim(emote_cry, 0);
+        $ch = ~p_choice3("Oh. Sorry. Is something wrong?", 1, "Yeah it's pretty awesome isn't it!", 2, "I would help you, if I only knew what was wrong.", 3);
+        switch_int($ch){
+            case 1 : {
+                ~chatplayer("<p,happy>Oh. Sorry. Is something wrong?");
+                ~chatnpc("<p,sad>Something wrong? My boss is going to kill me! I lost his eggs!");
+                npc_anim(emote_cry, 0);
+                ~chatplayer("<p,neutral>There are chickens nearby. I could get you as many eggs as you need.");
+                ~chatnpc("<p,angry>You fool! I need rabbit eggs!");
+                ~chatplayer("<p,neutral>...Rabbits do not lay eggs.");
+                ~chatnpc("<p,neutral>So they got to you too.");
+                ~chatplayer("<p,confused>Excuse me?");
+                ~chatnpc("<p,neutral>Never mind. The point is, I lost some special eggs, and I need you to recover them while I distract the boss from doing his egg count.");
+                ~chatplayer("<p,neutral>Egg count? Fine. Where are they?");
+                ~chatnpc("<p,neutral>Well... not exactly sure.");
+                ~chatplayer("<p,happy>Oh, fantastic.");
+                ~chatnpc("<p,neutral>The first one must be somewhere in the Gnome Stronghold. I was drinking with some gnomes, and one thing led to another.");
+                ~chatplayer("<p,neutral>One thing led to you losing an egg?");
+                ~chatnpc("<p,neutral>Yes.");
+                ~chatplayer("<p,neutral>Do you at least know where in the Stronghold?");
+                ~chatnpc("<p,neutral>Somewhere memorable.");
+                ~chatplayer("<p,neutral>That tells me absolutely nothing.");
+                ~chatnpc("<p,neutral>You look clever. I am sure you will work it out.");
+                %easter_miniquest = ^emq_fetch_egg_1;
+            }
+            case 2 : {
+                ~chatplayer("<p,happy>Yeah it's pretty awesome isn't it!");
+                ~chatnpc("<p,neutral>It was. Until I lost the eggs. Now it is a nightmare.");
+                npc_anim(emote_cry, 0);
+            }
+            case 3 : {
+                ~chatplayer("<p,happy>I would help you, if I only knew what was wrong.");
+                ~chatnpc("<p,neutral>You would? Truly? Because I am in desperate need of a hero.");
+                npc_anim(emote_cry, 0);
+            }
+        }
+    }
+    case ^emq_started, ^emq_fetch_egg_1 : {
+        ~chatnpc("<p,neutral>Any luck finding that egg in the Gnome Stronghold?");
+        ~chatplayer("<p,sad>Not yet.");
+    }
+    case ^emq_return_egg_1 : {
+        if (inv_total(inv, ee06_01) > 0) {
+            ~chatplayer("<p,happy>I found your egg. It was not “somewhere memorable,” by the way.");
+            ~chatnpc("<p,happy>Wonderful work!");
+            npc_anim(emote_cheer, 0);
+            inv_del(inv, ee06_01, 1);
+            $ch = ~p_choice3("Right. What next?", 1, "Can I eat it?", 2, "It was behind a tree... so memorable.", 3);
+            switch_int($ch) {
+                case 1 : {
+                    ~chatplayer("<p,neutral>Right. What next?");
+                }
+                case 2 : {
+                    ~chatplayer("<p,neutral>Can I eat it?");
+                    ~chatnpc("<p,angry>Don't you dare! Those are the boss's prize collection!");
+                    ~chatplayer("<p,sad>Fine, fine.");
+                }
+                case 3 : {
+                    ~chatplayer("<p,neutral>It was behind a tree... so memorable.");
+                    ~chatnpc("<p,neutral>See? I knew you'd remember it. Truly a landmark.");
+                }
+            }
+            ~chatnpc("<p,neutral>Now, the next egg is in a dragon den.");
+            ~chatplayer("<p,confused>A what?");
+            ~chatnpc("<p,scared>A dragon den. I dropped it down a hole and definitely heard a dragon.");
+            ~chatplayer("<p,neutral>Where was this?");
+            ~chatnpc("<p,neutral>Underground.");
+            ~chatplayer("<p,neutral>That narrows it down to almost nowhere.");
+            ~chatnpc("<p,neutral>The dragons were blue.");
+            ~chatplayer("<p,neutral>Alright.");
+            ~chatnpc("<p,neutral>Or green.");
+            ~chatplayer("<p,neutral>If they were green, that is an important difference.");
+            ~chatnpc("<p,neutral>No, no. Blue. Definitely blue.");
+            ~chatplayer("<p,neutral>You do not sound certain.");
+            ~chatnpc("<p,neutral>I am sincere.");
+            %easter_miniquest = ^emq_fetch_egg_2;
+        } else {
+             ~chatnpc("<p,neutral>Where did that egg go? You had it a second ago!");
+        }
+    }
+    case ^emq_fetch_egg_2 : {
+        ~chatnpc("<p,neutral>How's the search going in the dragon den?");
+        ~chatplayer("<p,sad>It's a bit warm in there.");
+    }
+    case ^emq_return_egg_2 : {
+        if (inv_total(inv, ee06_02) > 0) {
+            npc_anim(emote_cheer, 0);
+            ~chatplayer("<p,happy>I got it. I was nearly roasted alive.");
+            ~chatnpc("<p,happy>Splendid! You really are saving Easter.");
+            inv_del(inv, ee06_02, 1);
+            $ch = ~p_choice3("I suspect I am the only one trying.", 1, "Do I look like a roast chicken to you?", 2, "Are the eggs fireproof?", 3);
+            switch_int($ch) {
+                case 1 : {
+                    ~chatplayer("<p,neutral>I am beginning to suspect I am the only one trying.");
+                    ~chatnpc("<p,neutral>Nonsense. I am worrying very hard.");
+                }
+                case 2 : {
+                    ~chatplayer("<p,angry>Do I look like a roast chicken to you?");
+                    ~chatnpc("<p,happy>A bit! But a very brave one.");
+                }
+                case 3 : {
+                    ~chatplayer("<p,neutral>Are the eggs fireproof?");
+                    ~chatnpc("<p,neutral>I wouldn't test it. They are quite delicate.");
+                }
+            }
+            ~chatplayer("<p,neutral>Are we done now?");
+            ~chatnpc("<p,neutral>Goodness, no. There are still three more.");
+            ~chatplayer("<p,neutral>Three mo—");
+            ~chatnpc("<p,neutral>The next one was in Karamja, near the waterfall.");
+            ~chatplayer("<p,neutral>What waterfall in Karamja?");
+            ~chatnpc("<p,neutral>The only one!");
+            ~chatplayer("<p,neutral>I hate everything about this conversation.");
+            ~chatnpc("<p,neutral>Just get the egg, please!");
+            %easter_miniquest = ^emq_fetch_egg_3;
+        } else {
+            ~chatnpc("<p,neutral>The dragons haven't eaten you, have they?");
+        }
+    }
+    case ^emq_fetch_egg_3 : {
+        ~chatnpc("<p,neutral>Found the waterfall egg yet?");
+        ~chatplayer("<p,sad>Still looking.");
+    }
+    case ^emq_return_egg_3 : {
+        if (inv_total(inv, ee06_03) > 0) {
+            npc_anim(emote_cheer, 0);
+            ~chatplayer("<p,happy>I found it. Those stepping stones are seriously evil.");
+            ~chatnpc("<p,happy>Really? I hope you didn't slip.");
+            inv_del(inv, ee06_03, 1);
+            $ch = ~p_choice3("Just... next location.", 1, "I'm still dripping wet.", 2, "I saw a giant bug!", 3);
+            switch_int($ch) {
+                case 1 : {
+                    ~chatplayer("<p,neutral>Just... tell me the next location.");
+                }
+                case 2 : {
+                    ~chatplayer("<p,sad>I'm still dripping wet.");
+                    ~chatnpc("<p,neutral>Think of it as a seasonal bath!");
+                }
+                case 3 : {
+                    ~chatplayer("<p,confused>I saw a giant bug!");
+                    ~chatnpc("<p,neutral>Did it have an egg? No? Then keep focused!");
+                }
+            }
+            ~chatnpc("<p,neutral>Ah yes. The fourth egg is in the desert.");
+            ~chatplayer("<p,neutral>Where in the desert?");
+            ~chatnpc("<p,neutral>In the sandy part.");
+            ~chatplayer("<p,neutral>You are insane.");
+            ~chatnpc("<p,neutral>No, my name is Fred. And it was very hot. I remember that distinctly.");
+            ~chatplayer("<p,neutral>That describes the entire desert.");
+            ~chatnpc("<p,neutral>There may have been one of those humped things nearby.");
+            ~chatplayer("<p,neutral>A camel?");
+            ~chatnpc("<p,neutral>Goodness, no! The meaner kind. Ugthanki.");
+            ~chatplayer("<p,neutral>What have I gotten myself into...");
+            ~chatnpc("<p,neutral>Seasonal heroism! Take a knife, did you know you can use it on cacti?");
+            %easter_miniquest = ^emq_fetch_egg_4;
+        } else {
+            ~chatnpc("<p,neutral>Are you enjoying the Karamja scenery?");
+        }
+    }
+    case ^emq_fetch_egg_4 : {
+        ~chatnpc("<p,neutral>Any luck in the desert?");
+        ~chatplayer("<p,sad>Too much sand.");
+    }
+    case ^emq_return_egg_4 : {
+        if (inv_total(inv, ee06_04) > 0) {
+            npc_anim(emote_cheer, 0);
+            ~chatplayer("<p,happy>You were right about the cactuses..");
+            ~chatnpc("<p,neutral>Cacti.");
+            inv_del(inv, ee06_04, 1);
+            ~chatplayer("<p,happy>...Anyway I am back. Please, for the love of all that is holy, tell me that was the last one.");
+            ~chatnpc("<p,neutral>Just one more!");
+            
+            $ch = ~p_choice2("Thank God!", 1, "Thank the gods!", 2);
+            switch_int($ch) {
+                case 1 : { ~chatplayer("<p,happy>Thank God!"); }
+                case 2 : { ~chatplayer("<p,happy>Thank the gods!"); }
+            }
+            ~chatnpc("<p,neutral>That is the spirit! The last egg is in the King Black Dragon’s lair.");
+            ~chatplayer("<p,neutral>No.");
+            ~chatnpc("<p,neutral>Yes.");
+            ~chatplayer("<p,neutral>No. No, no, no. I am not going into the King Black Dragon’s lair for an egg.");
+            ~chatnpc("<p,neutral>There is no other option, <displayname>. You are the only one capable of this.");
+            ~chatplayer("<p,neutral>Why me?!");
+            ~chatnpc("<p,neutral>You have already shown a rare combination of courage, competence, and a willingness to keep saying yes when you probably should not.");
+            ~chatplayer("<p,neutral>I am not dying for an egg.");
+            ~chatnpc("<p,neutral>I will get you bunny ears.");
+            ~chatplayer("<p,neutral>Not enough.");
+            ~chatnpc("<p,neutral>And an edible Easter egg.");
+            ~chatplayer("<p,neutral>...Fine. But this had better be the last one.");
+            ~chatnpc("<p,neutral>It is. I assure you.");
+            %easter_miniquest = ^emq_fetch_egg_5;
+        } else {
+             ~chatnpc("<p,neutral>Did you lose the desert egg in the sand?");
+        }
+    }
+    case ^emq_fetch_egg_5 : {
+        ~chatnpc("<p,neutral>The King Black Dragon is waiting!");
+        ~chatplayer("<p,sad>I'm trying to mentally prepare.");
+    }
+    case ^emq_return_egg_5 : {
+        if (inv_total(inv, ee06_05) > 0) {
+            npc_anim(emote_cheer, 0);
+            ~chatplayer("<p,happy>I GOT IT. I actually got it. We are done. We are completely, utterly done.");
+            ~chatnpc("<p,happy>Marvelous! You have done Easter a great service.");
+            inv_del(inv, ee06_05, 1);
+            ~chatplayer("<p,neutral>Right. Good. Excellent.");
+            ~chatnpc("<p,neutral>And now, your reward.");
+            ~chatplayer("<p,neutral>Finally.");
+            ~chatnpc("<p,neutral>About that.");
+            ~chatplayer("<p,neutral>Fred.");
+            ~chatnpc("<p,neutral>You cannot have my bunny ears.");
+            ~chatplayer("<p,neutral>Fred.");
+            ~chatnpc("<p,neutral>Or any of my eggs.");
+            ~chatplayer("<p,neutral>Fred, do not do this to me.");
+            ~chatnpc("<p,neutral>You will need to get your own.");
+            $ch = ~p_choice3("How about a duel?", 1, "I'll just take them later.", 2, "You are a terrible person.", 3);
+            switch_int($ch) {
+                case 1 : {
+                    ~chatplayer("<p,neutral>How do you feel about a duel?");
+                    ~chatnpc("<p,neutral>Hold your horses!");
+                }
+                case 2 : {
+                    ~chatplayer("<p,neutral>I'll just take them while you're sleeping.");
+                    ~chatnpc("<p,neutral>No! Wait!");
+                }
+                case 3 : {
+                    ~chatplayer("<p,angry>You are a terrible person.");
+                    ~chatnpc("<p,neutral>I am a misunderstood artist of logistics!");
+                }
+            }
+            ~chatnpc("<p,neutral>Hold your horses! My friend has them!");
+            ~chatplayer("<p,neutral>I don't think we have horses in RuneScape, for some reason... but what friend?");
+            ~chatnpc("<p,neutral>My good friend Hans. Just tell him, “Happy Easter.”");
+            ~chatplayer("<p,neutral>...I crossed the world, fought through dragons, wandered the desert, and nearly died in the Wilderness... just so I could say “Happy Easter” to Hans?");
+            ~chatnpc("<p,neutral>Yes! Wait, do you know him?");
+            ~chatplayer("<p,neutral>Could I not have done that from the beginning?");
+            ~chatnpc("<p,neutral>Well, yes. I suppose you could have. But that would not be in the spirit of selflessness!");
+            ~chatplayer("<p,neutral>Was this all just some moral lesson?");
+            ~chatnpc("<p,neutral>Of course. It is Easter!");
+            %easter_miniquest = ^emq_completed;
+        } else {
+             ~chatnpc("<p,neutral>You survived the dragon lair but lost the egg? Go back!");
+        }
+    }
+    case ^emq_completed : {
+        ~chatnpc("<p,happy>Happy Easter! Go see Hans for your reward.");
+    }
+}
+
+[proc,egg_pickup](obj $egg)(boolean)
+switch_obj($egg){
+    case ee06_01 : {
+        if (%easter_miniquest ! ^emq_fetch_egg_1) { return(false); }
+        if (inv_total(inv, ee06_01) > 0 | inv_total(bank, ee06_01) > 0 | inv_total(premium_bank, ee06_01) > 0) {
+            mes("You already have one of these.");
+            return(false);
+        }
+        %easter_miniquest = ^emq_return_egg_1;
+        return(true);
+    }
+    case ee06_02 : {
+        if (%easter_miniquest ! ^emq_fetch_egg_2) { return(false); }
+        if (inv_total(inv, ee06_02) > 0 | inv_total(bank, ee06_02) > 0 | inv_total(premium_bank, ee06_02) > 0) {
+            mes("You already have one of these.");
+            return(false);
+        }
+        %easter_miniquest = ^emq_return_egg_2;
+        return(true);
+    }
+    case ee06_03 : {
+        if (%easter_miniquest ! ^emq_fetch_egg_3) { return(false); }
+        if (inv_total(inv, ee06_03) > 0 | inv_total(bank, ee06_03) > 0 | inv_total(premium_bank, ee06_03) > 0) {
+            mes("You already have one of these.");
+            return(false);
+        }
+        %easter_miniquest = ^emq_return_egg_3;
+        return(true);
+    }
+    case ee06_04 : {
+        if (%easter_miniquest ! ^emq_fetch_egg_4) { return(false); }
+        if (inv_total(inv, ee06_04) > 0 | inv_total(bank, ee06_04) > 0 | inv_total(premium_bank, ee06_04) > 0) {
+            mes("You already have one of these.");
+            return(false);
+        }
+        %easter_miniquest = ^emq_return_egg_4;
+        return(true);
+    }
+    case ee06_05 : {
+        if (%easter_miniquest ! ^emq_fetch_egg_5) { return(false); }
+        if (inv_total(inv, ee06_05) > 0 | inv_total(bank, ee06_05) > 0 | inv_total(premium_bank, ee06_05) > 0) {
+            mes("You already have one of these.");
+            return(false);
+        }
+        %easter_miniquest = ^emq_return_egg_5;
+        return(true);
+    }
+    case default : {
+        return(true);
+    }
+}
