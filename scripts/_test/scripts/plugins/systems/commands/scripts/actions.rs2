@@ -28,7 +28,7 @@ inv_add(inv, $product, 1);
 // info: Cutting Animation Only
 [proc,cutting_animation]
 anim(human_cutting, 0);
-sound_synth(sliced, 0, 0);
+sound_synth(tinderbox_strike, 0, 0);
 
 // info: Standard smelting action with variable smithing speeds.
 [proc,smelting_action](obj $used_ore, int $coal_amount, namedobj $product, int $count, int $exp)

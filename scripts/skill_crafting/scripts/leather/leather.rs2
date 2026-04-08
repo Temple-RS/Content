@@ -77,6 +77,7 @@ def_int $leather_count;
 $leather, $leather_count = db_getfield($product_data, craft_leather_table:leather, 0);
 
 ~make_options($leather);
+if_close;
 while (~make_x($leather) = true){
     if (inv_total(inv, $leather) < $leather_count) {
         mes("You don't have enough leather to make <db_getfield($product_data, craft_leather_table:name, 0)>.");

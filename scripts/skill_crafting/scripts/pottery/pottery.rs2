@@ -26,6 +26,7 @@ switch_obj (last_useitem)
 /// clay works the same as rsc
 
 ~make_options(clay);
+if_close;
 while (~make_x(clay) = true){
     if (inv_total(inv, $water_source) < 1) {
         mes("You have run out of water!");
@@ -70,7 +71,8 @@ if (stat(crafting) < $level)
     ~objbox($item, "You need a Crafting level of <tostring($level)> to make a <$name>.", 250, 0, divide(^objbox_height, 2));
     return;
 }
-~make_options($item);
+~make_options(softclay);
+if_close;
 while (~make_x(softclay) = true){
     sound_synth(pottery, 0, 0);
     anim(human_potterywheel, 0);
@@ -85,16 +87,17 @@ while (~make_x(softclay) = true){
 def_obj $last_obj = inv_getobj(inv, $last);
 def_struct $struct = oc_param($last_obj, crafting_pottery_struct);
 ~make_options($last_obj);
+if_close;
 while (~make_x($last_obj) = true){
     mes("You put the <oc_name(struct_param($struct, product))> in the oven.");
     sound_synth(furnace, 0, 0);
     anim(human_furnace, 0);
+    inv_del(inv, $last_obj, 1);
     p_delay(3);
     mes("The <oc_name(struct_param($struct, product))> hardens in the oven.");
     //p_delay(1);
     def_namedobj $product = struct_param($struct, product);
     // delete unfired item
-    inv_del(inv, $last_obj, 1);
     // add fired item. success rate is the same for all unfired items
     if (stat_random(crafting, 180, 800) = true) {
         inv_add(inv, $product, 1);
@@ -103,6 +106,7 @@ while (~make_x($last_obj) = true){
     } else {
         mes("The <oc_name($product)> cracks in the oven.");
     }
+    p_delay(1);
 }
 
 
