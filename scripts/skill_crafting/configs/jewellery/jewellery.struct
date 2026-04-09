@@ -144,6 +144,13 @@ param=levelrequired,18
 param=productexp,500
 param=name,Silver sickle
 
+[tiara]
+param=product,tiara
+param=levelrequired,23
+param=productexp,525
+param=name,Tiara
+
+
 
 
 

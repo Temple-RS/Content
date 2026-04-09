@@ -2,20 +2,20 @@
 
 [proc,offer_bones](obj $last_offering, int $slot)
 p_stopaction;
+def_int $exp = calc(3 * oc_param($last_offering, bone_exp));
 switch_obj($last_offering){
-    case bones : {
-        stat_advance(prayer, oc_param($last_offering, bone_exp));
-    }
-    case dragon_bones : {
-        stat_advance(prayer, oc_param($last_offering, bone_exp));
-    }
+    case dragon_bones : { stat_advance(prayer, $exp); }
+    case babydragon_bones : { stat_advance(prayer, $exp); }
+    case big_bones : { stat_advance(prayer, $exp); }
     case default : {
-        ~displaymessage(^dm_default);
+        mes("This offering is denied.");
         return;
     }
 }
 anim(human_pickuptable, 0);
 sound_synth(bones_down, 1, 0);
+mes("You offer some bones.");
 def_obj $last_item = inv_getobj(inv, $slot);
 inv_delslot(inv, $slot);
 p_delay(0);
+// coord: 0_46_59_7_45

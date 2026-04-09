@@ -23,6 +23,7 @@ womanhead=obj_tiara_manhead
 cost=100
 wearpos=hat
 weight=1kg
+param=crafting_jewelry_struct,tiara
 
 [tiara_air]
 name=Air tiara

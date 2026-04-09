@@ -1,4 +1,5 @@
 [opnpc1,fred] @easter_miniquest;
+
 [label,easter_miniquest]
 def_int $ch;
 if (~event_settings(^easter) = false) {
@@ -116,7 +117,7 @@ switch_int(%easter_miniquest){
             }
             ~chatplayer("<p,neutral>Are we done now?");
             ~chatnpc("<p,neutral>Goodness, no. There are still three more.");
-            ~chatplayer("<p,neutral>Three mo—");
+            ~chatplayer("<p,neutral>Three more?");
             ~chatnpc("<p,neutral>The next one was in Karamja, near the waterfall.");
             ~chatplayer("<p,neutral>What waterfall in Karamja?");
             ~chatnpc("<p,neutral>The only one!");
