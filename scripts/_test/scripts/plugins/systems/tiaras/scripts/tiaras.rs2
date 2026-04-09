@@ -184,30 +184,30 @@ while (~make_x(tiara) = true & ~make_x($talisman) = true){
     switch_obj($talisman){
         case air_talisman : 
             inv_add(inv, tiara_air, 1);
-            stat_advance(runecraft, 25);
+            stat_advance(runecraft, 250);
         case mind_talisman : 
             inv_add(inv, tiara_mind, 1);
-            stat_advance(runecraft, 27);
+            stat_advance(runecraft, 270);
         case water_talisman : 
             inv_add(inv, tiara_water, 1);
-            stat_advance(runecraft, 30);
+            stat_advance(runecraft, 300);
         case body_talisman : 
             inv_add(inv, tiara_body, 1);
-            stat_advance(runecraft, 37);
+            stat_advance(runecraft, 370);
         case earth_talisman : 
             inv_add(inv, tiara_earth, 1);
-            stat_advance(runecraft, 33);
+            stat_advance(runecraft, 330);
         case fire_talisman : 
             inv_add(inv, tiara_fire, 1);
-            stat_advance(runecraft, 35);
+            stat_advance(runecraft, 350);
         case cosmic_talisman : 
             inv_add(inv, tiara_cosmic, 1);
-            stat_advance(runecraft, 40);
+            stat_advance(runecraft, 400);
         case nature_talisman : 
             inv_add(inv, tiara_nature, 1);
-            stat_advance(runecraft, 45);
+            stat_advance(runecraft, 450);
         case chaos_talisman : 
             inv_add(inv, tiara_chaos, 1);
-            stat_advance(runecraft, 42);
+            stat_advance(runecraft, 420);
     }
 }
