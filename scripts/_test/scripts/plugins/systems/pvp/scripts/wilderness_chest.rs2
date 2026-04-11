@@ -17,23 +17,300 @@ anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 mes("You unlock the chest with your key.");
 p_delay(0);
-// Temp note: dur updated
 loc_change(wilderness_chestopen, $random_respawn);
 inv_del(inv, wc_key, 1);
-//inv_add(inv, wilderness_ring, 1);
-//inv_add(inv, wilderness_cape, 1);
-//inv_add(inv, wilderness_necklace, 1);
-//mes("You find some treasure in the chest!");
 p_delay(0);
 
 
-[opheld2,wilderness_cape] @defence_limit(40, last_slot);
-[opheld2,wilderness_ring] @defence_limit(40, last_slot);
-[opheld2,wilderness_necklace] @defence_limit(40, last_slot);
+[opheld2,wilderness_cape] @defence_limit(1, last_slot);
+[opheld2,wilderness_ring] @defence_limit(1, last_slot);
+[opheld3,wilderness_ring] ~wring_toggle;
+[opheld4,wilderness_ring] ~combat_level_menu;
+[opheld2,wilderness_necklace] @defence_limit(1, last_slot);
 
 [label,defence_limit](int $level, int $slot)
-if (stat_base(defence) > $level) {
-    mes("Your defence is too high to use this item.");
+if (stat_base(defence) < $level) {
+    mes("Your defence is too low to use this item.");
     return;
 }
 ~equip($slot);
+
+// -------------------------------------------------------
+// TOGGLE — activates ALL configured skill levels at once,
+// or restores them all when toggled off.
+// -------------------------------------------------------
+
+[proc,wring_toggle]
+if (~wilderness_level(coord) > 0) {
+    mes("You can't use this in the wilderness.");
+    return;
+}
+switch_int(%wilderness_defence_toggle) {
+    case 0 : {
+        // TOGGLE ON: save original XPs, apply target levels, skull
+        ~wring_save_all_xp;
+        ~wring_apply_all_targets;
+        %wilderness_defence_toggle = 1;
+        ~pk_skull(^max_32bit_int);
+        mes("Skill levels applied. You have been skulled.");
+    }
+    case 1 : {
+        // TOGGLE OFF: restore all original XPs, clear skull
+        ~wring_restore_all;
+        %wilderness_defence_toggle = 0;
+        ~clear_pk_skull;
+        mes("Your levels have been restored.");
+    }
+}
+
+// -------------------------------------------------------
+// Save current XP for all 6 stats to their _exp varps.
+// -------------------------------------------------------
+
+[proc,wring_save_all_xp]
+def_int $current_xp = 0;
+
+$current_xp = stat_xp(attack);
+if ($current_xp > 0) { %wilderness_attack_exp = $current_xp; }
+
+$current_xp = stat_xp(strength);
+if ($current_xp > 0) { %wilderness_strength_exp = $current_xp; }
+
+$current_xp = stat_xp(defence);
+if ($current_xp > 0) { %wilderness_defence_exp = $current_xp; }
+
+$current_xp = stat_xp(ranged);
+if ($current_xp > 0) { %wilderness_ranged_exp = $current_xp; }
+
+$current_xp = stat_xp(magic);
+if ($current_xp > 0) { %wilderness_magic_exp = $current_xp; }
+
+$current_xp = stat_xp(prayer);
+if ($current_xp > 0) { %wilderness_prayer_exp = $current_xp; }
+
+
+// -------------------------------------------------------
+// Apply configured target levels for all 6 stats.
+// -------------------------------------------------------
+
+[proc,wring_apply_all_targets]
+def_int $xp = 0;
+
+if (%wilderness_attack_target > 1) { $xp = ~xp_for_level(%wilderness_attack_target); } else { $xp = 0; }
+stat_setxp(attack, $xp);
+
+if (%wilderness_strength_target > 1) { $xp = ~xp_for_level(%wilderness_strength_target); } else { $xp = 0; }
+stat_setxp(strength, $xp);
+
+if (%wilderness_defence_target > 1) { $xp = ~xp_for_level(%wilderness_defence_target); } else { $xp = 0; }
+stat_setxp(defence, $xp);
+
+if (%wilderness_ranged_target > 1) { $xp = ~xp_for_level(%wilderness_ranged_target); } else { $xp = 0; }
+stat_setxp(ranged, $xp);
+
+if (%wilderness_magic_target > 1) { $xp = ~xp_for_level(%wilderness_magic_target); } else { $xp = 0; }
+stat_setxp(magic, $xp);
+
+if (%wilderness_prayer_target > 1) { $xp = ~xp_for_level(%wilderness_prayer_target); } else { $xp = 0; }
+stat_setxp(prayer, $xp);
+
+
+// -------------------------------------------------------
+// Restore all 6 stats from their saved _exp varps.
+// -------------------------------------------------------
+
+[proc,wring_restore_all]
+if (%wilderness_attack_exp > 0) {
+    stat_setxp(attack, %wilderness_attack_exp);
+    %wilderness_attack_exp = 0;
+}
+if (%wilderness_strength_exp > 0) {
+    stat_setxp(strength, %wilderness_strength_exp);
+    %wilderness_strength_exp = 0;
+}
+if (%wilderness_defence_exp > 0) {
+    stat_setxp(defence, %wilderness_defence_exp);
+    %wilderness_defence_exp = 0;
+}
+if (%wilderness_ranged_exp > 0) {
+    stat_setxp(ranged, %wilderness_ranged_exp);
+    %wilderness_ranged_exp = 0;
+}
+if (%wilderness_magic_exp > 0) {
+    stat_setxp(magic, %wilderness_magic_exp);
+    %wilderness_magic_exp = 0;
+}
+if (%wilderness_prayer_exp > 0) {
+    stat_setxp(prayer, %wilderness_prayer_exp);
+    %wilderness_prayer_exp = 0;
+}
+
+// -------------------------------------------------------
+// SET LEVELS MENU (iop4) 
+// -------------------------------------------------------
+
+[proc,combat_level_menu]
+if (~wilderness_level(coord) > 0) {
+    mes("You can't use this in the wilderness.");
+    return;
+}
+def_int $stat_choice = ~p_choice5_header(
+    "Attack", 1,
+    "Strength", 2,
+    "Defence", 3,
+    "Ranged", 4,
+    "More...", 5,
+    "Set Target Level:");
+
+def_int $max_level = 1;
+def_int $current_target = 1;
+def_int $target = 1;
+
+if ($stat_choice = 1) {
+    if (%wilderness_attack_exp > 0) { $max_level = ~level_from_xp(%wilderness_attack_exp); } else { $max_level = stat_base(attack); }
+    $current_target = %wilderness_attack_target;
+    if ($current_target = 0) $current_target = 1;
+    ~mesbox("Attack — current target: <tostring($current_target)>. Enter new target (1 - <tostring($max_level)>):");
+    p_countdialog;
+    $target = last_int;
+    if ($target < 1) { mes("Level must be at least 1."); return; }
+    if ($target > $max_level) { mes("You can't set your target above <tostring($max_level)>."); return; }
+    %wilderness_attack_target = $target;
+    mes("Attack target set to level <tostring($target)>.");
+
+} else if ($stat_choice = 2) {
+    if (%wilderness_strength_exp > 0) { $max_level = ~level_from_xp(%wilderness_strength_exp); } else { $max_level = stat_base(strength); }
+    $current_target = %wilderness_strength_target;
+    if ($current_target = 0) $current_target = 1;
+    ~mesbox("Strength — current target: <tostring($current_target)>. Enter new target (1 - <tostring($max_level)>):");
+    p_countdialog;
+    $target = last_int;
+    if ($target < 1) { mes("Level must be at least 1."); return; }
+    if ($target > $max_level) { mes("You can't set your target above <tostring($max_level)>."); return; }
+    %wilderness_strength_target = $target;
+    mes("Strength target set to level <tostring($target)>.");
+
+} else if ($stat_choice = 3) {
+    if (%wilderness_defence_exp > 0) { $max_level = ~level_from_xp(%wilderness_defence_exp); } else { $max_level = stat_base(defence); }
+    $current_target = %wilderness_defence_target;
+    if ($current_target = 0) $current_target = 1;
+    ~mesbox("Defence — current target: <tostring($current_target)>. Enter new target (1 - <tostring($max_level)>):");
+    p_countdialog;
+    $target = last_int;
+    if ($target < 1) { mes("Level must be at least 1."); return; }
+    if ($target > $max_level) { mes("You can't set your target above <tostring($max_level)>."); return; }
+    %wilderness_defence_target = $target;
+    mes("Defence target set to level <tostring($target)>.");
+
+} else if ($stat_choice = 4) {
+    if (%wilderness_ranged_exp > 0) { $max_level = ~level_from_xp(%wilderness_ranged_exp); } else { $max_level = stat_base(ranged); }
+    $current_target = %wilderness_ranged_target;
+    if ($current_target = 0) $current_target = 1;
+    ~mesbox("Ranged — current target: <tostring($current_target)>. Enter new target (1 - <tostring($max_level)>):");
+    p_countdialog;
+    $target = last_int;
+    if ($target < 1) { mes("Level must be at least 1."); return; }
+    if ($target > $max_level) { mes("You can't set your target above <tostring($max_level)>."); return; }
+    %wilderness_ranged_target = $target;
+    mes("Ranged target set to level <tostring($target)>.");
+
+} else if ($stat_choice = 5) {
+    def_int $stat_choice2 = ~p_choice2_header(
+        "Magic", 1,
+        "Prayer", 2,
+        "Set Target Level:");
+
+    if ($stat_choice2 = 1) {
+        if (%wilderness_magic_exp > 0) { $max_level = ~level_from_xp(%wilderness_magic_exp); } else { $max_level = stat_base(magic); }
+        $current_target = %wilderness_magic_target;
+        if ($current_target = 0) $current_target = 1;
+        ~mesbox("Magic — current target: <tostring($current_target)>. Enter new target (1 - <tostring($max_level)>):");
+        p_countdialog;
+        $target = last_int;
+        if ($target < 1) { mes("Level must be at least 1."); return; }
+        if ($target > $max_level) { mes("You can't set your target above <tostring($max_level)>."); return; }
+        %wilderness_magic_target = $target;
+        mes("Magic target set to level <tostring($target)>.");
+
+    } else {
+        if (%wilderness_prayer_exp > 0) { $max_level = ~level_from_xp(%wilderness_prayer_exp); } else { $max_level = stat_base(prayer); }
+        $current_target = %wilderness_prayer_target;
+        if ($current_target = 0) $current_target = 1;
+        ~mesbox("Prayer — current target: <tostring($current_target)>. Enter new target (1 - <tostring($max_level)>):");
+        p_countdialog;
+        $target = last_int;
+        if ($target < 1) { mes("Level must be at least 1."); return; }
+        if ($target > $max_level) { mes("You can't set your target above <tostring($max_level)>."); return; }
+        %wilderness_prayer_target = $target;
+        mes("Prayer target set to level <tostring($target)>.");
+    }
+}
+
+
+// -------------------------------------------------------
+// XP-for-level lookup  (exact RS XP table, levels 1-99)
+// -------------------------------------------------------
+
+[proc,xp_for_level](int $level)(int)
+if ($level < 1) $level = 1;
+if ($level > 99) $level = 99;
+switch_int($level) {
+    case 1  : return(0);    case 2  : return(83);   case 3  : return(174);  case 4  : return(276);
+    case 5  : return(388);  case 6  : return(512);  case 7  : return(650);  case 8  : return(801);
+    case 9  : return(969);  case 10 : return(1154); case 11 : return(1358); case 12 : return(1584);
+    case 13 : return(1833); case 14 : return(2107); case 15 : return(2411); case 16 : return(2746);
+    case 17 : return(3115); case 18 : return(3523); case 19 : return(3973); case 20 : return(4470);
+    case 21 : return(5018); case 22 : return(5624); case 23 : return(6291); case 24 : return(7028);
+    case 25 : return(7842); case 26 : return(8740); case 27 : return(9730); case 28 : return(10824);
+    case 29 : return(12031);case 30 : return(13363);case 31 : return(14833);case 32 : return(16456);
+    case 33 : return(18247);case 34 : return(20224);case 35 : return(22406);case 36 : return(24815);
+    case 37 : return(27473);case 38 : return(30408);case 39 : return(33648);case 40 : return(37224);
+    case 41 : return(41171);case 42 : return(45529);case 43 : return(50339);case 44 : return(55649);
+    case 45 : return(61512);case 46 : return(67983);case 47 : return(75127);case 48 : return(83014);
+    case 49 : return(91721);case 50 : return(101333);case 51 : return(111945);case 52 : return(123660);
+    case 53 : return(136594);case 54 : return(150872);case 55 : return(166636);case 56 : return(184040);
+    case 57 : return(203254);case 58 : return(224466);case 59 : return(247886);case 60 : return(273742);
+    case 61 : return(302288);case 62 : return(333804);case 63 : return(368599);case 64 : return(407015);
+    case 65 : return(449428);case 66 : return(496254);case 67 : return(547953);case 68 : return(605032);
+    case 69 : return(668051);case 70 : return(737627);case 71 : return(814445);case 72 : return(899257);
+    case 73 : return(992895);case 74 : return(1096278);case 75 : return(1210421);case 76 : return(1336443);
+    case 77 : return(1475581);case 78 : return(1629200);case 79 : return(1798808);case 80 : return(1986068);
+    case 81 : return(2192818);case 82 : return(2421087);case 83 : return(2673114);case 84 : return(2951373);
+    case 85 : return(3258594);case 86 : return(3597792);case 87 : return(3972294);case 88 : return(4385776);
+    case 89 : return(4842295);case 90 : return(5346332);case 91 : return(5902831);case 92 : return(6517253);
+    case 93 : return(7195629);case 94 : return(7944614);case 95 : return(8771558);case 96 : return(9684577);
+    case 97 : return(10692629);case 98 : return(11805606);case 99 : return(13034431);
+    case default : return(0);
+}
+
+// -------------------------------------------------------
+// Level-from-XP lookup (inverse of above)
+// -------------------------------------------------------
+
+[proc,level_from_xp](int $xp)(int)
+if ($xp < 83) return(1);    if ($xp < 174) return(2);   if ($xp < 276) return(3);   if ($xp < 388) return(4);
+if ($xp < 512) return(5);   if ($xp < 650) return(6);   if ($xp < 801) return(7);   if ($xp < 969) return(8);
+if ($xp < 1154) return(9);  if ($xp < 1358) return(10); if ($xp < 1584) return(11); if ($xp < 1833) return(12);
+if ($xp < 2107) return(13); if ($xp < 2411) return(14); if ($xp < 2746) return(15); if ($xp < 3115) return(16);
+if ($xp < 3523) return(17); if ($xp < 3973) return(18); if ($xp < 4470) return(19); if ($xp < 5018) return(20);
+if ($xp < 5624) return(21); if ($xp < 6291) return(22); if ($xp < 7028) return(23); if ($xp < 7842) return(24);
+if ($xp < 8740) return(25); if ($xp < 9730) return(26); if ($xp < 10824) return(27);if ($xp < 12031) return(28);
+if ($xp < 13363) return(29);if ($xp < 14833) return(30);if ($xp < 16456) return(31);if ($xp < 18247) return(32);
+if ($xp < 20224) return(33);if ($xp < 22406) return(34);if ($xp < 24815) return(35);if ($xp < 27473) return(36);
+if ($xp < 30408) return(37);if ($xp < 33648) return(38);if ($xp < 37224) return(39);if ($xp < 41171) return(40);
+if ($xp < 45529) return(41);if ($xp < 50339) return(42);if ($xp < 55649) return(43);if ($xp < 61512) return(44);
+if ($xp < 67983) return(45);if ($xp < 75127) return(46);if ($xp < 83014) return(47);if ($xp < 91721) return(48);
+if ($xp < 101333) return(49);if ($xp < 111945) return(50);if ($xp < 123660) return(51);if ($xp < 136594) return(52);
+if ($xp < 150872) return(53);if ($xp < 166636) return(54);if ($xp < 184040) return(55);if ($xp < 203254) return(56);
+if ($xp < 224466) return(57);if ($xp < 247886) return(58);if ($xp < 273742) return(59);if ($xp < 302288) return(60);
+if ($xp < 333804) return(61);if ($xp < 368599) return(62);if ($xp < 407015) return(63);if ($xp < 449428) return(64);
+if ($xp < 496254) return(65);if ($xp < 547953) return(66);if ($xp < 605032) return(67);if ($xp < 668051) return(68);
+if ($xp < 737627) return(69);if ($xp < 814445) return(70);if ($xp < 899257) return(71);if ($xp < 992895) return(72);
+if ($xp < 1096278) return(73);if ($xp < 1210421) return(74);if ($xp < 1336443) return(75);if ($xp < 1475581) return(76);
+if ($xp < 1629200) return(77);if ($xp < 1798808) return(78);if ($xp < 1986068) return(79);if ($xp < 2192818) return(80);
+if ($xp < 2421087) return(81);if ($xp < 2673114) return(82);if ($xp < 2951373) return(83);if ($xp < 3258594) return(84);
+if ($xp < 3597792) return(85);if ($xp < 3972294) return(86);if ($xp < 4385776) return(87);if ($xp < 4842295) return(88);
+if ($xp < 5346332) return(89);if ($xp < 5902831) return(90);if ($xp < 6517253) return(91);if ($xp < 7195629) return(92);
+if ($xp < 7944614) return(93);if ($xp < 8771558) return(94);if ($xp < 9684577) return(95);if ($xp < 10692629) return(96);
+if ($xp < 11805606) return(97);if ($xp < 13034431) return(98);
+return(99);

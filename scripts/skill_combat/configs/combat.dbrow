@@ -11,6 +11,7 @@
 // val=weapon_crossbow,weapon_crossbow_table
 // val=weapon_thrown,weapon_thrown_table
 // val=weapon_javelin,weapon_thrown_table
+// val=weapon_dart,weapon_thrown_table
 
 [weapon_2h_sword_table]
 table=combat_style_table
@@ -108,6 +109,15 @@ data=damagetype,^stab_style
 data=damagetype,^stab_style
 data=damagetype,^slash_style
 data=damagetype,^stab_style
+
+[weapon_pipe_table]
+table=combat_style_table
+data=damagestyle,^style_ranged_accurate
+data=damagestyle,^style_ranged_rapid
+data=damagestyle,^style_ranged_longrange
+data=damagetype,^ranged_style
+data=damagetype,^ranged_style
+data=damagetype,^ranged_style
 
 [weapon_bow_table]
 table=combat_style_table

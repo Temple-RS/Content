@@ -65,7 +65,7 @@ if ($ammo = ogre_arrow) spotanim_pl(oc_param($ammo, proj_launch), 50, 0);
 else spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 def_int $delay = 30;
 switch_category(oc_category($rhand)) {
-    case weapon_bow, weapon_crossbow :
+    case weapon_bow, weapon_crossbow, weapon_pipe :
         $delay = ~player_projectile(coord, .coord, .uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5);
         ~ranged_dropammo_pvp($ammo, calc($delay / 30));
     case weapon_thrown, weapon_javelin :

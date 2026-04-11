@@ -178,6 +178,10 @@ if ($random < 8) {
     return (bronze_dart_tip, 15);
 } else if ($random < 22) {
     return (~grindingtable);
+} else if ($random < 25){
+    return (~skill_table(ranged));
+} else if ($random < 27){
+    return (~skill_table(magic));
 } else if ($random < 50) {
     return (bronze_battleaxe, 1);
 } else if ($random < 55) {
@@ -234,6 +238,10 @@ if ($random < 8) {
     return (~grindingtable);
 } else if ($random < 25) {
     return (lumbyscroll, 2);
+} else if ($random < 26){
+    return (~skill_table(ranged));
+} else if ($random < 27){
+    return (~skill_table(magic));
 } else if ($random < 35) {
     return (draynorscroll, 2);
 } else if ($random < 50) {
@@ -287,6 +295,10 @@ if ($random < 8) {
     return (~grindingtable);
 } else if ($random < 25) {
     return (shiloscroll, 1);
+} else if ($random < 26){
+    return (~skill_table(ranged));
+} else if ($random < 27){
+    return (~skill_table(magic));
 } else if ($random < 34) {
     return (~talisman_table);
 } else if ($random < 50) {
@@ -331,7 +343,10 @@ if ($random < 8) {
     return (mithril_dart_tip, 30);
 } else if ($random < 25) {
     return (shiloscroll,5);
-    return (coins,250);
+} else if ($random < 26){
+    return (~skill_table(ranged));
+} else if ($random < 27){
+    return (~skill_table(magic));
 } else if ($random < 28) {
     return (edgevillescroll, 1);
 } else if ($random < 34) {
@@ -371,7 +386,233 @@ switch_int($scroll) {
     case 5 : return(blankscroll, 1);
     case 6 : ~scrollpack;
 }
+[proc,ranged_table]()(namedobj, int)
+def_int $random = random(60);
+def_int $ranged = stat_base(ranged);
+def_int $lucky_drop = 0;
 
+
+[proc,skill_table](stat $stat)(namedobj, int)
+def_int $random = random(60);
+def_int $skill = stat_base($stat);
+def_int $lucky_drop = 0;
+switch_stat($stat){
+    case magic : {
+        if ($skill < 25){
+            if ($random < 5){return(airrune, 10);}
+            else if ($random < 8){return(airrune, 12);}
+            else if ($random < 10){return(airrune, 15);}
+            else if ($random < 15){return(earthrune, 5);}
+            else if ($random < 18){return(earthrune, 6);}
+            else if ($random < 20){return(earthrune, 7);}
+            else if ($random < 59){return(mindrune, 5);}
+            switch_int($random){
+                case 60 : $lucky_drop = 1;
+            }
+        } else if ($skill < 40){
+            if ($random < 5){return(firerune, 10);}
+            else if ($random < 8){return(firerune, 12);}
+            else if ($random < 10){return(firerune, 15);}
+            else if ($random < 15){return(waterrune, 10);}
+            else if ($random < 18){return(waterrune, 12);}
+            else if ($random < 20){return(waterrune, 15);}
+            else if ($random < 59){return(mindrune, 15);}
+            switch_int($random){
+                case 60 : $lucky_drop = 2;
+            }
+        } else if ($skill < 60){
+            if ($random < 5){return(airrune, 50);}
+            else if ($random < 8){return(airrune, 52);}
+            else if ($random < 10){return(airrune, 55);}
+            else if ($random < 15){return(chaosrune, 25);}
+            else if ($random < 18){return(chaosrune, 27);}
+            else if ($random < 20){return(chaosrune, 30);}
+            else if ($random < 59){return(lawrune, 15);}
+            switch_int($random){
+                case 60 : $lucky_drop = 3;
+            }
+        } else if ($skill < 99){
+            if ($random < 5){return(naturerune, 25);}
+            else if ($random < 8){return(naturerune, 27);}
+            else if ($random < 10){return(naturerune, 30);}
+            else if ($random < 15){return(bloodrune, 25);}
+            else if ($random < 18){return(bloodrune, 27);}
+            else if ($random < 20){return(bloodrune, 30);}
+            else if ($random < 59){return(lawrune, 25);}
+            switch_int($random){
+                case 60 : $lucky_drop = 4;
+            }
+        } else if ($skill = 99){
+            if ($random < 5){return(naturerune, 30);}
+            else if ($random < 8){return(lawrune, 35);}
+            else if ($random < 10){return(bloodrune, 40);}
+            else if ($random < 15){return(chaosrune, 150);}
+            else if ($random < 18){return(bloodrune, 52);}
+            else if ($random < 20){return(lawrune, 55);}
+            else if ($random < 59){return(deathrune, 25);}
+            switch_int($random){
+                case 60 : $lucky_drop = 5;
+                return(~lucky_drop($lucky_drop, $stat));
+            }
+        }
+    }
+    case ranged : {
+        if ($skill < 25){
+            if ($random < 5){return(bronze_arrow, 10);}
+            else if ($random < 8){return(bronze_arrow, 12);}
+            else if ($random < 10){return(bronze_arrow, 15);}
+            else if ($random < 15){return(iron_arrow, 5);}
+            else if ($random < 18){return(iron_arrow, 6);}
+            else if ($random < 20){return(iron_arrow, 7);}
+            else if ($random < 59){return(bronze_arrow, 5);}
+            switch_int($random){
+                case 60 : $lucky_drop = 1;
+            }
+        } else if ($skill < 40){
+            if ($random < 5){return(steel_arrow, 5);}
+            else if ($random < 8){return(steel_arrow, 6);}
+            else if ($random < 10){return(steel_arrow, 7);}
+            else if ($random < 15){return(steel_arrow, 8);}
+            else if ($random < 18){return(steel_arrow, 9);}
+            else if ($random < 20){return(steel_arrow, 10);}
+            else if ($random < 59){return(steel_arrow, 5);}
+            switch_int($random){
+                case 60 : $lucky_drop = 2;
+            }
+        } else if ($skill < 60){
+            if ($random < 5){return(mithril_arrow, 5);}
+            else if ($random < 8){return(mithril_arrow, 6);}
+            else if ($random < 10){return(mithril_arrow, 7);}
+            else if ($random < 15){return(mithril_arrow, 8);}
+            else if ($random < 18){return(mithril_arrow, 9);}
+            else if ($random < 20){return(mithril_arrow, 10);}
+            else if ($random < 59){return(mithril_arrow, 5);}
+            switch_int($random){
+                case 60 : $lucky_drop = 3;
+            }
+        } else if ($skill < 99){
+            if ($random < 5){return(adamant_arrow, 5);}
+            else if ($random < 8){return(adamant_arrow, 6);}
+            else if ($random < 10){return(adamant_arrow, 7);}
+            else if ($random < 15){return(adamant_arrow, 8);}
+            else if ($random < 18){return(adamant_arrow, 9);}
+            else if ($random < 20){return(adamant_arrow, 10);}
+            else if ($random < 59){return(adamant_arrow, 5);}
+            switch_int($random){
+                case 60 : $lucky_drop = 4;
+            }
+        } else if ($skill = 99){
+            if ($random < 5){return(rune_arrow, 5);}
+            else if ($random < 8){return(rune_arrow, 6);}
+            else if ($random < 10){return(rune_arrow, 7);}
+            else if ($random < 15){return(rune_arrow, 8);}
+            else if ($random < 18){return(rune_arrow, 9);}
+            else if ($random < 20){return(rune_arrow, 10);}
+            else if ($random < 59){return(rune_arrow, 5);}
+            switch_int($random){
+                case 60 : 
+                    $lucky_drop = 5;
+                    return(~lucky_drop($lucky_drop, $stat));
+            }
+        }
+    }
+}
+
+[proc,lucky_drop](int $lucky_drop, stat $stat)(namedobj, int)
+def_int $random = random(10);
+switch_stat($stat){
+   case ranged : {
+        switch_int($lucky_drop) {
+            case 1 : {
+                switch_int($random){
+                    case 1 : return(hardleather_body, 1);
+                    case 2 : return(coif, 1);
+                    case 3 : return(leather_gloves, 1);
+                    case default : return(oak_longbow, 1);
+                }
+            }
+            case 2 : {
+                switch_int($random){
+                    case 1 : return(studded_body, 1);
+                    case 2 : return(studded_chaps, 1);
+                    case 3 : return(leather_vambraces, 1);
+                    case default : return(willow_longbow, 1);
+                }
+            }
+            case 3 : {
+                switch_int($random){
+                    case 1 : return(dragonhide_body, 1);
+                    case 2 : return(dragonhide_chaps, 1);
+                    case 3 : return(dragon_vambraces, 1);
+                    case default : return(maple_longbow, 1);
+                }
+            }
+            case 4 : {
+                switch_int($random){
+                    case 1 : return(blue_dragonhide_body, 1);
+                    case 2 : return(blue_dragonhide_chaps, 1);
+                    case 3 : return(blue_dragon_vambraces, 1);
+                    case default : return(yew_longbow, 1);
+                }
+            }
+            case 5 : {
+                switch_int($random){
+                    case 1 : return(red_dragonhide_body, 1);
+                    case 2 : return(red_dragonhide_chaps, 1);
+                    case 3 : return(red_dragon_vambraces, 1);
+                    case default : return(magic_longbow, 1);
+                }
+            }
+        }
+   }
+   case magic : {
+        switch_int($lucky_drop) {
+            case 1 : {
+                switch_int($random){
+                    case 1 : return(staff_of_air, 1);
+                    case 2 : return(staff_of_earth, 1);
+                    case default : return(magic_staff, 1);
+                }
+            }
+            case 2 : {
+                switch_int($random){
+                    case 1 : return(staff_of_fire, 1);
+                    case 2 : return(staff_of_water, 1);
+                    case default : return(magic_staff, 1);
+                }
+            }
+            case 3 : {
+                switch_int($random){
+                    case 1 : return(mystic_air_staff, 1);
+                    case 2 : return(mystic_earth_staff, 1);
+                    case 3 : return(mystic_fire_staff, 1);
+                    case default : return(staff_of_fire, 1);
+                }
+            }
+            case 4 : {
+                switch_int($random){
+                    case 1 : return(mystic_water_staff, 1);
+                    case 2 : return(mystic_lava_staff, 1);
+                    case 3 : return(zamrobetop, 1);
+                    case 4 : return(zamrobebottom, 1);
+                    case default : return(mystic_earth_staff, 1);
+                }
+            }
+            case 5 : {
+                switch_int($random){
+                    case 1 : return(mystic_air_staff, 1);
+                    case 2 : return(mystic_earth_staff, 1);
+                    case 3 : return(mystic_fire_staff, 1);
+                    case 4 : return(mystic_water_staff, 1);
+                    case 5 : return(mystic_lava_staff, 1);
+                    case 6 : return(zamrobetop, 1);
+                    case 7 : return(zamrobebottom, 1);
+                    case default : return(lawrune, 50);
+                }
+            }
+        }
+   }
+}
 
 [proc,randomjunk]()(namedobj, int) // guess
 switch_int (random(8)) {
@@ -421,6 +662,10 @@ if ($random < 1) {
     return (draynorscroll, 1);
 } else if ($random < 12) { // Ensured salmon is reachable
     return (salmon, 2);
+} else if ($random < 13) {
+    return (~skill_table(ranged));
+} else if ($random < 14) {
+    return (~skill_table(magic));
 } else if ($random < 15){
     return (feather, calc(max(10, $variation)));
 }
@@ -578,6 +823,10 @@ if ($r2 > 2){
         return (feather, ~random_range(50, 100));
     } else if ($random < 117) {
         return (uncut_diamond, 1);
+    } else if ($random < 118) {
+        return (~mid_tier_items);
+    } else if ($random < 119) {
+        return (~high_tier_items);
     } else if ($random < 124) {
         return (unidentified_ranarr, 1);
     } else if ($random < 125) {
@@ -633,7 +882,7 @@ if ($r2 > 2){
     } else if ($random < 23) {
         return (dwarven_stout, 2);
     } else if ($random < 24) {
-        return (~mid_tier_items);
+        return (~low_tier_items);
     } else if ($random < 25) {
         return (shiloscroll,5);
     } else if ($random < 28) {

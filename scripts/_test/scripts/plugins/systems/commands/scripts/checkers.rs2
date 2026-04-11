@@ -3,7 +3,7 @@
 [proc,tool_check](obj $tool)(boolean)
 def_obj $worn = inv_getobj(worn, 3);
 if (inv_total(inv, $tool) < 1) {
-    ~mesbox("You need a <oc_param($tool, name)> to do this.");
+    ~mesbox("You need a tool to do this.");
     return(false);
 }
 switch_obj($worn){

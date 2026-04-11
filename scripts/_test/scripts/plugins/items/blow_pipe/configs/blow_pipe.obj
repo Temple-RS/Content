@@ -1,0 +1,74 @@
+[blow_pipe]
+cost=2
+name=Kalphite Pipe
+desc=A blowpipe.
+members=yes
+model=model_2570_obj
+manwear=model_515_obj_wear,0
+womanwear=model_515_obj_wear,0
+recol1s=16912
+recol1d=22244
+2dxof=2
+2dyof=-18
+2dzoom=1400
+2dyan=132
+2dxan=228
+weight=12g
+iop2=Wield
+wearpos=righthand
+category=weapon_pipe
+param=rangeattack,75
+param=levelrequire,99
+param=attackrate,4
+param=attackrange,15
+param=rangeattack_anim,human_blowpipe
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart_fire
+param=damagetype,^ranged_style
+
+
+[blow_dart]
+stackable=yes
+members=yes
+cost=2
+name=Kalphite Stinger
+desc=A deadly stinger from a kalphite.
+model=model_2379_obj
+recol1s=21140
+recol1d=26465
+recol2s=15360
+recol2d=19074
+recol3s=10368
+recol3d=17990
+2dxof=8
+2dyof=11
+2dzoom=720
+2dyan=336
+2dxan=396
+category=weapon_dart
+weight=10g
+param=rangebonus,54
+param=levelrequire,99
+iop2=Wield
+wearpos=quiver
+weight=16g
+param=proj_travel,blow_dart_travel
+param=rangeattack_anim,human_stake2
+param=defend_anim,human_unarmedblock
+param=rangeattack_sound,dart
+param=poison_severity,40
+
+[kalphite_stinger]
+name=Kalphite Stinger
+desc=A deadly stinger from a kalphite.
+model=model_2654_obj
+recol1s=30617
+recol1d=17990
+2dxof=6
+2dyof=-1
+2dzoom=580
+2dyan=60
+2dxan=152
+members=yes
+weight=10g
+tradeable=no

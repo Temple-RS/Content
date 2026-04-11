@@ -75,7 +75,7 @@ if (npc_param(defend_sound) ! null) {
 
 [proc,player_ranged_check_ammo](obj $rhand)(obj)
 def_category $weapon_cat = oc_category($rhand);
-if ($weapon_cat ! weapon_bow & $weapon_cat ! weapon_crossbow) {
+if ($weapon_cat ! weapon_bow & $weapon_cat ! weapon_crossbow & $weapon_cat ! weapon_pipe) {
     return($rhand); // in this case, the rhand is the ammo.
 }
 def_obj $ammo = inv_getobj(worn, ^wearpos_quiver);
@@ -94,6 +94,10 @@ if ($weapon_cat = weapon_crossbow & $ammo_cat ! bolts) {
     mes("You can't use that ammo with your crossbow."); // todo confirm this for 2004.
     return(null);
 }
+if ($weapon_cat = weapon_pipe & $ammo_cat ! weapon_dart) {
+    mes("You can't use that ammo with your blowpipe.");
+    return(null);
+}
 if (oc_param($ammo, levelrequire) > oc_param($rhand, levelrequire)) { //todo confirm crossbows could use all bolts at lvl 1
     mes("Your bow isn't powerful enough for those arrows."); // todo confirm this for 2004.
     return(null);
@@ -103,10 +107,10 @@ return($ammo);
 
 [proc,player_ranged_use_weapon](obj $rhand, obj $ammo)(int)
 if ($ammo = ogre_arrow) spotanim_pl(oc_param($ammo, proj_launch), 50, 0);
-else spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
+else if ($ammo ! blow_dart) spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 def_int $delay = 30;
 switch_category(oc_category($rhand)) {
-    case weapon_bow, weapon_crossbow : 
+    case weapon_bow, weapon_crossbow, weapon_pipe : 
         $delay = ~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5);
         ~ranged_dropammo_npc($ammo, divide($delay, 30));
     case weapon_thrown, weapon_javelin : 
