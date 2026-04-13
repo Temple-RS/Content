@@ -5,13 +5,13 @@ switch_obj(last_useitem){
     case feather : {
         if (~tool_check(knife) = true){
             ~cutting_animation;
-            if (inv_total(inv, feather) < 15) {
-                mes("You need at least 15 feathers to do this.");
+            if (inv_total(inv, feather) < 5) {
+                mes("You need at least 5 feathers to do this.");
                 return;
             }
             inv_del(inv, kalphite_stinger, 1);
-            inv_del(inv, feather, 15);
-            inv_add(inv, blow_dart, 15);
+            inv_del(inv, feather, 5);
+            inv_add(inv, blow_dart, 5);
             stat_advance(fletching, 750);
             mes("You shave down the stinger and attach the feather make some darts.");
         }
@@ -19,13 +19,13 @@ switch_obj(last_useitem){
     case knife : {
         if (~tool_check(feather) = true){
             ~cutting_animation;
-            if (inv_total(inv, feather) < 15) {
-                mes("You need at least 15 feathers to do this.");
+            if (inv_total(inv, feather) < 5) {
+                mes("You need at least 5 feathers to do this.");
                 return;
             }
             inv_del(inv, kalphite_stinger, 1);
-            inv_del(inv, feather, 15);
-            inv_add(inv, blow_dart, 15);
+            inv_del(inv, feather, 5);
+            inv_add(inv, blow_dart, 5);
             stat_advance(fletching, 750);
             mes("You shave down the stinger and attach the feather make some darts.");
         }

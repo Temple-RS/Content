@@ -102,7 +102,11 @@ settimer(move_ikovtrigger, 1);
 [mapzone,0_42_75] @music_playbyregion(coord);
 [mapzone,0_42_151] @music_playbyregion(coord);
 [mapzone,0_42_152] @music_playbyregion(coord);
-[mapzone,0_42_153] @music_playbyregion(coord);
+[mapzone,0_42_153] 
+~kbd_enter;
+@music_playbyregion(coord);
+[mapzoneexit,0_42_153]
+~wilderness_exit;
 [mapzone,0_42_154] @music_playbyregion(coord);
 [mapzone,0_43_45] @music_playbyregion(coord);
 [mapzone,0_43_46] @music_playbyregion(coord);

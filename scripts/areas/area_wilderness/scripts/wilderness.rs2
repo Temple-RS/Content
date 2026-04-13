@@ -11,3 +11,8 @@ set_player_op("Attack", 2, ^false);
 [proc,wilderness_exit]
 if_openoverlay(null);
 set_player_op(null, 2, ^false);
+
+[proc,kbd_enter]
+if_openoverlay(kbd_overlay);
+set_player_op("Attack", 2, ^false);
+%wilderness = ^true;

@@ -1,12 +1,9 @@
 [blow_dart_launch]
-frame1=anim_6849
-frame2=anim_6851
-frame3=anim_6844
-frame4=anim_6845
-frame5=anim_6846
-frame6=anim_6847
-frame7=anim_6848
-frame8=anim_6850
+frame1=anim_6845
+frame2=anim_6846
+frame3=anim_6847
+frame4=anim_6848
+frame5=anim_6850
 
 [human_blowpipe]
 replaceheldright=blow_pipe
