@@ -92,14 +92,23 @@ sound_synth(tinderbox_strike, 1, 0);
 p_delay(1);
 anim(human_glassblowing,0);
 mes("You smoke the cannabis.");
-say("Thats the good stuff...");
+switch_int(random(3)){
+    case 0 : 
+        say("Thats the good stuff...");
+    case 1 :
+        say("I'm feeling good...");
+    case 2 :
+        say("This is way too dank...");
+    case 3 :
+        say("Happy 4/20... this is someone's birthday!");
+}
 p_delay(1);
 sound_synth(tinderbox_strike, 1, 0);
 anim(human_glassblowing,0); 
 
 stat_boost(herblore, 3, 0);
 stat_advance(herblore, 250);
-
+anim(emote_laugh, 0);
 
 [label,grind_cannabis]
 ~grinding_action(cannabis, ground_cannabis);
