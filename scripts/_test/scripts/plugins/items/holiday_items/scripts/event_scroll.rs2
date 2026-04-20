@@ -87,7 +87,7 @@ switch_obj(last_useitem){
     }
 }
 [label,smoke_cannabis]
-inv_del(inv, cannabis, 1);
+inv_del(inv, ground_cannabis, 1);
 sound_synth(tinderbox_strike, 1, 0);
 p_delay(1);
 anim(human_glassblowing,0);
