@@ -114,7 +114,6 @@ sound_synth(grind, ~stat_speed(crafting), 0);
 p_delay(~stat_speed(crafting));
 anim(human_herbing_grind,0);
 sound_synth(grind, ~stat_speed(crafting), 0);
-p_delay(~stat_speed(crafting));
 inv_add(inv, $product, 1);
 
 // info: Standard fill action with variable crafting speeds.

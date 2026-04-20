@@ -98,9 +98,9 @@ sound_synth(tinderbox_strike, 1, 0);
 anim(human_glassblowing,0); 
 
 stat_boost(herblore, 3, 0);
-stat_advance(herblore, 20);
+stat_advance(herblore, 250);
 
 
 [label,grind_cannabis]
 ~grinding_action(cannabis, ground_cannabis);
-stat_advance(herblore, 5);
+stat_advance(herblore, 50);
