@@ -6,3 +6,9 @@
 ^new_year = 5
 ^fourtwenty = 6
 ^valentines = 7
+
+
+// Four Twenty Quests
+^420_notstarted = 0
+^420_started = 1
+^420_completed = 2

@@ -4,7 +4,7 @@ switch_int($event){
         return(false);
     }
     case ^easter : {
-        return(true);
+        return(false);
     }
     case ^st_patricks : {
         return(false);
@@ -19,7 +19,7 @@ switch_int($event){
         return(false);
     }
     case ^fourtwenty : {
-        return(false);
+        return(true);
     }
     case ^valentines : {
         return(false);
@@ -28,3 +28,47 @@ switch_int($event){
         return(false);
     }
 }
+
+
+[opnpc1,druid] ~420event;
+
+[proc,420_drop]
+if (~event_settings(^fourtwenty) = true){
+    if (%fourtwentyquest >= ^420_started){
+        obj_add(npc_coord, cannabis, max(1, random(3)), ^lootdrop_duration);
+    }
+}
+[proc,420event]
+    if (~event_settings(^fourtwenty) = true){
+        switch_int(%fourtwentyquest){
+            case ^420_notstarted : {
+                ~chatnpc("<p,happy>High you are how! <displayname>,");
+                npc_anim(emote_laugh, 0);
+                anim(emote_cry, 0);
+                ~chatplayer("<p,sad>I could be as happy as you are");
+                inv_add(inv, cannabis, 1);
+                ~chatnpc("<p,happy>Take some of this man.");
+                ~chatnpc("<p,happy>You might need a grinder and pipe for that.");
+                ~chatnpc("<p,angry>Those fuckin' Chaos Druids took our stash!");
+                ~chatnpc("<p,sad>Could you go get it back for us?");
+                ~chatnpc("<p,happy>I'll give you some of this if you do.");
+                ~chatplayer("<p,happy>I would love too!");
+                %fourtwentyquest = ^420_started;
+            }
+            case ^420_started : {
+                if (inv_total(inv, cannabis) < 20){
+                    ~chatnpc("<p,sad>You don't have enough cannabis!");
+                    return;
+                } else {
+                    inv_del(inv, cannabis, 20);
+                    npc_anim(human_herbing_grind, 0);
+                    p_delay(0);
+                    inv_add(inv, ground_cannabis, 20);
+                    ~chatnpc("<p,happy>Thanks man!");
+                    %420day = 1;
+                    %fourtwentyquest = ^420_completed;
+                }
+            }
+        }
+
+    }
